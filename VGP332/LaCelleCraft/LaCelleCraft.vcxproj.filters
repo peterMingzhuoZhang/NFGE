@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="winmain.cpp" />
+    <ClCompile Include="EngineWrapper.cpp" />
+    <ClCompile Include="GraphUtil.cpp">
+      <Filter>GirdMap</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureGridMap.cpp">
+      <Filter>GirdMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>UtilityElement</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettingManager.cpp" />
+    <ClCompile Include="BattleMap.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthBar.cpp">
+      <Filter>UtilityElement</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessBar.cpp">
+      <Filter>UtilityElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Structure.cpp">
+      <Filter>GameObject\Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>GameObject\Structure\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="PTAnimation.cpp">
+      <Filter>UtilityElement</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectPoolManager.cpp" />
+    <ClCompile Include="Base.cpp">
+      <Filter>GameObject\Structure\Building</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelManager.cpp">
+      <Filter>GameEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="Commander.cpp">
+      <Filter>GameEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerControllor.cpp">
+      <Filter>GameEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="LCTexture.cpp">
+      <Filter>UtilityElement</Filter>
+    </ClCompile>
+    <ClCompile Include="Interceptor.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Carrier.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit.cpp">
+      <Filter>GameObject\Unit</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="Worker.cpp">
+      <Filter>GameObject\Unit\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="PCLWorker.cpp">
+      <Filter>GameObject\Unit\Worker</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>GameObject\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="PSmallSpark.cpp">
+      <Filter>GameObject\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>GameObject\Structure\Building</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GirdMap">
+      <UniqueIdentifier>{5bee3bbe-372e-44e0-833e-009ca9d03b13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{9b7355c6-2d35-4ddd-bacf-2f74f3f7ba6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UtilityElement">
+      <UniqueIdentifier>{7fb197a1-992a-407a-a585-084f8e9aa20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Structure">
+      <UniqueIdentifier>{78dc26ab-a4b9-4a0a-b9e3-539dff66c936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Structure\Building">
+      <UniqueIdentifier>{77458503-4d42-48f0-afaa-66632107f8db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Structure\Resource">
+      <UniqueIdentifier>{5ecef1ec-fadf-4738-99e6-6c6e4b239e3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Unit">
+      <UniqueIdentifier>{9a791276-40f2-4b5c-8b7f-02cb4e0096d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEntity">
+      <UniqueIdentifier>{c28b71e7-e422-43e4-8ed6-8f1b60095e33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Projectile">
+      <UniqueIdentifier>{9cefe740-7566-4288-b852-5af87a173c79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Unit\Worker">
+      <UniqueIdentifier>{e0984bd6-5b3f-4312-9ecd-6fcafcbb6cc3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineWrapper.h" />
+    <ClInclude Include="GraphUtil.h">
+      <Filter>GirdMap</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFindingMapShell.h">
+      <Filter>GirdMap</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureGridMap.h">
+      <Filter>GirdMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>GirdMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>GirdMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>UtilityElement</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettingManager.h" />
+    <ClInclude Include="BattleMap.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthBar.h">
+      <Filter>UtilityElement</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessBar.h">
+      <Filter>UtilityElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>GameObject\Structure\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="Structure.h">
+      <Filter>GameObject\Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>GameObject\Structure\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="PTAnimation.h">
+      <Filter>UtilityElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Base.h">
+      <Filter>GameObject\Structure\Building</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectPoolManager.h" />
+    <ClInclude Include="Commander.h">
+      <Filter>GameEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerControllor.h">
+      <Filter>GameEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelManager.h">
+      <Filter>GameEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="LCTexture.h">
+      <Filter>UtilityElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Carrier.h">
+      <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="Interceptor.h">
+      <Filter>GameObject\Unit</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="Status.h">
+      <Filter>UtilityElement</Filter>
+    </ClInclude>
+    <ClInclude Include="Fightable.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
+      <Filter>GameObject\Unit\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="PCLWorker.h">
+      <Filter>GameObject\Unit\Worker</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>GameObject\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="PSmallSpark.h">
+      <Filter>GameObject\Projectile</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
