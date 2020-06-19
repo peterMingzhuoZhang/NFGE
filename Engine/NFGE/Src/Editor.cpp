@@ -74,6 +74,35 @@ namespace
 		if (ImGui::MenuItem("Checked", NULL, true)) {}
 		if (ImGui::MenuItem("Quit", "Alt+F4")) {}
 	}
+
+	void ShowMetaClassInInspector(const NFGE::Core::Meta::MetaClass* metaClassPtr, uint8_t* rawPtr)
+	{
+		if (ImGui::CollapsingHeader(metaClassPtr->GetName(), ImGuiTreeNodeFlags_DefaultOpen))
+		{
+			for (size_t i = 0; i < metaClassPtr->GetFieldCount(); ++i)
+			{
+				auto metaField = metaClassPtr->GetField(i);
+				if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Vector3>())
+				{
+					float* data = (float*)(rawPtr + metaField->GetOffset());
+					ImGui::DragFloat3(metaField->GetName(), data);
+				}
+				if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Quaternion>())
+				{
+					Math::Quaternion* data = (Math::Quaternion*)(rawPtr + metaField->GetOffset());
+
+					Math::Vector3 eurlaAngle = Math::GetEular(*data);
+					eurlaAngle *= NFGE::Math::Constants::RadToDeg;
+
+					ImGui::DragFloat3(metaField->GetName(), &eurlaAngle.x);
+
+					eurlaAngle *= NFGE::Math::Constants::DegToRad;
+
+					*data = Math::Quaternion::ToQuaternion(eurlaAngle.x, eurlaAngle.y, eurlaAngle.z);
+				}
+			}
+		}
+	}
 }
 Editor::Editor(World& world)
 	:mWorld(world)
@@ -156,31 +185,9 @@ void Editor::ShowInspectorView()
 		for (auto& component : mSelectedGameObject->mComponents)
 		{
 			auto metaClass = component->GetMetaClass();
-			if (ImGui::CollapsingHeader(metaClass->GetName(), ImGuiTreeNodeFlags_DefaultOpen))
-			{
-				for (size_t i = 0; i < metaClass->GetFieldCount(); ++i)
-				{
-					auto metaField = metaClass->GetField(i);
-					if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Vector3>())
-					{
-						float* data = (float*)((uint8_t*)component.get() + metaField->GetOffset());
-						ImGui::DragFloat3(metaField->GetName(), data);
-					}
-					if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Quaternion>())
-					{
-						Math::Quaternion* data = (Math::Quaternion*)((uint8_t*)component.get() + metaField->GetOffset());
-						
-						Math::Vector3 eurlaAngle = Math::GetEular(*data);
-						eurlaAngle *= NFGE::Math::Constants::RadToDeg;
-						
-						ImGui::DragFloat3(metaField->GetName(), &eurlaAngle.x);
 
-						eurlaAngle *= NFGE::Math::Constants::DegToRad;
-
-						*data = Math::Quaternion::ToQuaternion(eurlaAngle.x, eurlaAngle.y, eurlaAngle.z);
-					}
-				}
-			}
+			ShowMetaClassInInspector(metaClass, (uint8_t*)component.get());
+			
 		}
 	}
 	ImGui::End();
