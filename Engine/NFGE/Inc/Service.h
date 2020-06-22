@@ -19,6 +19,7 @@ namespace NFGE
 		virtual void Update(float deltaTime) {}
 		virtual void Render() {}
 		virtual void WorldViewUI() {}
+		virtual void InspectorUI(void (*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*) ) {}
 		virtual void DebugUI() {}
 
 		World& GetWorld() { return *mWorld; }

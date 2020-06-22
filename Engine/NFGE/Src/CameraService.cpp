@@ -7,6 +7,15 @@ META_DERIVED_BEGIN(CameraService, Service)
 	META_NO_FIELD
 META_CLASS_END;
 
+META_CLASS_BEGIN(CameraEntry)
+	META_FIELD_BEGIN
+	META_FIELD(name, "Name")
+	META_FIELD(mPosition, "Position")
+	META_FIELD(mDirection, "Direction")
+	META_FIELD(Fov, "Fov")
+	META_FIELD_END
+META_CLASS_END;
+
 void NFGE::CameraService::WorldViewUI()
 {
 	if (ImGui::TreeNode("Cameras"))
@@ -25,10 +34,41 @@ void NFGE::CameraService::WorldViewUI()
 	
 }
 
-void CameraService::DebugUI()
+void NFGE::CameraService::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*))
 {
-	
+	auto& cameraEntry = mCameraList[mSelectedCamera];
+	auto metaClass = mCameraList[mSelectedCamera].GetMetaClass();
+	ShowMetaClassInInspector(metaClass, (uint8_t*)&(cameraEntry));
 
+	cameraEntry.camera.SetPosition(cameraEntry.mPosition);
+	cameraEntry.mDirection = NFGE::Math::Normalize(cameraEntry.mDirection);
+	cameraEntry.camera.SetDirection(cameraEntry.mDirection);
+	cameraEntry.camera.SetFOV(cameraEntry.Fov * Math::Constants::DegToRad);
+
+	if (ImGui::CollapsingHeader("Control", ImGuiTreeNodeFlags_DefaultOpen))
+	{
+		bool isActive = mSelectedCamera == mActiveCameraIndex;
+		if(ImGui::Checkbox("Active Camera", &isActive))
+		{
+			mActiveCameraIndex = mSelectedCamera;
+		}
+
+		if (ImGui::Button("Add Camera", { 200.0f,25.0f }))
+		{
+			mCameraList.emplace_back(CameraEntry());
+			mCameraList.back().name = mCameraList.back().name + "_" + std::to_string(mCameraList.size());
+			mSelectedCamera = mCameraList.size() - 1;
+		}
+
+		if (mCameraList.size() > 1)
+		{
+			if (ImGui::Button("Remove Current Camera", { 200.0f,25.0f }))
+			{
+				mCameraList.erase(mCameraList.begin() + mSelectedCamera);
+				mSelectedCamera = 0;
+			}
+		}
+	}
 }
 
 Graphics::Camera* CameraService::AddCamera(const char* name)

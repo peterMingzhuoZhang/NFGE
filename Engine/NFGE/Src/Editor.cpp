@@ -87,7 +87,7 @@ namespace
 					float* data = (float*)(rawPtr + metaField->GetOffset());
 					ImGui::DragFloat3(metaField->GetName(), data);
 				}
-				if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Quaternion>())
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Quaternion>())
 				{
 					Math::Quaternion* data = (Math::Quaternion*)(rawPtr + metaField->GetOffset());
 
@@ -99,6 +99,21 @@ namespace
 					eurlaAngle *= NFGE::Math::Constants::DegToRad;
 
 					*data = Math::Quaternion::ToQuaternion(eurlaAngle.x, eurlaAngle.y, eurlaAngle.z);
+				}
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<std::string>())
+				{
+					std::string* data = (std::string*)(rawPtr + metaField->GetOffset());
+
+					char temp[256];
+					strcpy(temp, data->c_str());
+					ImGui::InputText(metaField->GetName(), temp, 256);
+					
+					*data = temp;
+				}
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<float>())
+				{
+					float* data = (float*)(rawPtr + metaField->GetOffset());
+					ImGui::DragFloat(metaField->GetName(), data, 0.1f, 0.0f, 360.0f);
 				}
 			}
 		}
@@ -178,7 +193,7 @@ void Editor::ShowInspectorView()
 	ImGui::Begin("Inspector");
 	if (mSelectedService)
 	{
-		mSelectedService->DebugUI();
+		mSelectedService->InspectorUI(ShowMetaClassInInspector);
 	}
 	else if (mSelectedGameObject)
 	{

@@ -149,6 +149,7 @@ void EditState::DebugUI()
 
 void EditState::RenderScene()
 {
+	
 	for (float i = -50.0f; i <= 50.0f; i += 1.0f)
 	{
 		SimpleDraw::AddLine({ i,0.0f,-50.0f }, { i,0.0f,50.0f }, Colors::DarkGray);
@@ -156,7 +157,7 @@ void EditState::RenderScene()
 	}
 
 	mWorld.Render();
-	SimpleDraw::Render(*mCamera);
+	//SimpleDraw::Render(*mCamera);
 
 	spherePC.Render(*mCamera);
 	spherePN.Render(*mCamera);

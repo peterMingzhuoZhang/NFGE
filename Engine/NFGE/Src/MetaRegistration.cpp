@@ -23,4 +23,6 @@ void NFGE::StaticMetaRegister()
 
 	META_REGISTER(NFGE::CameraService);
 	META_REGISTER(NFGE::TerrainService);
+
+	//META_REGISTER(NFGE::CameraEntry);
 }
