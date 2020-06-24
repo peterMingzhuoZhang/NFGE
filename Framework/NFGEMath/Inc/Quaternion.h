@@ -40,6 +40,12 @@ namespace NFGE::Math
 			w * v.z + z * v.w + x * v.y - y * v.x,
 			w * v.w - x * v.x - y * v.y - z * v.z);
 	}
+
+	struct EditorQuaternion
+	{
+		Quaternion mQuaternion;
+		Vector3 mEularAngle;
+	};
 }
 
 #endif // !INCLUDE_NFGE_NFGEMATH_QUATERNION_H

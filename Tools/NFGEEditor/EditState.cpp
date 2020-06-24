@@ -19,8 +19,9 @@ void EditState::Initialize()
 
 	auto cameraService = mWorld.AddService<NFGE::CameraService>();
 	mCamera = cameraService->AddCamera("Editor");
-	mCamera->SetPosition({ 0.0f,0.0f,-10.0f });
-	mCamera->SetDirection({ 0.0f,0.0f,1.0f });
+
+	cameraService->SetCameraPosition("Editor", { 0.0f,0.0f,-10.0f });
+	cameraService->SetCameraDirection("Editor", { 0.0f,0.0f,1.0f });
 	cameraService->SetActiveCamera("Editor");
 
 	auto terrainService = mWorld.AddService<NFGE::TerrainService>();

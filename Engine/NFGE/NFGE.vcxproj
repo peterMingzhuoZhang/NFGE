@@ -168,6 +168,7 @@
     <ClInclude Include="Inc\Component.h" />
     <ClInclude Include="Inc\GameObject.h" />
     <ClInclude Include="Inc\GameObjectFactory.h" />
+    <ClInclude Include="Inc\MeshRenderComponent.h" />
     <ClInclude Include="Inc\NFGE.h" />
     <ClInclude Include="Inc\MetaRegistration.h" />
     <ClInclude Include="Inc\Editor.h" />

@@ -21,5 +21,5 @@ void NFGE::ColliderComponent::Render()
 {
 	//NFGE::Graphics::SimpleDraw::AddAABB(center + mTransformComponent->position - extend, center + mTransformComponent->position + extend, Graphics::Colors::Gray, true);
 	//NFGE::Graphics::SimpleDraw::AddAABB(center + mTransformComponent->position - extend, center + mTransformComponent->position + extend, Graphics::Colors::Cyan, false);
-	NFGE::Graphics::SimpleDraw::AddOBB({ center + mTransformComponent->position, extend, mTransformComponent->rotation }, Graphics::Colors::Red);
+	NFGE::Graphics::SimpleDraw::AddOBB({ center + mTransformComponent->position, extend, mTransformComponent->rotation.mQuaternion }, Graphics::Colors::Red);
 }

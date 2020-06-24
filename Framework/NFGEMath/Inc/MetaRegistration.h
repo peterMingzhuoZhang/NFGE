@@ -11,7 +11,7 @@
 META_TYPE_DECLARE(NFGE::Math::Vector2)
 META_TYPE_DECLARE(NFGE::Math::Vector3)
 META_TYPE_DECLARE(NFGE::Math::Vector4)
-META_TYPE_DECLARE(NFGE::Math::Quaternion)
+META_TYPE_DECLARE(NFGE::Math::EditorQuaternion)
 META_TYPE_DECLARE(NFGE::Math::Matrix4)
 
 namespace NFGE::Math

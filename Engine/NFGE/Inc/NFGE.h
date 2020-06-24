@@ -16,6 +16,7 @@
 // Components headers
 #include "TransformComponent.h"
 #include "ColliderComponent.h"
+#include "MeshRenderComponent.h"
 
 // World headers
 #include "Component.h"

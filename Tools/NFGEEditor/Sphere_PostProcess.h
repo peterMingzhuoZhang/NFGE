@@ -9,7 +9,6 @@ using namespace NFGE::Math;
 
 struct MySphere
 {
-
 	MeshBuffer mMeshBuffer;
 	float mRadius;
 	virtual void Load(Vector3 position, int row, int col, float mRadius) = 0;

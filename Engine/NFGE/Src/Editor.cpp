@@ -87,18 +87,18 @@ namespace
 					float* data = (float*)(rawPtr + metaField->GetOffset());
 					ImGui::DragFloat3(metaField->GetName(), data);
 				}
-				else if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Quaternion>())
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::EditorQuaternion>())
 				{
-					Math::Quaternion* data = (Math::Quaternion*)(rawPtr + metaField->GetOffset());
+					Math::EditorQuaternion* data = (Math::EditorQuaternion*)(rawPtr + metaField->GetOffset());
 
-					Math::Vector3 eurlaAngle = Math::GetEular(*data);
+					Math::Vector3& eurlaAngle = data->mEularAngle;
 					eurlaAngle *= NFGE::Math::Constants::RadToDeg;
 
 					ImGui::DragFloat3(metaField->GetName(), &eurlaAngle.x);
 
 					eurlaAngle *= NFGE::Math::Constants::DegToRad;
 
-					*data = Math::Quaternion::ToQuaternion(eurlaAngle.x, eurlaAngle.y, eurlaAngle.z);
+					data->mQuaternion = Math::Quaternion::ToQuaternion(eurlaAngle.x, eurlaAngle.y, eurlaAngle.z);
 				}
 				else if (metaField->GetMetaType() == Core::Meta::DeduceType<std::string>())
 				{
@@ -214,17 +214,17 @@ void NFGE::Editor::ShowMenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			ShowExampleMenuFile();
+			//ShowExampleMenuFile();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit"))
 		{
-			if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-			if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
-			ImGui::Separator();
-			if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-			if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-			if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+			//if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
+			//if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
+			//ImGui::Separator();
+			//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
+			//if (ImGui::MenuItem("Copy", "CTRL+C")) {}
+			//if (ImGui::MenuItem("Paste", "CTRL+V")) {}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();

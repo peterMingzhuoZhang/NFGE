@@ -9,3 +9,13 @@ META_DERIVED_BEGIN(TransformComponent, Component)
 	META_FIELD(rotation, "Rotation")
 	META_FIELD_END
 META_CLASS_END
+
+
+void NFGE::TransformComponent::Initialize()
+{
+	rotation.mEularAngle = NFGE::Math::GetEular(rotation.mQuaternion);
+}
+
+void NFGE::TransformComponent::Render()
+{
+}

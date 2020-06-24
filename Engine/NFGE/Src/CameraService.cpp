@@ -40,10 +40,7 @@ void NFGE::CameraService::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE
 	auto metaClass = mCameraList[mSelectedCamera].GetMetaClass();
 	ShowMetaClassInInspector(metaClass, (uint8_t*)&(cameraEntry));
 
-	cameraEntry.camera.SetPosition(cameraEntry.mPosition);
-	cameraEntry.mDirection = NFGE::Math::Normalize(cameraEntry.mDirection);
-	cameraEntry.camera.SetDirection(cameraEntry.mDirection);
-	cameraEntry.camera.SetFOV(cameraEntry.Fov * Math::Constants::DegToRad);
+	RefreshWithCameraEntry(mSelectedCamera);
 
 	if (ImGui::CollapsingHeader("Control", ImGuiTreeNodeFlags_DefaultOpen))
 	{
@@ -83,6 +80,7 @@ Graphics::Camera* CameraService::AddCamera(const char* name)
 	if (camera == nullptr)
 	{
 		auto& entry = mCameraList.emplace_back(name);
+		entry.name = name;
 		camera = &entry.camera;
 	}
 	return camera;
@@ -95,6 +93,12 @@ Graphics::Camera* CameraService::FindCamera(const char* name)
 		return entry.name.c_str();
 	});
 	return (iter == mCameraList.end()) ? nullptr : &iter->camera;
+}
+
+size_t NFGE::CameraService::GetCameraIndex(const char * name)
+{
+	auto iter = std::find_if(mCameraList.begin(), mCameraList.end(), [name](auto& entry) { return entry.name.c_str(); });
+	return (iter == mCameraList.end()) ? UINT_MAX : iter - mCameraList.begin();
 }
 
 void CameraService::SetActiveCamera(const char* name)
@@ -120,4 +124,37 @@ const Graphics::Camera& CameraService::GetActiveCamera() const
 {
 	ASSERT(mActiveCameraIndex < mCameraList.size(), "[CameraService] No active camera!");
 	return mCameraList[mActiveCameraIndex].camera;
+}
+
+void NFGE::CameraService::SetCameraPosition(const char* name, const Math::Vector3 & pos)
+{
+	size_t camIndex = GetCameraIndex(name);
+	ASSERT(camIndex != UINT_MAX, "[CameraService] access none existing camera.");
+	mCameraList[camIndex].mPosition = pos;
+	RefreshWithCameraEntry(camIndex);
+}
+
+void NFGE::CameraService::SetCameraDirection(const char* name, const Math::Vector3 & dir)
+{
+	size_t camIndex = GetCameraIndex(name);
+	ASSERT(camIndex != UINT_MAX, "[CameraService] access none existing camera.");
+	mCameraList[camIndex].mDirection = dir;
+	RefreshWithCameraEntry(camIndex);
+}
+
+void NFGE::CameraService::SetCameraFOV(const char* name, float fov)
+{
+	size_t camIndex = GetCameraIndex(name);
+	ASSERT(camIndex != UINT_MAX, "[CameraService] access none existing camera.");
+	mCameraList[camIndex].Fov = fov;
+	RefreshWithCameraEntry(camIndex);
+}
+
+void NFGE::CameraService::RefreshWithCameraEntry(size_t camIndex)
+{
+	auto& cameraEntry = mCameraList[camIndex];
+	cameraEntry.camera.SetPosition(cameraEntry.mPosition);
+	cameraEntry.mDirection = NFGE::Math::Normalize(cameraEntry.mDirection);
+	cameraEntry.camera.SetDirection(cameraEntry.mDirection);
+	cameraEntry.camera.SetFOV(cameraEntry.Fov * Math::Constants::DegToRad);
 }

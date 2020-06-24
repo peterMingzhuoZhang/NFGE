@@ -44,13 +44,19 @@ namespace NFGE
 		Graphics::Camera& GetActiveCamera();
 		const Graphics::Camera& GetActiveCamera() const;
 
-	private:
-		
+		// 
+		void SetCameraPosition(const char* name, const Math::Vector3& pos);
+		void SetCameraDirection(const char* name, const Math::Vector3& dir);
+		void SetCameraFOV(const char* name, float pos);
 
+	private:
 		std::vector<CameraEntry> mCameraList;
 		int mActiveCameraIndex = 0;
 
 		size_t mSelectedCamera = 0;
+
+		size_t GetCameraIndex(const char* name);
+		void RefreshWithCameraEntry(size_t camIndex);
 	};
 }
 

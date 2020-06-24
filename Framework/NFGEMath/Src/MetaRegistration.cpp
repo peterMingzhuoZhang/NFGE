@@ -32,14 +32,14 @@ namespace NFGE::Core::Meta
 		vector2->w = object.FindMember("w")->value.GetFloat();
 	}
 	template<>
-	void Deserialize<Quaternion>(void* instance, const rapidjson::Value& value)
+	void Deserialize<EditorQuaternion>(void* instance, const rapidjson::Value& value)
 	{
 		auto object = value.GetObjectW();
-		auto vector2 = (Quaternion*)(instance);
-		vector2->x = object.FindMember("x")->value.GetFloat();
-		vector2->y = object.FindMember("y")->value.GetFloat();
-		vector2->z = object.FindMember("z")->value.GetFloat();
-		vector2->w = object.FindMember("w")->value.GetFloat();
+		auto quaternion = (EditorQuaternion*)(instance);
+		quaternion->mQuaternion.x = object.FindMember("x")->value.GetFloat();
+		quaternion->mQuaternion.y = object.FindMember("y")->value.GetFloat();
+		quaternion->mQuaternion.z = object.FindMember("z")->value.GetFloat();
+		quaternion->mQuaternion.w = object.FindMember("w")->value.GetFloat();
 	}
 }
 
@@ -47,7 +47,7 @@ namespace NFGE::Core::Meta
 META_TYPE_DEFINE(NFGE::Math::Vector2, Vector2)
 META_TYPE_DEFINE(NFGE::Math::Vector3, Vector3)
 META_TYPE_DEFINE(NFGE::Math::Vector4, Vector4)
-META_TYPE_DEFINE(NFGE::Math::Quaternion, Quaternion)
+META_TYPE_DEFINE(NFGE::Math::EditorQuaternion, EditorQuaternion)
 META_TYPE_DEFINE(NFGE::Math::Matrix4, Matrix4)
 
 void NFGE::Math::StaticMetaRegister()
