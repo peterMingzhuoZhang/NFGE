@@ -19,3 +19,4 @@ void NFGE::TransformComponent::Initialize()
 void NFGE::TransformComponent::Render()
 {
 }
+ 

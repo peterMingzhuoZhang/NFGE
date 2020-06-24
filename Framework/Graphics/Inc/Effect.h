@@ -248,11 +248,18 @@ namespace NFGE::Graphics
 				void AddTexture(MeshTextureMaterial::ModelTextureType textureType, TextureId textureId)
 				{
 					auto temp = currentContainTexture & (0x1 << (uint32_t)textureType);
-					ASSERT(!(currentContainTexture & (0x1 << (uint32_t)textureType)), "NFGE does not support loading same type of texture twice");
-					currentContainTexture |= 0x1 << (uint32_t)textureType;
-					textureIndexFinder[(uint32_t)textureType] = textures.size();
-					textureTypes.push_back(textureType);
-					textures.push_back(textureId);
+
+					if (currentContainTexture & (0x1 << (uint32_t)textureType))	// Add same type texture means replace it
+					{
+						textures[textureIndexFinder[(uint32_t)textureType]] = textureId;
+					}
+					else
+					{
+						currentContainTexture |= 0x1 << (uint32_t)textureType;
+						textureIndexFinder[(uint32_t)textureType] = textures.size();
+						textureTypes.push_back(textureType);
+						textures.push_back(textureId);
+					}
 				}
 
 				void GetTexture(MeshTextureMaterial::ModelTextureType textureType, TextureId& textureId) override

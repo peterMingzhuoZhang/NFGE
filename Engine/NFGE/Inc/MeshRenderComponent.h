@@ -30,7 +30,10 @@ namespace NFGE
 		NFGE::Graphics::MeshBuffer mMeshBuffer;
 		MeshRenderContext mContext;
 		NFGE::Graphics::Mesh mMesh;
-		  
+		MeshRenderGeometryType mGemotryType;
+
+
+		//Editor control variables
 
 		const TransformComponent* mTransformComponent = nullptr;
 	};
