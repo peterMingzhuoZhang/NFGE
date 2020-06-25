@@ -189,6 +189,7 @@
     <ClCompile Include="Src\Editor.cpp" />
     <ClCompile Include="Src\GameObject.cpp" />
     <ClCompile Include="Src\GameObjectFactory.cpp" />
+    <ClCompile Include="Src\MeshRenderComponent.cpp" />
     <ClCompile Include="Src\MetaRegistration.cpp" />
     <ClCompile Include="Src\NFGE.cpp" />
     <ClCompile Include="Src\Precompiled.cpp">

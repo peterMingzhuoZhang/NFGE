@@ -112,6 +112,9 @@
     <ClCompile Include="Src\CameraService.cpp">
       <Filter>Src\Services</Filter>
     </ClCompile>
+    <ClCompile Include="Src\MeshRenderComponent.cpp">
+      <Filter>Src\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Inc">

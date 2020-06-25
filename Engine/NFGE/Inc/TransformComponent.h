@@ -12,6 +12,7 @@ namespace NFGE
 
 		void Initialize() override;
 		void Render() override;
+		void InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*)) override;
 
 		Math::Vector3 position;
 		Math::EditorQuaternion rotation;

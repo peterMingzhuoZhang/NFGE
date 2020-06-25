@@ -12,6 +12,7 @@ namespace NFGE
 		META_CLASS_DECLARE;
 		void Initialize() override;
 		void Render() override;
+		void InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*)) override;
 
 		Math::Vector3 center;
 		Math::Vector3 extend;

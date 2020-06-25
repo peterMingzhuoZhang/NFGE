@@ -16,6 +16,7 @@ namespace NFGE
 
 		virtual void Update(float deltaTime) {}
 		virtual void Render() {}
+		virtual void InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*)) {}
 		virtual void DebugUI() {}
 
 		GameObject& GetOwner() { return *mOwner; }

@@ -199,10 +199,7 @@ void Editor::ShowInspectorView()
 	{
 		for (auto& component : mSelectedGameObject->mComponents)
 		{
-			auto metaClass = component->GetMetaClass();
-
-			ShowMetaClassInInspector(metaClass, (uint8_t*)component.get());
-			
+			component->InspectorUI(ShowMetaClassInInspector);
 		}
 	}
 	ImGui::End();

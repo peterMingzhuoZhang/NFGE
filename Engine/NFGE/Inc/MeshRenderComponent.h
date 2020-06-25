@@ -15,7 +15,18 @@ namespace NFGE
 	};
 	struct MeshRenderContext
 	{
+		META_CLASS_DECLARE;
 		float mRadius;
+
+		//Editor control variables
+		NFGE::Math::Vector4 mAmbientColor;
+		NFGE::Math::Vector4 mDiffuseColor;
+		NFGE::Math::Vector4 mSpecularColor;
+		float bumpWeight;
+		std::string mDiffuseTextureDir;
+		std::string mSpecularTextureDir;
+		std::string mNormalextureDir;
+		std::string mDisplacementTextureDir;
 
 	};
 
@@ -26,6 +37,7 @@ namespace NFGE
 		META_CLASS_DECLARE;
 		void Initialize() override;
 		void Render() override;
+		void InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*)) override;
 
 		NFGE::Graphics::MeshBuffer mMeshBuffer;
 		MeshRenderContext mContext;
@@ -38,15 +50,8 @@ namespace NFGE
 		NFGE::Graphics::TextureId mDisplacementTexture;
 		NFGE::Graphics::TextureId mNormalTexture;
 		
-		//Editor control variables
-		NFGE::Math::Vector4 mAmbientColor;
-		NFGE::Math::Vector4 mDiffuseColor;
-		NFGE::Math::Vector4 mSpecularColor;
-		float bumpWeight;
-		std::string mDiffuseTextureDir;
-		std::string mSpecularTextureDir;
-		std::string mDisplacementTextureDir;
-		std::string mNormalTextureDir;
+		MeshRenderContext mControlContext;
+	
 
 
 		const TransformComponent* mTransformComponent = nullptr;

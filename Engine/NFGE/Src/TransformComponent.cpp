@@ -19,4 +19,9 @@ void NFGE::TransformComponent::Initialize()
 void NFGE::TransformComponent::Render()
 {
 }
+
+void NFGE::TransformComponent::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass *, uint8_t *))
+{
+	ShowMetaClassInInspector(GetMetaClass(), (uint8_t*)this);
+}
  
