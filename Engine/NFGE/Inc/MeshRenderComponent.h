@@ -40,9 +40,8 @@ namespace NFGE
 		void InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*)) override;
 
 		NFGE::Graphics::MeshBuffer mMeshBuffer;
-		MeshRenderContext mContext;
+		int mGemotryType;
 		NFGE::Graphics::Mesh mMesh;
-		MeshRenderGeometryType mGemotryType;
 		NFGE::Graphics::Effects::StandardMeshEffect::StandardMeshEffectContext mEffectContext;
 		NFGE::Graphics::Material mMaterial;
 		NFGE::Graphics::TextureId mDiffuseTexture;

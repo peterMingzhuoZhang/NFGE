@@ -20,6 +20,7 @@ META_CLASS_END;
 
 META_DERIVED_BEGIN(MeshRenderComponent, Component)
 	META_FIELD_BEGIN
+	META_FIELD(mGemotryType, "GeometryType")
 	META_FIELD(mControlContext, "Mesh Render Context")
 	META_FIELD_END
 META_CLASS_END;
