@@ -2,6 +2,7 @@
 #include "MeshRenderComponent.h"
 #include "TransformComponent.h"
 #include "GameObject.h"
+#include "NFGE.h"
 
 using namespace NFGE;
 
@@ -10,11 +11,14 @@ META_CLASS_BEGIN(MeshRenderContext)
 	META_FIELD(mAmbientColor, "Ambient Color")
 	META_FIELD(mDiffuseColor, "Diffuse Color")
 	META_FIELD(mSpecularColor, "Specular Color")
+	META_FIELD(mSpecualrPower, "Specular Power")
 	META_FIELD(mDiffuseTextureDir, "Diffuse Texture")
 	META_FIELD(mSpecularTextureDir, "Specular Texture")
 	META_FIELD(mNormalextureDir, "Normal Texture")
 	META_FIELD(mDisplacementTextureDir, "displacement Texture")
-	META_FIELD(bumpWeight, "Displacement weight")
+	META_FIELD(mBumpWeight, "Displacement weight")
+	META_FIELD(mIsCastShadow, "Is Casting Shadow")
+	META_FIELD(mTopology, "Topology")
 	META_FIELD_END
 META_CLASS_END;
 
@@ -54,13 +58,31 @@ void NFGE::MeshRenderComponent::Initialize()
 	}
 
 	mMeshBuffer.Initialize(mMesh);
-	mMeshBuffer.SetTopology();
+
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::DIFFUSE, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mDiffuseTextureDir));
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::SPECULAR, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mSpecularTextureDir));
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::DISPLACEMENT, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mDisplacementTextureDir));
+	mEffectContext.bumpWeight = mControlContext.mBumpWeight;
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::NORMALS, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mNormalextureDir));
+
+	mEffectContext.light = &sApp.GetMainLight();
+
+	mEffectContext.material.ambient = mControlContext.mAmbientColor;
+	mEffectContext.material.diffuse = mControlContext.mDiffuseColor;
+	mEffectContext.material.specular = mControlContext.mSpecularColor;
+	mEffectContext.material.power = mControlContext.mSpecualrPower;
 
 	mTransformComponent = GetOwner().GetComponent<TransformComponent>();
 }
 
 void NFGE::MeshRenderComponent::Render()
 {
+	mMeshBuffer.SetTopology(mControlContext.mTopology);
+
+	mEffectContext.position = mTransformComponent->finalPosition;
+	mEffectContext.rotation = mTransformComponent->finalRotation;
+	mEffectContext.scale = mTransformComponent->fianlScale;
+
 
 }
 

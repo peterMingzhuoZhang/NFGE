@@ -58,4 +58,7 @@
 #include "VertexType.h"
 #include "VertexType.h"
 
+// Meta headers
+#include "MetaRegistration.h"
+
 #endif // !INCLUDE_NFGE_GRAPHICS_H

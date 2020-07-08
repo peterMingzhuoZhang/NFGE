@@ -175,6 +175,7 @@
     <ClCompile Include="Src\GraphicsSystem.cpp" />
     <ClCompile Include="Src\MeshBuilder.cpp" />
     <ClCompile Include="Src\MeshIO.cpp" />
+    <ClCompile Include="Src\MetaRegistration.cpp" />
     <ClCompile Include="Src\Model.cpp" />
     <ClCompile Include="Src\ModelIO.cpp" />
     <ClCompile Include="Src\ModelManager.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="Inc\MeshBuilder.h" />
     <ClInclude Include="Inc\MeshIO.h" />
     <ClInclude Include="Inc\MeshTextureMaterial.h" />
+    <ClInclude Include="Inc\MetaRegistration.h" />
     <ClInclude Include="Inc\Model.h" />
     <ClInclude Include="Inc\ModelIO.h" />
     <ClInclude Include="Inc\ModelManager.h" />

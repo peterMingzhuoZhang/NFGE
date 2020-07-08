@@ -115,6 +115,17 @@ namespace
 					float* data = (float*)(rawPtr + metaField->GetOffset());
 					ImGui::DragFloat(metaField->GetName(), data, 0.1f, 0.0f, 360.0f);
 				}
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<NFGE::Graphics::MeshBuffer::Topology>())
+				{
+					NFGE::Graphics::MeshBuffer::Topology* data = (NFGE::Graphics::MeshBuffer::Topology*)(rawPtr + metaField->GetOffset());
+
+					int selectedItem = static_cast<int>(*data);
+					const char* items[]{ "Points", "Lines", "Triangles" };
+
+					ImGui::Combo("Topology", &selectedItem, items, IM_ARRAYSIZE(items));
+
+					*data = static_cast<NFGE::Graphics::MeshBuffer::Topology>(selectedItem);
+				}
 			}
 		}
 	}

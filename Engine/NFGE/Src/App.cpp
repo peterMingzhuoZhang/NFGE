@@ -32,6 +32,7 @@ void NFGE::App::Run(AppConfig appConfig)
 	LOG("Registering meta types ...");
 	Core::StaticMetaRegister();
 	Math::StaticMetaRegister();
+	Graphics::StaticMetaRegister();
 	NFGE::StaticMetaRegister();
 
 	mAppConfig = std::move(appConfig);

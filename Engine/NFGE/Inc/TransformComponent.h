@@ -16,6 +16,11 @@ namespace NFGE
 
 		Math::Vector3 position;
 		Math::EditorQuaternion rotation;
+		Math::Vector3 scale;
+
+		Math::Vector3 finalPosition;
+		Math::Quaternion finalRotation;
+		Math::Vector3 fianlScale;
 	};
 }
 

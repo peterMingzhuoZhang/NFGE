@@ -67,6 +67,12 @@
     <Filter Include="Inc\GeometryMesh">
       <UniqueIdentifier>{a6243675-4f19-4cfe-a72d-2d8534cba6f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Inc\Meta">
+      <UniqueIdentifier>{7312187f-1e27-470c-9621-2373d163e3b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Meta">
+      <UniqueIdentifier>{3534302c-7f55-46de-b983-8e265e8a0d12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\GraphicsSystem.cpp">
@@ -209,6 +215,9 @@
     </ClCompile>
     <ClCompile Include="Src\PostProcessUnit.cpp">
       <Filter>Src\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MetaRegistration.cpp">
+      <Filter>Src\Meta</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,6 +395,9 @@
     </ClInclude>
     <ClInclude Include="Inc\PostProcessManager.h">
       <Filter>Inc\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\MetaRegistration.h">
+      <Filter>Inc\Meta</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
