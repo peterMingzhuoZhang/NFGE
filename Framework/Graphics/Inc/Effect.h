@@ -210,7 +210,7 @@ namespace NFGE::Graphics
 				StandardMeshEffectContext()
 				{
 					//effectedPostProcessContext.reserve(PostProcessContext::TypeCount);
-					effectedPostProcessContext.reserve(3); // Hard code number for memory compacity Optimazation
+					effectedPostProcessContext.reserve(PostProcessContext::TypeCount); // Hard code number for memory compacity Optimazation
 					effectedPostProcessContext.emplace_back(std::make_unique<PostProcesses::PostProcessUnit_None::PostProcessContext_None>());
 					effectedPostProcessContext.emplace_back(std::make_unique<PostProcesses::PostProcessUnit_Pixelate::PostProcessContext_Pixelate>());
 					effectedPostProcessContext.emplace_back(std::make_unique<PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow>());
@@ -274,6 +274,7 @@ namespace NFGE::Graphics
 
 				float GetDisplacementMapWeight() override { return bumpWeight; }
 				const TransformData& GetTransformData() override { return mTransformData; }
+				PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow* GetShadowPostProcessContextPtr() { return (PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow*)effectedPostProcessContext[contextIndexTracker[PostProcessContext::Type_SHADOW_02]].get(); }
 			}*mContext;
 		public:
 			void Set(EffectContext* contextPtr) override;
@@ -310,7 +311,7 @@ namespace NFGE::Graphics
 				ModelMeshEffectContext()
 				{
 					//effectedPostProcessContext.reserve(PostProcessContext::TypeCount);
-					effectedPostProcessContext.reserve(3); // Hard code number for memory compacity Optimazation
+					effectedPostProcessContext.reserve(PostProcessContext::TypeCount);
 					effectedPostProcessContext.emplace_back(std::make_unique<PostProcesses::PostProcessUnit_None::PostProcessContext_None>());
 					effectedPostProcessContext.emplace_back(std::make_unique<PostProcesses::PostProcessUnit_Pixelate::PostProcessContext_Pixelate>());
 					effectedPostProcessContext.emplace_back(std::make_unique<PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow>());
@@ -348,6 +349,7 @@ namespace NFGE::Graphics
 				}
 				float GetDisplacementMapWeight() override { return bumpWeight; }
 				const TransformData& GetTransformData() override { return mTransformData; }
+				PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow* GetShadowPostProcessContextPtr() { return (PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow*)effectedPostProcessContext[contextIndexTracker[PostProcessContext::Type_SHADOW_02]].get(); }
 
 			}*mContext;
 		public:
@@ -442,6 +444,7 @@ namespace NFGE::Graphics
 				}
 				float GetDisplacementMapWeight() override { return bumpWeight; }
 				const TransformData& GetTransformData() override { return mTransformData; }
+				PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow* GetShadowPostProcessContextPtr() { return (PostProcesses::PostProcessUnit_Shadow::PostProcessContext_Shadow*)effectedPostProcessContext[contextIndexTracker[PostProcessContext::Type_SHADOW_02]].get(); }
 			private:
 				void UpdateTransformImpl(Bone* bone, std::vector<NFGE::Math::Matrix4>& boneMatri);
 

@@ -31,7 +31,9 @@ namespace NFGE {
 			static Mesh CreatePlane(int row, int col, float unit);
 			static Mesh CreateCube();
 			static Mesh CreateCone(int HeightFactor, int roundFactor, float radius, float height);
+			static Mesh CreateCylinder(int HeightFactor, int roundFactor, float radius, float height);
 			static Mesh CreateSphere(int HeightFactor, int roundFactor, float radius);
+			static Mesh CreateTorus(int LengthFactor, int roundFactor, float innerRadius, float outerRadius);
 
 			static BoneMesh CreateTentacle(int numOfSeg, int sliceFactor, int roundFactor, float radius, float height, float(*radiusShaper)(float));
 

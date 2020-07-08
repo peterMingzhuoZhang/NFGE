@@ -7,13 +7,14 @@ namespace NFGE
 {
 	enum MeshRenderGeometryType
 	{
-		Sphere = 0,
+		Plane = 0,
 		Cube,
+		Sphere,
 		Cylinder,
 		Cone,
 		Toro
 	};
-	struct MeshRenderContext
+	struct MeshRenderContext	// Thing that only expose to use to change
 	{
 		META_CLASS_DECLARE;
 		float mRadius;
@@ -51,9 +52,8 @@ namespace NFGE
 		
 		MeshRenderContext mControlContext;
 	
-
-
 		const TransformComponent* mTransformComponent = nullptr;
+		
 	};
 }
 

@@ -199,7 +199,7 @@ void Editor::ShowInspectorView()
 	{
 		for (auto& component : mSelectedGameObject->mComponents)
 		{
-			component->InspectorUI(ShowMetaClassInInspector);
+			component->InspectorUI(ShowMetaClassInInspector); 
 		}
 	}
 	ImGui::End();

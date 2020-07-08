@@ -129,6 +129,10 @@ MeshPC NFGE::Graphics::MeshBuilder::CreateCylinderPC(int row, int col, float rad
 	std::vector<uint32_t> indices;
 	float unitHeight = height / (row - 1);
 	float unitAngleRad = -Math::Constants::TwoPi / (col - 1);
+
+	int topPointIndex = row * col;
+	int botPointIndex = row * col + 1;
+
 	for (int i = 0; i < row; i++)
 	{
 		for (int j = 0; j < col; j++)
@@ -140,9 +144,9 @@ MeshPC NFGE::Graphics::MeshBuilder::CreateCylinderPC(int row, int col, float rad
 					radius * cos(j * unitAngleRad)
 				}, (i == 0 || i == row - 1) ? Colors::PowderBlue : Colors::Orange });
 
-			if ((i == 0) && (j != 0)&&(j != col - 1))
+			if ((i == 0) &&(j != col - 1))
 			{
-				indices.push_back(static_cast<uint32_t>(0));							//|
+				indices.push_back(static_cast<uint32_t>(topPointIndex));							//|
 				indices.push_back(static_cast<uint32_t>(0 + j + 1));					//|--- top circle
 				indices.push_back(static_cast<uint32_t>(0 + j));						//|
 			}
@@ -156,14 +160,28 @@ MeshPC NFGE::Graphics::MeshBuilder::CreateCylinderPC(int row, int col, float rad
 				indices.push_back(static_cast<uint32_t>((i * col + j + 1)));			//|--- right triangle
 				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|
 			}
-			if ((i == row - 1) && (j != 0) && (j != col - 1))
+			if ((i == row - 1)  && (j != col - 1))
 			{
-				indices.push_back(static_cast<uint32_t>(i * col));						//|
+				indices.push_back(static_cast<uint32_t>(botPointIndex));						//|
 				indices.push_back(static_cast<uint32_t>(i * col + j));					//|--- bottom circle
 				indices.push_back(static_cast<uint32_t>(i * col + j + 1));				//|
 			}
 		}
 	}
+	
+	vertices.push_back({
+		{
+			0.0f,
+			height * 0.5f,
+			0.0f
+		}, Colors::Orange });
+
+	vertices.push_back({
+		{
+			0.0f,
+			height * 0.5f - static_cast<float>(row - 1) * unitHeight,
+			0.0f
+		}, Colors::Orange });
 
 	MeshPC mesh;
 	mesh.vertices.insert(mesh.vertices.end(), std::begin(vertices), std::end(vertices));
@@ -286,7 +304,7 @@ MeshPC NFGE::Graphics::MeshBuilder::CreateTorusPC(int row, int col, float innerR
 					//--------------------------------|             Length of the Proj of Vertex on RealRadius direction                                    |
 					//--------------------------------| RealRadius + (clinderRadius - proj of [Vertex position vector] on local circle on Radius direction) |
 					//                                v                                                                                                     v
-					-sin(unitAngleRad_Verti * i) *           (realRadius + cylinderRadius - (cylinderRadius * cos(j * unitAngleRad_Horiz))),
+					sin(unitAngleRad_Verti * i) *           (realRadius + cylinderRadius - (cylinderRadius * cos(j * unitAngleRad_Horiz))),
 					cos(unitAngleRad_Verti * i) *            (realRadius + cylinderRadius - (cylinderRadius * cos(j * unitAngleRad_Horiz)))
 				}, (i == 0 || i == row - 1) ? Colors::PowderBlue : Colors::Orange });
 
@@ -299,12 +317,12 @@ MeshPC NFGE::Graphics::MeshBuilder::CreateTorusPC(int row, int col, float innerR
 			if ((i != row - 1) && (j != col - 1))
 			{
 				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
-				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|--- left triangle
 				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j)));			//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|--- left triangle
 
 				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
-				indices.push_back(static_cast<uint32_t>((i * col + j + 1)));			//|--- right triangle
 				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|
+				indices.push_back(static_cast<uint32_t>((i * col + j + 1)));			//|--- right triangle
 			}
 			if ((i == row - 1) && (j != 0) && (j != col - 1))
 			{
@@ -948,6 +966,130 @@ Mesh NFGE::Graphics::MeshBuilder::CreateCone(int row, int col, float radius, flo
 	return mesh;
 }
 
+Mesh NFGE::Graphics::MeshBuilder::CreateCylinder(int row, int col, float radius, float height)
+{
+	std::vector<Vertex> vertices;
+	std::vector<uint32_t> indices;
+	float unitHeight = height / (row - 1);
+	float unitAngleRad = -Math::Constants::TwoPi / (col - 1);
+	float uUnit = 1.0f / (col - 1);
+	float vUnit = 1.0f / (row - 1);
+
+	int topPointIndex = row * col;
+	int botPointIndex = row * col + 1;
+
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < col; j++)
+		{
+			Math::Vector3 pos;
+			if (i == 0)
+			{
+				pos =
+				{
+					radius * sin(j * unitAngleRad),
+					height * 0.5f - static_cast<float>(i + 1) * unitHeight,
+					radius * i * cos(j * unitAngleRad)
+				};
+			}
+			else if (i != row - 1)
+			{
+				pos =
+				{
+					radius * sin(j * unitAngleRad),
+					height * 0.5f - static_cast<float>(i) * unitHeight,
+					radius * i * cos(j * unitAngleRad)
+				};
+			}
+			else
+			{
+				pos =
+				{
+					radius * sin(j * unitAngleRad),
+					height * 0.5f - static_cast<float>(i - 1) * unitHeight,
+					radius * cos(j * unitAngleRad)
+				};
+			}
+
+			Math::Vector3 tangent;
+			Math::Vector3 normal;
+
+			if (i == 0)
+			{
+				normal = { 0.0f, 1.0f, 0.0f };
+				tangent = { -1.0f, 0.0f, 0.0f };
+			}
+			else if (i != row - 1)
+			{
+				normal = Math::Normalize({ pos.x, 0.0f, pos.z });
+				tangent = { -normal.z, 0.0f, -normal.x };
+			}
+			else
+			{
+				normal = { 0.0f, -1.0f, 0.0f };
+				tangent = { 1.0f, 0.0f, 0.0f };
+			}
+
+			vertices.push_back({
+				pos,
+				normal,
+				tangent,
+				{ (float)j * uUnit , (float)i * vUnit }
+				});
+
+			if ((i == 0) && (j != col - 1))
+			{
+				indices.push_back(static_cast<uint32_t>(topPointIndex));							//|
+				indices.push_back(static_cast<uint32_t>(0 + j + 1));					//|--- top circle
+				indices.push_back(static_cast<uint32_t>(0 + j));						//|
+			}
+			if ((i != 0) && (i != row - 1) && (j != col - 1))
+			{
+				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|--- left triangle
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j)));			//|
+
+				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				indices.push_back(static_cast<uint32_t>((i * col + j + 1)));			//|--- right triangle
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|
+			}
+			if ((i == row - 1) && (j != col - 1))
+			{
+				indices.push_back(static_cast<uint32_t>(botPointIndex));						//|
+				indices.push_back(static_cast<uint32_t>(i * col + j));					//|--- bottom circle
+				indices.push_back(static_cast<uint32_t>(i * col + j + 1));				//|
+			}
+		}
+	}
+
+	vertices.push_back({
+		{
+			0.0f,
+			height * 0.5f,
+			0.0f
+		},
+		{0.0f,1.0f,0.0f},
+		{-1.0f,0.0f,0.0f},
+		{0.0f,0.0f}
+		});
+
+	vertices.push_back({
+		{
+			0.0f,
+			height * 0.5f - static_cast<float>(row - 1) * unitHeight,
+			0.0f
+		},
+		{ 0.0f,1.0f,0.0f },
+		{ -1.0f,0.0f,0.0f },
+		{ 0.0f,0.0f } 
+		});
+
+	Mesh mesh;
+	mesh.vertices.insert(mesh.vertices.end(), std::begin(vertices), std::end(vertices));
+	mesh.indices.insert(mesh.indices.end(), std::begin(indices), std::end(indices));
+	return mesh;
+}
+
 Mesh NFGE::Graphics::MeshBuilder::CreateSphere(int row, int col, float radius)
 {
 	std::vector<Vertex> vertices;
@@ -1018,6 +1160,76 @@ Mesh NFGE::Graphics::MeshBuilder::CreateSphere(int row, int col, float radius)
 
 	Mesh mesh;
 	mesh.vertices.insert(mesh.vertices.end(), std::begin(vertices), std::end(vertices));
+	mesh.indices.insert(mesh.indices.end(), std::begin(indices), std::end(indices));
+	return mesh;
+}
+
+Mesh NFGE::Graphics::MeshBuilder::CreateTorus(int row, int col, float innerRadius, float outerRadius)
+{
+	std::vector<Vertex> vertices;
+	std::vector<uint32_t> indices;
+
+	float cylinderRadius = (outerRadius - innerRadius) * 0.5f;
+	float realRadius = innerRadius + cylinderRadius;
+	float unitAngleRad_Horiz = Math::Constants::TwoPi / (col - 1);
+	float unitAngleRad_Verti = Math::Constants::TwoPi / (row - 1);
+	float uUnit = 1.0f / (col - 1);
+	float vUnit = 1.0f / (row - 1);
+
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < col; j++)
+		{
+			NFGE::Math::Vector3 circleCenterInEachRow = { 0.0f,sin(unitAngleRad_Verti * i) * realRadius, cos(unitAngleRad_Verti * i) * realRadius };
+			NFGE::Math::Vector3 pos = {
+				//----------------| sin of current portion of Horiz angle |----------
+				//                | give us [0] to [-1] to [0] to [1]     |
+				//                v                                       v
+				cylinderRadius *		sin(j * unitAngleRad_Horiz),
+
+				//--------------------------------|             Length of the Proj of Vertex on RealRadius direction                                    |
+				//--------------------------------| RealRadius + (clinderRadius - proj of [Vertex position vector] on local circle on Radius direction) |
+				//                                v                                                                                                     v
+				sin(unitAngleRad_Verti * i) *           (realRadius + cylinderRadius - (cylinderRadius * cos(j * unitAngleRad_Horiz))),
+				cos(unitAngleRad_Verti * i) *            (realRadius + cylinderRadius - (cylinderRadius * cos(j * unitAngleRad_Horiz)))
+			};
+
+			NFGE::Math::Vector3 normal = NFGE::Math::Normalize(pos - circleCenterInEachRow);
+
+			vertices.push_back({
+				pos,
+				normal,
+				{ NFGE::Math::Cross(normal, NFGE::Math::Cross({1.0f,0.0f,0.0f},circleCenterInEachRow)) },
+				{(float)j * uUnit , (float)i * vUnit},
+				});
+
+			if ((i == 0) && (j != 0) && (j != col - 1))
+			{
+				indices.push_back(static_cast<uint32_t>(0));							//|
+				indices.push_back(static_cast<uint32_t>(0 + j + 1));					//|--- top circle
+				indices.push_back(static_cast<uint32_t>(0 + j));						//|
+			}
+			if ((i != row - 1) && (j != col - 1))
+			{
+				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j)));			//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|--- left triangle
+
+				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|
+				indices.push_back(static_cast<uint32_t>((i * col + j + 1)));			//|--- right triangle
+			}
+			if ((i == row - 1) && (j != 0) && (j != col - 1))
+			{
+				indices.push_back(static_cast<uint32_t>(i * col));						//|
+				indices.push_back(static_cast<uint32_t>(i * col + j));					//|--- bottom circle
+				indices.push_back(static_cast<uint32_t>(i * col + j + 1));				//|
+			}
+		}
+	}
+
+	Mesh mesh;
+	mesh.vertices.insert(mesh.vertices.end(), std::begin(vertices), std::end(vertices));  
 	mesh.indices.insert(mesh.indices.end(), std::begin(indices), std::end(indices));
 	return mesh;
 }

@@ -27,6 +27,35 @@ META_CLASS_END;
 
 void NFGE::MeshRenderComponent::Initialize()
 {
+	MeshRenderGeometryType gemotryType = static_cast<MeshRenderGeometryType>(mGemotryType);
+
+	switch (gemotryType)
+	{
+	case NFGE::Plane:
+		mMesh = NFGE::Graphics::MeshBuilder::CreatePlane(5, 5, 1);
+		break;
+	case NFGE::Sphere:
+		mMesh = NFGE::Graphics::MeshBuilder::CreateSphere(8,8,1.0f);
+		break;
+	case NFGE::Cube:
+		mMesh = NFGE::Graphics::MeshBuilder::CreateCube();
+		break;
+	case NFGE::Cylinder:
+		mMesh = NFGE::Graphics::MeshBuilder::CreateCylinder(8, 16, 1.0f,3.0f);
+		break;
+	case NFGE::Cone:
+		mMesh = NFGE::Graphics::MeshBuilder::CreateCone(8, 16, 1.0f, 3.0f);
+		break;
+	case NFGE::Toro:
+		mMesh = NFGE::Graphics::MeshBuilder::CreateTorus(16, 16, 1.0f, 3.0f);
+		break;
+	default:
+		break;
+	}
+
+	mMeshBuffer.Initialize(mMesh);
+	mMeshBuffer.SetTopology();
+
 	mTransformComponent = GetOwner().GetComponent<TransformComponent>();
 }
 
