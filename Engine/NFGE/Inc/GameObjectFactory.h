@@ -10,6 +10,7 @@ namespace NFGE
 	public:
 		GameObjectFactory(GameObjectAllocator& allocator);
 
+		GameObject* CreateEmpty();
 		GameObject* Create(const char* templateFileName);
 		void Destory(GameObject* gameObject);
 

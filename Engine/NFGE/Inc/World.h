@@ -41,6 +41,7 @@ namespace NFGE
 		}
 
 		void LoadLevel(const std::filesystem::path &  filename);
+		GameObjectHandle CreateEmpty(std::string name, GameObject* parent = nullptr);
 		GameObjectHandle Create(const std::filesystem::path& templateFileName, std::string name, GameObject* parent = nullptr);
 		GameObjectHandle Find(const std::string& name);
 		void Destroy(GameObjectHandle handle);

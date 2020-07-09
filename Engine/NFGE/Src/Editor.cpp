@@ -4,6 +4,7 @@
 #include "World.h"
 #include "GameObject.h"
 #include "Component.h"
+#include "MeshRenderComponent.h"
 #include "Service.h"
 
 using namespace NFGE;
@@ -218,10 +219,7 @@ void Editor::ShowInspectorView()
 	}
 	else if (mSelectedGameObject)
 	{
-		for (auto& component : mSelectedGameObject->mComponents)
-		{
-			component->InspectorUI(ShowMetaClassInInspector); 
-		}
+		mSelectedGameObject->InspectorUI(ShowMetaClassInInspector);
 	}
 	ImGui::End();
 }
@@ -243,6 +241,30 @@ void NFGE::Editor::ShowMenuBar()
 			//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
 			//if (ImGui::MenuItem("Copy", "CTRL+C")) {}
 			//if (ImGui::MenuItem("Paste", "CTRL+V")) {}
+			
+			if (ImGui::BeginMenu("Add GameObject"))
+			{
+				if(ImGui::MenuItem("Empty GameObject"))
+				{
+					mWorld.CreateEmpty("Empty");
+				}
+				if (ImGui::BeginMenu("Geometry"))
+				{
+					for (size_t i = 0; i < (size_t)MeshRenderGeometryType::MAX; i++)
+					{
+						if (ImGui::MenuItem(NFGE::MeshRenderGeometryTypeName[i]))
+						{
+							auto gameObject = mWorld.CreateEmpty(NFGE::MeshRenderGeometryTypeName[i]);
+							auto meshRenderComponent = gameObject->AddComponent<NFGE::MeshRenderComponent>();
+							meshRenderComponent->mGemotryType = i;
+							meshRenderComponent->Initialize();
+						}
+					}
+					
+					ImGui::EndMenu();
+				}
+				ImGui::EndMenu();
+			}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();

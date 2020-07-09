@@ -3,6 +3,7 @@
 #include "NFGE.h"
 
 #include "GameObjectFactory.h"
+#include "TransformComponent.h"
 
 using namespace NFGE;
 
@@ -90,6 +91,33 @@ Service* World::AddService(const Core::Meta::MetaClass* metaClass)
 	newService->mWorld = this;
 	mServices.emplace_back(std::unique_ptr<Service>(newService));
 	return newService;
+}
+
+GameObjectHandle NFGE::World::CreateEmpty(std::string name, GameObject * parent)
+{
+	auto gameObject = mGameObjectFactory->CreateEmpty();
+	ASSERT(gameObject != nullptr, "[World] Failed to create empty game object");
+
+	// Register withe the handle pool
+	auto handle = mGameObjectHandlePool->Register(gameObject);
+
+	gameObject->mWorld = this;
+	gameObject->mHandle = handle;
+	gameObject->mName = std::move(name);
+	gameObject->AddComponent<NFGE::TransformComponent>();
+	
+	gameObject->Initialize();
+
+	if (parent)
+	{
+		gameObject->mParent = parent;
+		parent->mChilds.push_back(gameObject);
+	}
+
+	// Add game object to the update list
+	mUpdateList.push_back(gameObject);
+
+	return handle;
 }
 
 GameObjectHandle World::Create(const std::filesystem::path& templateFileName, std::string name, GameObject* parent)

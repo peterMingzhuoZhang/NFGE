@@ -6,7 +6,9 @@
 using namespace NFGE;
 
 META_CLASS_BEGIN(GameObject)
-	META_NO_FIELD
+	META_FIELD_BEGIN
+	META_FIELD(mName, "name")
+	META_FIELD_END
 META_CLASS_END
 
 void GameObject::Initialize()
@@ -31,6 +33,15 @@ void GameObject::Render()
 {
 	for (auto& component : mComponents)
 		component->Render();
+}
+
+void NFGE::GameObject::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass *, uint8_t *))
+{
+	ShowMetaClassInInspector(GetMetaClass(), (uint8_t*)this);
+	for (auto& component : mComponents)
+	{
+		component->InspectorUI(ShowMetaClassInInspector);
+	}
 }
 
 void GameObject::DebugUI()

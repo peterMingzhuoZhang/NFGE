@@ -21,6 +21,7 @@ namespace NFGE
 
 		void Update(float deltaTime);
 		void Render();
+		void InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass*, uint8_t*));
 		void DebugUI();
 		
 		Component* AddComponent(const NFGE::Core::Meta::MetaClass* metaClass);

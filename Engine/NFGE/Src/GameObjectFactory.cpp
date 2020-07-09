@@ -15,6 +15,11 @@ NFGE::GameObjectFactory::GameObjectFactory(GameObjectAllocator & allocator)
 {
 }
 
+GameObject * NFGE::GameObjectFactory::CreateEmpty()
+{
+	return mGameObjectAllocator.New();
+}
+
 GameObject * NFGE::GameObjectFactory::Create(const char * templateFileName)
 {
 	using namespace rapidjson;

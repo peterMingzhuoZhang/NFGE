@@ -12,29 +12,42 @@ namespace NFGE
 		Sphere,
 		Cylinder,
 		Cone,
-		Toro
+		Toro,
+		MAX
 	};
+	
+	const std::array<const char*, (uint32_t)MeshRenderGeometryType::MAX> MeshRenderGeometryTypeName = {
+		{
+			"Plane",
+			"Cube",
+			"Sphere",
+			"Cylinder",
+			"Cone",
+			"Toro",
+		}
+	};
+
 	struct MeshRenderContext	// Thing that only expose to use to change
 	{
 		META_CLASS_DECLARE;
 		float mRadius;
 
 		//Editor control variables
-		NFGE::Math::Vector4 mAmbientColor;
-		NFGE::Math::Vector4 mDiffuseColor;
-		NFGE::Math::Vector4 mSpecularColor;
-		float mSpecualrPower;
-		float mBumpWeight;
+		NFGE::Math::Vector4 mAmbientColor{ 1.0f,0.5f,0.5f, 1.0f};
+		NFGE::Math::Vector4 mDiffuseColor{ 1.0f,0.5f,0.5f, 1.0f};
+		NFGE::Math::Vector4 mSpecularColor{ 1.0f,0.5f,0.5f, 1.0f};
+		float mSpecualrPower{10.0f};
+		float mBumpWeight{0.0f};
 		std::string mDiffuseTextureDir;
-		bool mIsUsingDiffuse = true;
+		bool mIsUsingDiffuse = false;
 		std::string mSpecularTextureDir;
-		bool mIsUsingSpecular = true;
+		bool mIsUsingSpecular = false;
 		std::string mNormalextureDir;
-		bool mIsUsingNormal = true;
+		bool mIsUsingNormal = false;
 		std::string mDisplacementTextureDir;
-		bool mIsUsingDisplacement = true;
+		bool mIsUsingDisplacement = false;
 		bool mIsCastShadow = false;
-		NFGE::Graphics::MeshBuffer::Topology mTopology;
+		NFGE::Graphics::MeshBuffer::Topology mTopology{ NFGE::Graphics::MeshBuffer::Topology::Triangles };
 	};
 
 	class TransformComponent;

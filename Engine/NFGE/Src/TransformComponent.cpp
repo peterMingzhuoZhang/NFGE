@@ -19,7 +19,7 @@ void NFGE::TransformComponent::Initialize()
 
 void NFGE::TransformComponent::Render()
 {
-
+	NFGE::Graphics::SimpleDraw::AddSphere({ position, 0.25f }, NFGE::Graphics::Colors::Green);
 }
 
 void NFGE::TransformComponent::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass *, uint8_t *))
