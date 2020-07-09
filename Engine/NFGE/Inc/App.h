@@ -7,6 +7,7 @@ namespace NFGE
 {
 	class AppState;
 	class World;
+	class CameraEntry;
 	struct AppConfig
 	{
 		AppConfig() = default;
@@ -39,6 +40,7 @@ namespace NFGE
 
 		// Time Functions
 		float GetTime();
+		float GetDeltaTime();
 
 		// Resource Functions
 		Graphics::TextureId LoadTexture(const char* fileName);
@@ -89,6 +91,7 @@ namespace NFGE
 		NFGE::Graphics::Camera& GetMainCamera();
 		NFGE::Graphics::DirectionalLight& GetMainLight();
 		void SoSoCameraControl(float turnSpeed, float moveSpeed, NFGE::Graphics::Camera& camera, float deltaTime);
+		void SoSoCameraControl(float turnSpeed, float moveSpeed, CameraEntry& camera, float deltaTime);
 		
 		void SetWorld(World& world) {mWorld = &world;};
 	private:

@@ -123,6 +123,12 @@ Graphics::Camera& CameraService::GetActiveCamera()
 	return mCameraList[mActiveCameraIndex].camera;
 }
 
+CameraEntry & NFGE::CameraService::GetActiveCameraEntry()
+{
+	ASSERT(mActiveCameraIndex < mCameraList.size(), "[CameraService] No active camera!");
+	return mCameraList[mActiveCameraIndex];
+}
+
 const Graphics::Camera& CameraService::GetActiveCamera() const
 {
 	ASSERT(mActiveCameraIndex < mCameraList.size(), "[CameraService] No active camera!");

@@ -6,6 +6,8 @@
 #include "Component.h"
 #include "MeshRenderComponent.h"
 #include "Service.h"
+#include "CameraService.h"
+#include "NFGE.h"
 
 using namespace NFGE;
 
@@ -204,6 +206,33 @@ void Editor::ShowWorldView()
 				mSelectedGameObject = gameObject;
 				mSelectedService = nullptr;
 			}
+
+			if (ImGui::IsItemHovered())
+			{
+				if (ImGui::IsMouseClicked(1))
+				{
+					isShowPop = true;
+				}
+			}
+			else
+			{
+				if (ImGui::IsMouseClicked(0) && ImGui::IsMouseClicked(1))
+				{
+					isShowPop = false;
+				}
+			}
+			
+			if (isShowPop && mSelectedGameObject == gameObject)
+			{
+				if (ImGui::BeginPopupContextWindow())
+				{
+					if (ImGui::MenuItem("Delete"))
+					{
+						mWorld.Destroy(mSelectedGameObject->GetHandle());
+					}
+					ImGui::EndPopup();
+				}
+			}
 		}
 		ImGui::TreePop();
 	}
@@ -275,6 +304,7 @@ void NFGE::Editor::ShowSceneView()
 {
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Scene");
+	
 	ImGui::PopStyleVar(1);
 
 	ImVec2 vMin = ImGui::GetWindowContentRegionMin();
@@ -294,6 +324,12 @@ void NFGE::Editor::ShowSceneView()
 
 	auto lastRenderTarget = NFGE::Graphics::PostProcessManager::Get()->GetLastRenderTargetPtr();
 	ImGui::Image(lastRenderTarget->GetShaderResourceView(), { (vMax.y - vMin.y) * aspectRatio, vMax.y - vMin.y });
+
+	if (ImGui::IsItemHovered())
+	{
+		NFGE::sApp.SoSoCameraControl(10.0f, 1.0f, mWorld.GetService<CameraService>()->GetActiveCameraEntry(), NFGE::sApp.GetDeltaTime());
+	}
+	
 
 	ImGui::CaptureMouseFromApp(!ImGui::IsItemHovered());
 	ImGui::End();

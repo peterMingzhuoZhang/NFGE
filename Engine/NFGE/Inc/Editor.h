@@ -27,6 +27,8 @@ namespace NFGE
 
 		Service* mSelectedService = nullptr;
 		GameObject* mSelectedGameObject = nullptr;
+
+		bool isShowPop = false;
 	};
 }
 

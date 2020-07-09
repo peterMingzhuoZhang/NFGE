@@ -74,6 +74,7 @@ void NFGE::App::Run(AppConfig appConfig)
 	mCurrentState = mAppStates.begin()->second.get();
 	mCurrentState->Initialize();
 
+	myTimer.Initialize();
 
 	bool done = false;
 	while (!done)
@@ -97,6 +98,8 @@ void NFGE::App::Run(AppConfig appConfig)
 		auto currentTime = std::chrono::high_resolution_clock::now();
 		auto deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime).count() / 1000.0f;
 		lastTime = currentTime;
+
+		myTimer.Update();
 
 		mCurrentState->Update(deltaTime);
 
@@ -266,6 +269,12 @@ void NFGE::App::ExecuteTextCommand()
 float NFGE::App::GetTime()
 {
 	return myTimer.GetTotalTime();
+}
+
+//----------------------------------------------------------------------------------------------------
+float NFGE::App::GetDeltaTime()
+{
+	return myTimer.GetElapsedTime();
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -558,6 +567,27 @@ void NFGE::App::SoSoCameraControl(float turnSpeed, float moveSpeed, NFGE::Graphi
 		camera.Yaw(inputSystem->GetMouseMoveX() * turnSpeed * deltaTime);
 		camera.Pitch(-inputSystem->GetMouseMoveY() * turnSpeed * deltaTime);
 	}
+}
+void NFGE::App::SoSoCameraControl(float turnSpeed, float moveSpeed, CameraEntry& cameraEntry, float deltaTime)
+{
+
+	auto inputSystem = InputSystem::Get();
+	if (inputSystem->IsKeyDown(KeyCode::W))
+		cameraEntry.camera.Walk(moveSpeed * deltaTime);
+	if (inputSystem->IsKeyDown(KeyCode::S))
+		cameraEntry.camera.Walk(-moveSpeed * deltaTime);
+	if (inputSystem->IsKeyDown(KeyCode::D))
+		cameraEntry.camera.Strafe(moveSpeed * deltaTime);
+	if (inputSystem->IsKeyDown(KeyCode::A))
+		cameraEntry.camera.Strafe(-moveSpeed * deltaTime);
+	if (inputSystem->IsMouseDown(MouseButton::RBUTTON))
+	{
+		cameraEntry.camera.Yaw(inputSystem->GetMouseMoveX() * turnSpeed * deltaTime);
+		cameraEntry.camera.Pitch(-inputSystem->GetMouseMoveY() * turnSpeed * deltaTime);
+	}
+
+	cameraEntry.mPosition = cameraEntry.camera.GetPosition();
+	cameraEntry.mDirection = cameraEntry.camera.GetDirection();
 }
 
 //----------------------------------------------------------------------------------------------------

@@ -42,6 +42,7 @@ namespace NFGE
 
 		void SetActiveCamera(const char* name);
 		Graphics::Camera& GetActiveCamera();
+		CameraEntry& GetActiveCameraEntry();
 		const Graphics::Camera& GetActiveCamera() const;
 
 		// 
