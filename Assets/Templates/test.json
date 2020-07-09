@@ -12,20 +12,56 @@
           "y": 0,
           "z": 0,
           "w": 0
+        },
+		"Scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
         }
       },
-        "ColliderComponent": {
-          "Center": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-          },
-          "Extend": {
-            "x": 2,
-            "y": 2,
-            "z": 2
-          }
+      "ColliderComponent": {
+        "Center": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "Extend": {
+          "x": 2,
+          "y": 2,
+          "z": 2
+        }
+      },
+	  "MeshRenderComponent": {
+        "GeometryType": 0,
+        "Mesh Render Context": {
+          "Ambient Color": {
+			"x" : 1.0,
+			"y" : 0.5,
+			"z" : 0.5,
+			"w" : 1.0
+		  },
+		  "Diffuse Color": {
+			"x" : 1.0,
+			"y" : 0.5,
+			"z" : 0.5,
+			"w" : 1.0
+		  },
+		  "Specular Color": {
+			"x" : 1.0,
+			"y" : 0.5,
+			"z" : 0.5,
+			"w" : 1.0
+		  },
+          "Specular Power": 10.0,
+          "Diffuse Texture": "",
+		  "Specular Texture": "",
+		  "Normal Texture": "",
+		  "Displacement Texture": "",
+		  "Displacement Weight" : 0.0,
+		  "Is Casting Shadow" : true,
+		  "Topology" : 2
         }
       }
-    }
+	}
+  }
 }

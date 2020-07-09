@@ -1,5 +1,6 @@
 #include "Precompiled.h"
 #include "CameraService.h"
+#include "NFGE.h"
 
 using namespace NFGE;
 
@@ -66,6 +67,8 @@ void NFGE::CameraService::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE
 			}
 		}
 	}
+
+	
 }
 
 Graphics::Camera* CameraService::AddCamera(const char* name)
@@ -154,6 +157,11 @@ void NFGE::CameraService::RefreshWithCameraEntry(size_t camIndex)
 {
 	auto& cameraEntry = mCameraList[camIndex];
 	cameraEntry.camera.SetPosition(cameraEntry.mPosition);
+
+	if (cameraEntry.mDirection.x == 0.0f && cameraEntry.mDirection.y == 0.0f && cameraEntry.mDirection.z == 0.0f) // TODO:: Override == operator in future
+	{
+		cameraEntry.mDirection = NFGE::Math::Vector3::One();
+	}
 	cameraEntry.mDirection = NFGE::Math::Normalize(cameraEntry.mDirection);
 	cameraEntry.camera.SetDirection(cameraEntry.mDirection);
 	cameraEntry.camera.SetFOV(cameraEntry.Fov * Math::Constants::DegToRad);

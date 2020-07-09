@@ -15,8 +15,8 @@ META_CLASS_BEGIN(MeshRenderContext)
 	META_FIELD(mDiffuseTextureDir, "Diffuse Texture")
 	META_FIELD(mSpecularTextureDir, "Specular Texture")
 	META_FIELD(mNormalextureDir, "Normal Texture")
-	META_FIELD(mDisplacementTextureDir, "displacement Texture")
-	META_FIELD(mBumpWeight, "Displacement weight")
+	META_FIELD(mDisplacementTextureDir, "Displacement Texture")
+	META_FIELD(mBumpWeight, "Displacement Weight")
 	META_FIELD(mIsCastShadow, "Is Casting Shadow")
 	META_FIELD(mTopology, "Topology")
 	META_FIELD_END
@@ -78,12 +78,20 @@ void NFGE::MeshRenderComponent::Initialize()
 void NFGE::MeshRenderComponent::Render()
 {
 	mMeshBuffer.SetTopology(mControlContext.mTopology);
+	mEffectContext.GetShadowPostProcessContextPtr()->isCastShadow = mControlContext.mIsCastShadow;
 
-	mEffectContext.position = mTransformComponent->finalPosition;
-	mEffectContext.rotation = mTransformComponent->finalRotation;
-	mEffectContext.scale = mTransformComponent->fianlScale;
+	//mEffectContext.position = mTransformComponent->finalPosition;
+	//mEffectContext.rotation = mTransformComponent->finalRotation;
+	//mEffectContext.scale = mTransformComponent->fianlScale;
+	mEffectContext.position = mTransformComponent->position;
+	mEffectContext.rotation = mTransformComponent->rotation.mQuaternion;
+	mEffectContext.scale = mTransformComponent->scale;
 
 
+	auto effectManager = Graphics::EffectManager::Get();
+	Graphics::Effect* effect = NFGE::Graphics::EffectManager::Get()->GerEffect(NFGE::Graphics::EffectType::StandardMesh);
+
+	effectManager->RegisterRenderObject(effect, &mEffectContext, &mMeshBuffer, NFGE::sApp.GetMainCamera());
 }
 
 void NFGE::MeshRenderComponent::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass *, uint8_t *))

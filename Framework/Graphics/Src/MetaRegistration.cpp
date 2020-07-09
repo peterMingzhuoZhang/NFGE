@@ -7,9 +7,8 @@ namespace NFGE::Core::Meta
 	template<>
 	void Deserialize<MeshBuffer::Topology>(void* instance, const rapidjson::Value& value)
 	{
-		auto object = value.GetObjectW();
 		auto topology = (MeshBuffer::Topology*)(instance);
-		*topology = static_cast<MeshBuffer::Topology>(object.FindMember("value")->value.GetInt());
+		*topology = static_cast<MeshBuffer::Topology>(value.GetInt());
 	}
 
 }

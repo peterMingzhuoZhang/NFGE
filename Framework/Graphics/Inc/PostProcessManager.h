@@ -77,6 +77,7 @@ namespace NFGE::Graphics
 		const std::filesystem::path& GetRootPath() const { return mRootPath; }
 
 		void SetCurrentUsingCamera(Camera* camera) { mCurrentCamera = camera; }
+		void SetCurrentUsingLight(DirectionalLight* light) { mCurrentLight = light; }
 		void SetIsUsingShadow(bool isUsingShadow) { mIsUsingShadow = isUsingShadow; }
 		void SetLastRenderTargetPtr(RenderTarget* renderTargetPtr) { mLastRenderTarget = renderTargetPtr; };
 

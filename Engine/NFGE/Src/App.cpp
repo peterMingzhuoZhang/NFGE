@@ -111,6 +111,9 @@ void NFGE::App::Run(AppConfig appConfig)
 		{//Experimenting
 			auto effectManager = EffectManager::Get();
 			auto postProcessManager = PostProcessManager::Get();
+			postProcessManager->SetCurrentUsingLight(&GetMainLight());
+			postProcessManager->SetCurrentUsingCamera(&GetMainCamera());
+
 			auto& masterRenderTarget = postProcessManager->GetMasterRenderTarget();
 			masterRenderTarget.BeginRender(); // incase some object not using effect system to render
 			mCurrentState->Render();

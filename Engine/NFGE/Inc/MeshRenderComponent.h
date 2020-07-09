@@ -31,8 +31,6 @@ namespace NFGE
 		std::string mDisplacementTextureDir;
 		bool mIsCastShadow = false;
 		NFGE::Graphics::MeshBuffer::Topology mTopology;
-
-
 	};
 
 	class TransformComponent;
@@ -47,7 +45,7 @@ namespace NFGE
 		NFGE::Graphics::MeshBuffer mMeshBuffer;
 		int mGemotryType;
 		NFGE::Graphics::Mesh mMesh;
-		NFGE::Graphics::Effects::StandardMeshEffect::StandardMeshEffectContext mEffectContext;\
+		NFGE::Graphics::Effects::StandardMeshEffect::StandardMeshEffectContext mEffectContext;
 		NFGE::Graphics::TextureId mDiffuseTexture;
 		NFGE::Graphics::TextureId mSpecularTexture;
 		NFGE::Graphics::TextureId mDisplacementTexture;

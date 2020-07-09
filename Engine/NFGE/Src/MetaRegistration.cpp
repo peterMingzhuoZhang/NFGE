@@ -7,6 +7,7 @@
 // Components
 #include "ColliderComponent.h"
 #include "TransformComponent.h"
+#include "MeshRenderComponent.h"
 
 // Services
 #include "CameraService.h"
@@ -20,6 +21,7 @@ void NFGE::StaticMetaRegister()
 
 	META_REGISTER(NFGE::ColliderComponent);
 	META_REGISTER(NFGE::TransformComponent);
+	META_REGISTER(NFGE::MeshRenderComponent);
 
 	META_REGISTER(NFGE::CameraService);
 	META_REGISTER(NFGE::TerrainService);
