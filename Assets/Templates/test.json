@@ -32,7 +32,7 @@
         }
       },
 	  "MeshRenderComponent": {
-        "GeometryType": 0,
+        "GeometryType": 2,
         "Mesh Render Context": {
           "Ambient Color": {
 			"x" : 1.0,

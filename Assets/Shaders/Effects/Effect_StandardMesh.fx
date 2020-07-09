@@ -141,7 +141,7 @@ float4 PS(VSOutput input) : SV_Target
 	diffuseColor += (uint)(!hasDiffuseMap) * 1.0f;
 
 	bool hasSpecularMap = (bool)(containTextureTypeMask & TextureType_SPECULAR);
-	float4 textureSpecular = (uint)(hasSpecularMap) * specularMap.Sample(textureSampler, input.texCoord);
+	float4 textureSpecular = (uint)(hasSpecularMap) * specularMap.Sample(textureSampler, input.texCoord) + (uint)(!hasSpecularMap);
 
 	float4 color = ((ambient + diffuse) * diffuseColor + specular * textureSpecular.x);
 

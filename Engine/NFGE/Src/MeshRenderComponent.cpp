@@ -71,11 +71,6 @@ void NFGE::MeshRenderComponent::Initialize()
 
 	mEffectContext.light = &sApp.GetMainLight();
 
-	mEffectContext.material.ambient = mControlContext.mAmbientColor;
-	mEffectContext.material.diffuse = mControlContext.mDiffuseColor;
-	mEffectContext.material.specular = mControlContext.mSpecularColor;
-	mEffectContext.material.power = mControlContext.mSpecualrPower;
-
 	mTransformComponent = GetOwner().GetComponent<TransformComponent>();
 }
 
@@ -95,6 +90,11 @@ void NFGE::MeshRenderComponent::Render()
 	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::SPECULAR, mControlContext.mIsUsingSpecular);
 	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::NORMALS, mControlContext.mIsUsingNormal);
 	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::DISPLACEMENT, mControlContext.mIsUsingDisplacement);
+
+	mEffectContext.material.ambient = mControlContext.mAmbientColor;
+	mEffectContext.material.diffuse = mControlContext.mDiffuseColor;
+	mEffectContext.material.specular = mControlContext.mSpecularColor;
+	mEffectContext.material.power = mControlContext.mSpecualrPower;
 
 	auto effectManager = Graphics::EffectManager::Get();
 	Graphics::Effect* effect = NFGE::Graphics::EffectManager::Get()->GerEffect(NFGE::Graphics::EffectType::StandardMesh);

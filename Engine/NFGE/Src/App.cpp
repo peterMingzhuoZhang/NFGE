@@ -67,7 +67,7 @@ void NFGE::App::Run(AppConfig appConfig)
 	mLight.direction = NFGE::Math::Normalize({ 1.0f,-1.0f,-1.0f });
 	mLight.ambient = { 0.3f, 0.3f, 0.3f, 1.0f };
 	mLight.diffuse = { 0.6f, 0.6f, 0.6f, 1.0f };
-	mLight.specular = { 0.5f, 0.5f, 0.5f, 1.0f };
+	mLight.specular = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	initialized = true;
 	// Initialize the starting state
