@@ -220,8 +220,13 @@ namespace NFGE::Graphics
 					contextIndexTracker.emplace(PostProcessContext::Type_SHADOW_02, 2);
 					contextIndexTracker.emplace(PostProcessContext::Type_DepthBlur_03, 3);
 
-					textureTypes.reserve(18);
-					textures.reserve(18);
+					textureTypes.reserve(MeshTextureMaterial::totalTypeCount);
+					textures.reserve(MeshTextureMaterial::totalTypeCount);
+
+					for (size_t i = 0; i < MeshTextureMaterial::totalTypeCount; ++i)
+					{
+						usingTextureSwitch |= 0x1 << i;
+					}
 				}
 				
 				NFGE::Math::Matrix4 custumAdjustMatrix = NFGE::Math::Matrix4::sIdentity();
@@ -238,6 +243,7 @@ namespace NFGE::Graphics
 				std::vector<TextureId> textures;
 				std::array<int, MeshTextureMaterial::totalTypeCount> textureIndexFinder;
 				uint32_t currentContainTexture = 0;
+				uint32_t usingTextureSwitch;
 
 				DirectionalLight* light;
 				Material material{Colors::Gray,Colors::Gray, Colors::Gray, 1.0f};
@@ -270,6 +276,18 @@ namespace NFGE::Graphics
 						return;
 					}
 					textureId = textures[textureIndexFinder[textureType]];
+				}
+
+				void TextureUsingSwitch(MeshTextureMaterial::ModelTextureType textureType, bool flip) 
+				{
+					if (flip)
+					{
+						usingTextureSwitch |= 0x1 << (uint32_t)textureType;
+					}
+					else
+					{
+						usingTextureSwitch &= ~(0x1 << (uint32_t)textureType);
+					}
 				}
 
 				float GetDisplacementMapWeight() override { return bumpWeight; }

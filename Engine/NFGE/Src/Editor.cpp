@@ -84,8 +84,13 @@ namespace
 				auto metaField = metaClassPtr->GetField(i);
 				if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Vector3>())
 				{
-					float* data = (float*)(rawPtr + metaField->GetOffset());
-					ImGui::DragFloat3(metaField->GetName(), data);
+					Math::Vector3* data = (Math::Vector3*)(rawPtr + metaField->GetOffset());
+					ImGui::DragFloat3(metaField->GetName(), &(data->x));
+				}
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::Vector4>())
+				{
+					Math::Vector4* data = (Math::Vector4*)(rawPtr + metaField->GetOffset());
+					ImGui::ColorPicker4(metaField->GetName(), &(data->x));
 				}
 				else if (metaField->GetMetaType() == Core::Meta::DeduceType<Math::EditorQuaternion>())
 				{
@@ -114,6 +119,11 @@ namespace
 				{
 					float* data = (float*)(rawPtr + metaField->GetOffset());
 					ImGui::DragFloat(metaField->GetName(), data, 0.1f, 0.0f, 360.0f);
+				}
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<bool>())
+				{
+					bool* data = (bool*)(rawPtr + metaField->GetOffset());
+					ImGui::Checkbox(metaField->GetName(), data);
 				}
 				else if (metaField->GetMetaType() == Core::Meta::DeduceType<NFGE::Graphics::MeshBuffer::Topology>())
 				{

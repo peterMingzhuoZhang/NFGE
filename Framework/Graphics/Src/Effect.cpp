@@ -263,7 +263,7 @@ void StandardMeshEffect::Bind(const Camera& camera)
 	auto postProcessUnit_shadow = postProcessManager->GetPostProcessUnit<PostProcesses::PostProcessUnit_Shadow>();
 	OptionsData optData;
 	optData.displacementWeight = mContext->bumpWeight;
-	optData.meshTextureInfoMask = mContext->currentContainTexture;
+	optData.meshTextureInfoMask = mContext->currentContainTexture & mContext->usingTextureSwitch; // Turn certain texture off base on [usingTextureSwitch];
 	optData.useShadow = postProcessManager->GetIsUsingShadow();
 	optData.depthBias = postProcessUnit_shadow->GetDepthBias();
 	mOptionDateBuffer.Load(optData);

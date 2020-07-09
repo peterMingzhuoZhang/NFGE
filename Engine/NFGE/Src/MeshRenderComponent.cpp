@@ -13,9 +13,13 @@ META_CLASS_BEGIN(MeshRenderContext)
 	META_FIELD(mSpecularColor, "Specular Color")
 	META_FIELD(mSpecualrPower, "Specular Power")
 	META_FIELD(mDiffuseTextureDir, "Diffuse Texture")
+	META_FIELD(mIsUsingDiffuse, "Is Using Diffuse Texture")
 	META_FIELD(mSpecularTextureDir, "Specular Texture")
+	META_FIELD(mIsUsingSpecular, "Is Using Specular Texture")
 	META_FIELD(mNormalextureDir, "Normal Texture")
+	META_FIELD(mIsUsingNormal, "Is Using Normal Texture")
 	META_FIELD(mDisplacementTextureDir, "Displacement Texture")
+	META_FIELD(mIsUsingDisplacement, "Is Using Displacement Texture")
 	META_FIELD(mBumpWeight, "Displacement Weight")
 	META_FIELD(mIsCastShadow, "Is Casting Shadow")
 	META_FIELD(mTopology, "Topology")
@@ -87,6 +91,10 @@ void NFGE::MeshRenderComponent::Render()
 	mEffectContext.rotation = mTransformComponent->rotation.mQuaternion;
 	mEffectContext.scale = mTransformComponent->scale;
 
+	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::DIFFUSE, mControlContext.mIsUsingDiffuse);
+	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::SPECULAR, mControlContext.mIsUsingSpecular);
+	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::NORMALS, mControlContext.mIsUsingNormal);
+	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::DISPLACEMENT, mControlContext.mIsUsingDisplacement);
 
 	auto effectManager = Graphics::EffectManager::Get();
 	Graphics::Effect* effect = NFGE::Graphics::EffectManager::Get()->GerEffect(NFGE::Graphics::EffectType::StandardMesh);

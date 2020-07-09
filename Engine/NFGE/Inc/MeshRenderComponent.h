@@ -26,9 +26,13 @@ namespace NFGE
 		float mSpecualrPower;
 		float mBumpWeight;
 		std::string mDiffuseTextureDir;
+		bool mIsUsingDiffuse = true;
 		std::string mSpecularTextureDir;
+		bool mIsUsingSpecular = true;
 		std::string mNormalextureDir;
+		bool mIsUsingNormal = true;
 		std::string mDisplacementTextureDir;
+		bool mIsUsingDisplacement = true;
 		bool mIsCastShadow = false;
 		NFGE::Graphics::MeshBuffer::Topology mTopology;
 	};

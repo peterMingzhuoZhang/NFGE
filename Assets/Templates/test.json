@@ -54,9 +54,13 @@
 		  },
           "Specular Power": 10.0,
           "Diffuse Texture": "",
+		  "Is Using Diffuse Texture" : true,
 		  "Specular Texture": "",
+		  "Is Using Specular Texture" : true,
 		  "Normal Texture": "",
+		  "Is Using Normal Texture" : true,
 		  "Displacement Texture": "",
+		  "Is Using Displacement Texture" : true,
 		  "Displacement Weight" : 0.0,
 		  "Is Casting Shadow" : true,
 		  "Topology" : 2
