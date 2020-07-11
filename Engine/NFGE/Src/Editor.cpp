@@ -203,15 +203,6 @@ void Editor::ShowWorldView()
 		bool isDroped = false;
 		std::string moveTo = "";
 
-		if (ImGui::Selectable("~root"))
-		{
-
-		}
-		if (ImGui::IsItemHovered())
-		{
-			moveTo = "~root";
-		}
-
 		for (auto gameObject : mWorld.mUpdateList)
 		{
 			if (gameObject->mParent == nullptr)
@@ -222,40 +213,36 @@ void Editor::ShowWorldView()
 
 		if (isDraging)
 		{
-			if (ImGui::Selectable("~root"))
+			ImGui::Selectable("\t|");
+			ImGui::Selectable("\t|");
+			ImGui::Selectable("\tV");
+			ImGui::Selectable("~root");
+
+			if (!isDroped)
 			{
-				
-			}
-			if (ImGui::IsItemHovered())
-			{
-				moveTo = "~root";
+				if (ImGui::BeginDragDropTarget())
+				{
+					ImGuiDragDropFlags target_flags = 0;
+					target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
+					//target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
+					//target_flags |= ImGuiDragDropFlags_SourceNoDisableHover;
+					if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Choosing PayLoad", target_flags))
+					{
+						auto movingFrom = *(std::string*)payload->Data;
+						auto movingGameObj = mWorld.Find(movingFrom);
+						
+						if (movingGameObj->mParent)
+						{
+							movingGameObj->mParent->RemoveChild(movingGameObj.Get());
+							movingGameObj->mParent = nullptr;
+						}
+					}
+					ImGui::EndDragDropTarget();
+				}
 			}
 		}
 
-		if (!isDroped)
-		{
-			if (ImGui::BeginDragDropTarget())
-			{
-				ImGuiDragDropFlags target_flags = 0;
-				//target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
-				//target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Choosing PayLoad", target_flags))
-				{
-					auto movingFrom = *(std::string*)payload->Data;
-					auto movingGameObj = mWorld.Find(movingFrom);
-					if (moveTo == "~root")
-					{
-						movingGameObj->mParent = nullptr;
-					}
-					else
-					{
-						auto moveToGameObj = mWorld.Find(moveTo);
-						moveToGameObj->AddChild(movingGameObj.Get());
-					}
-				}
-				ImGui::EndDragDropTarget();
-			}
-		}
+		
 		
 
 
@@ -455,7 +442,7 @@ void NFGE::Editor::ShowGameObjectInWorldView( GameObject* gameObject, std::strin
 		}
 	}
 
-	if (!isDragingChild)
+	if (!isDragingChild) // If is draging one of its child, don't drag itself. Otherwise it will overwrite the payLoad
 	{
 		ImGuiDragDropFlags src_flags = 0;
 		src_flags |= ImGuiDragDropFlags_SourceNoDisableHover;     // Keep the source displayed as hovered
@@ -474,7 +461,7 @@ void NFGE::Editor::ShowGameObjectInWorldView( GameObject* gameObject, std::strin
 	}
 	else
 	{
-		isDraging = isDragingChild;
+		isDraging = isDragingChild; // keep passing the isDraging parameters
 	}
 	
 
@@ -486,6 +473,7 @@ void NFGE::Editor::ShowGameObjectInWorldView( GameObject* gameObject, std::strin
 			ImGuiDragDropFlags target_flags = 0;
 			//target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
 			//target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
+			//target_flags |= ImGuiDragDropFlags_SourceNoDisableHover;
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Choosing PayLoad", target_flags))
 			{
 				auto movingFrom = *(std::string*)payload->Data;
