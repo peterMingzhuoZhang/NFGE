@@ -175,6 +175,7 @@ void NFGE::Editor::ShowMainWindowWithDockSpace()
 
 	ImGui::PopStyleVar(3);
 }
+
 void Editor::ShowWorldView()
 {
 	ImGui::Begin("World");
@@ -198,46 +199,73 @@ void Editor::ShowWorldView()
 	
 	if (ImGui::TreeNode("GameObjects"))
 	{
-		const size_t objectCount = mWorld.mUpdateList.size();
+		bool isDraging = false;
+		bool isDroped = false;
+		std::string moveTo = "";
+
+		if (ImGui::Selectable("~root"))
+		{
+
+		}
+		if (ImGui::IsItemHovered())
+		{
+			moveTo = "~root";
+		}
+
 		for (auto gameObject : mWorld.mUpdateList)
 		{
-			if (ImGui::Selectable(gameObject->GetName().c_str(), gameObject == mSelectedGameObject))
+			if (gameObject->mParent == nullptr)
 			{
-				mSelectedGameObject = gameObject;
-				mSelectedService = nullptr;
-			}
-
-			if (ImGui::IsItemHovered())
-			{
-				if (ImGui::IsMouseClicked(1))
-				{
-					isShowPop = true;
-				}
-			}
-			else
-			{
-				if (ImGui::IsMouseClicked(0) && ImGui::IsMouseClicked(1))
-				{
-					isShowPop = false;
-				}
-			}
-			
-			if (isShowPop && mSelectedGameObject == gameObject)
-			{
-				if (ImGui::BeginPopupContextWindow())
-				{
-					if (ImGui::MenuItem("Delete"))
-					{
-						mWorld.Destroy(mSelectedGameObject->GetHandle());
-					}
-					ImGui::EndPopup();
-				}
+				ShowGameObjectInWorldView(gameObject, moveTo, isDraging, isDroped);
 			}
 		}
+
+		if (isDraging)
+		{
+			if (ImGui::Selectable("~root"))
+			{
+				
+			}
+			if (ImGui::IsItemHovered())
+			{
+				moveTo = "~root";
+			}
+		}
+
+		if (!isDroped)
+		{
+			if (ImGui::BeginDragDropTarget())
+			{
+				ImGuiDragDropFlags target_flags = 0;
+				//target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
+				//target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Choosing PayLoad", target_flags))
+				{
+					auto movingFrom = *(std::string*)payload->Data;
+					auto movingGameObj = mWorld.Find(movingFrom);
+					if (moveTo == "~root")
+					{
+						movingGameObj->mParent = nullptr;
+					}
+					else
+					{
+						auto moveToGameObj = mWorld.Find(moveTo);
+						moveToGameObj->AddChild(movingGameObj.Get());
+					}
+				}
+				ImGui::EndDragDropTarget();
+			}
+		}
+		
+
+
+
+		if (mSelectedGameObject != nullptr)
+			mSelectedService = nullptr;
+
 		ImGui::TreePop();
 	}
 	ImGui::End();
-
 }
 void Editor::ShowInspectorView()
 {
@@ -367,4 +395,113 @@ void NFGE::Editor::CameraControl(NFGE::Graphics::Camera & camera, float deltaTim
 		camera.Yaw(inputSystem->GetMouseMoveX() * turnSpeed * deltaTime);
 		camera.Pitch(-inputSystem->GetMouseMoveY() * turnSpeed * deltaTime);
 	}
+}
+
+void NFGE::Editor::ShowGameObjectInWorldView( GameObject* gameObject, std::string& moveTo, bool& isDraging, bool& isDroped, uint32_t depth)
+{
+	bool isDragingChild = false;
+
+	ImGuiSelectableFlags selecctable_flags = 0;
+	selecctable_flags |= ImGuiSelectableFlags_AllowDoubleClick;
+
+	std::string displayName = "";
+	for (size_t i = 0; i < depth; i++)
+	{
+		displayName += "\t";
+	}
+	displayName += gameObject->GetName();
+	
+	if (ImGui::Selectable(displayName.c_str(), gameObject == mSelectedGameObject, selecctable_flags))
+	{
+		mSelectedGameObject = gameObject;
+		gameObject->mIsShowChildInEditor = !gameObject->mIsShowChildInEditor;
+	}
+
+	if (!gameObject->mChilds.empty() && gameObject->mIsShowChildInEditor)
+	{
+		for (auto child : gameObject->mChilds)
+		{
+			ShowGameObjectInWorldView(child, moveTo, isDragingChild, isDroped, depth + 1);
+		}
+	}
+
+	
+
+	if (ImGui::IsItemHovered())
+	{
+		//moveTo = gameObject->GetName();
+		if (ImGui::IsMouseClicked(1))
+		{
+			isShowPop = true;
+		}
+	}
+	else
+	{
+		if (ImGui::IsMouseClicked(0) && ImGui::IsMouseClicked(1))
+		{
+			isShowPop = false;
+		}
+	}
+
+	if (isShowPop && mSelectedGameObject == gameObject)
+	{
+		if (ImGui::BeginPopupContextWindow())
+		{
+			if (ImGui::MenuItem("Delete"))
+			{
+				mWorld.Destroy(mSelectedGameObject->GetHandle());
+			}
+			ImGui::EndPopup();
+		}
+	}
+
+	if (!isDragingChild)
+	{
+		ImGuiDragDropFlags src_flags = 0;
+		src_flags |= ImGuiDragDropFlags_SourceNoDisableHover;     // Keep the source displayed as hovered
+		src_flags |= ImGuiDragDropFlags_SourceNoHoldToOpenOthers; // Because our dragging is local, we disable the feature of opening foreign treenodes/tabs while dragging
+																  //src_flags |= ImGuiDragDropFlags_SourceNoPreviewTooltip; // Hide the tooltip
+		if (ImGui::BeginDragDropSource(src_flags))
+		{
+			isDraging = true;
+
+			if (!(src_flags & ImGuiDragDropFlags_SourceNoPreviewTooltip))
+				ImGui::Text("Moving \"%s\"", gameObject->GetName().c_str());
+			std::string name = gameObject->GetName();
+			ImGui::SetDragDropPayload("Choosing PayLoad", &name, sizeof(std::string));
+			ImGui::EndDragDropSource();
+		}
+	}
+	else
+	{
+		isDraging = isDragingChild;
+	}
+	
+
+	if (!isDroped)
+	{
+		if (ImGui::BeginDragDropTarget())
+		{
+			isDroped = true;
+			ImGuiDragDropFlags target_flags = 0;
+			//target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
+			//target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Choosing PayLoad", target_flags))
+			{
+				auto movingFrom = *(std::string*)payload->Data;
+				auto movingGameObj = mWorld.Find(movingFrom);
+				if (moveTo == "~root")
+				{
+					movingGameObj->mParent = nullptr;
+				}
+				else
+				{
+					auto moveToGameObj = mWorld.Find(gameObject->GetName());
+					moveToGameObj->AddChild(movingGameObj.Get());
+				}
+			}
+			ImGui::EndDragDropTarget();
+		}
+	}
+	
 }

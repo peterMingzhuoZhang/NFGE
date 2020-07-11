@@ -171,6 +171,13 @@ void World::Destroy(GameObjectHandle handle)
 
 	// Cache the point er and unregister with the handle pool
 	GameObject* gameObject = handle.Get();
+
+	// Destroy children first
+	for (auto child : gameObject->mChilds)
+	{
+		Destroy(child->GetHandle());
+	}
+
 	mGameObjectHandlePool->Unregister(handle);
 
 	// Check if we can destroy it now
@@ -178,6 +185,8 @@ void World::Destroy(GameObjectHandle handle)
 		DestroyInternal(gameObject);
 	else
 		mDestroyList.push_back(gameObject);
+
+	
 }
 
 void World::Update(float deltaTime)

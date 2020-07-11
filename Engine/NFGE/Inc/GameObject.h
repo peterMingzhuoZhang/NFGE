@@ -59,6 +59,10 @@ namespace NFGE
 		std::string& GetName() { return mName; }
 
 		GameObjectHandle GetHandle() const { return mHandle; }
+
+		GameObject* GetParent() { return mParent; }
+		void RemoveChild(GameObject* child);
+		void AddChild(GameObject* child);
 	private:
 		friend class Editor;
 		friend class World;
@@ -71,6 +75,8 @@ namespace NFGE
 
 		GameObject* mParent = nullptr;
 		std::vector<GameObject*> mChilds;
+
+		bool mIsShowChildInEditor = false;
 	};
 }
 
