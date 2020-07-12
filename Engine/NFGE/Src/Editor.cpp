@@ -9,10 +9,27 @@
 #include "CameraService.h"
 #include "NFGE.h"
 
+#include "ImGui/Inc/imfilebrowser.h"
+
 using namespace NFGE;
 
 namespace
 {
+	// File Browering internal variables
+	ImGui::FileBrowser fileDialog;
+
+	enum class FileBroweringState
+	{
+		None,
+		PickGameObjectTemplate,
+		PickTexture,
+		Max
+	};
+
+	FileBroweringState fileBroswingState;
+	EditorMeshTexture* pickingTexture;
+
+	// Internal functions
 	void ShowExampleMenuFile()
 	{
 		ImGui::MenuItem("(dummy menu)", NULL, false, false);
@@ -138,6 +155,24 @@ namespace
 					ImGui::Combo("Topology", &selectedItem, items, IM_ARRAYSIZE(items));
 
 					*data = static_cast<NFGE::Graphics::MeshBuffer::Topology>(selectedItem);
+				}
+				else if (metaField->GetMetaType() == Core::Meta::DeduceType<EditorMeshTexture>())
+				{
+					NFGE::EditorMeshTexture* data = (NFGE::EditorMeshTexture*)(rawPtr + metaField->GetOffset());
+
+					void* spriteId = NFGE::sApp.GetSprite(NFGE::Graphics::TextureManager::Get()->LoadTexture(data->mFileName));
+
+					if (ImGui::ImageButton(spriteId, { 50.0f,50.0f }))
+					{
+						fileDialog.SetTitle("Adding Texture");
+						fileDialog.SetTypeFilters({ ".png",".jpg", ".dds" });
+
+						fileDialog.Open();
+
+						fileBroswingState = FileBroweringState::PickTexture;
+
+						pickingTexture = data;
+					}
 				}
 			}
 		}
@@ -307,12 +342,25 @@ void NFGE::Editor::ShowMenuBar()
 					
 					ImGui::EndMenu();
 				}
+
+				if (ImGui::MenuItem("Add From Template"))
+				{
+					fileDialog.SetTitle("Adding Game Object");
+					fileDialog.SetTypeFilters({ ".json" });
+
+					fileDialog.Open();
+
+					fileBroswingState = FileBroweringState::PickGameObjectTemplate;
+				}
+
 				ImGui::EndMenu();
 			}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
+
+	
 }
 
 void NFGE::Editor::ShowSceneView()
@@ -362,6 +410,38 @@ void NFGE::Editor::ShowUtil()
 	ImGui::Text("FPS: %f", 1.0f / deltaTime);
 
 	ImGui::End();
+
+	// File explore
+
+	std::string fileName;
+
+	fileDialog.Display();
+
+	if (fileDialog.HasSelected())
+	{
+		fileName = fileDialog.GetSelected().string();
+		fileDialog.ClearSelected();
+		switch (fileBroswingState)
+		{
+		case FileBroweringState::None:
+			break;
+		case FileBroweringState::PickGameObjectTemplate:
+			mWorld.Create(fileName, "NoName");
+			fileBroswingState = FileBroweringState::None;
+			break;
+		case FileBroweringState::PickTexture:
+
+			pickingTexture->mFileName = fileName;
+			pickingTexture->isUpdated = true;
+
+			fileBroswingState = FileBroweringState::None;
+			pickingTexture = nullptr;
+			break;
+		default:
+			break;
+		}
+	}
+
 }
 
 void NFGE::Editor::CameraControl(NFGE::Graphics::Camera & camera, float deltaTime)

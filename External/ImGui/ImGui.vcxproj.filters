@@ -33,6 +33,9 @@
     <ClInclude Include="Inc\imstb_truetype.h">
       <Filter>Inc</Filter>
     </ClInclude>
+    <ClInclude Include="Inc\imfilebrowser.h">
+      <Filter>Inc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\imgui.cpp">

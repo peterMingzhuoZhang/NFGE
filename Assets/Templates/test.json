@@ -32,7 +32,7 @@
         }
       },
 	  "MeshRenderComponent": {
-        "GeometryType": 1 ,
+        "GeometryType": 2 ,
         "Mesh Render Context": {
           "Ambient Color": {
 			"x" : 1.0,
@@ -53,13 +53,29 @@
 			"w" : 1.0
 		  },
           "Specular Power": 10.0,
-          "Diffuse Texture": "",
+          "Diffuse Texture": 
+		  {
+			"Texture Type" : 0,
+			"File Name" : ""
+		  },
 		  "Is Using Diffuse Texture" : true,
-		  "Specular Texture": "",
+		  "Specular Texture": 
+		  {
+			"Texture Type" : 1,
+			"File Name" : ""
+		  },
 		  "Is Using Specular Texture" : true,
-		  "Normal Texture": "",
+		  "Normal Texture": 
+		  {
+			"Texture Type" : 5,
+			"File Name" : ""
+		  },
 		  "Is Using Normal Texture" : true,
-		  "Displacement Texture": "",
+		  "Displacement Texture": 
+		  {
+			"Texture Type" : 8,
+			"File Name" : ""
+		  },
 		  "Is Using Displacement Texture" : true,
 		  "Displacement Weight" : 0.0,
 		  "Is Casting Shadow" : true,

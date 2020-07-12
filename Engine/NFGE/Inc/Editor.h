@@ -31,6 +31,7 @@ namespace NFGE
 		bool isShowPop = false;
 
 		void ShowGameObjectInWorldView(GameObject* gameObject, std::string& moveTo, bool& isDraging, bool& isDroped, uint32_t depth = 0);
+
 	};
 }
 

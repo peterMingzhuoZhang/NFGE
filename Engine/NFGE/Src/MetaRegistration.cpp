@@ -13,7 +13,6 @@
 #include "CameraService.h"
 #include "TerrainService.h"
 
-
 void NFGE::StaticMetaRegister()
 {
 	META_REGISTER(NFGE::GameObject);

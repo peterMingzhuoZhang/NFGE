@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Inc\imconfig.h" />
+    <ClInclude Include="Inc\imfilebrowser.h" />
     <ClInclude Include="Inc\imgui.h" />
     <ClInclude Include="Inc\imgui_impl_dx11.h" />
     <ClInclude Include="Inc\imgui_impl_win32.h" />

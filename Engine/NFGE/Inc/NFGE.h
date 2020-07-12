@@ -33,6 +33,8 @@
 #include "TerrainService.h"
 #include "CameraService.h"
 
+#include "MetaRegistration.h"
+
 namespace NFGE { extern App sApp; }
 
 namespace NFGEApp

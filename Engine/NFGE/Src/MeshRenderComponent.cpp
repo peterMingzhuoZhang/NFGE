@@ -6,6 +6,13 @@
 
 using namespace NFGE;
 
+META_CLASS_BEGIN(EditorMeshTexture)
+	META_FIELD_BEGIN
+	META_FIELD(mType, "Texture Type")
+	META_FIELD(mFileName, "File Name")
+	META_FIELD_END
+META_CLASS_END;
+
 META_CLASS_BEGIN(MeshRenderContext)
 	META_FIELD_BEGIN
 	META_FIELD(mAmbientColor, "Ambient Color")
@@ -43,7 +50,7 @@ void NFGE::MeshRenderComponent::Initialize()
 		mMesh = NFGE::Graphics::MeshBuilder::CreatePlane(5, 5, 1);
 		break;
 	case NFGE::Sphere:
-		mMesh = NFGE::Graphics::MeshBuilder::CreateSphere(8,8,1.0f);
+		mMesh = NFGE::Graphics::MeshBuilder::CreateSphere(28,28,1.0f);
 		break;
 	case NFGE::Cube:
 		mMesh = NFGE::Graphics::MeshBuilder::CreateCube();
@@ -63,11 +70,11 @@ void NFGE::MeshRenderComponent::Initialize()
 
 	mMeshBuffer.Initialize(mMesh);
 
-	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::DIFFUSE, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mDiffuseTextureDir));
-	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::SPECULAR, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mSpecularTextureDir));
-	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::DISPLACEMENT, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mDisplacementTextureDir));
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::DIFFUSE, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mDiffuseTextureDir.mFileName));
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::SPECULAR, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mSpecularTextureDir.mFileName));
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::DISPLACEMENT, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mDisplacementTextureDir.mFileName));
 	mEffectContext.bumpWeight = mControlContext.mBumpWeight;
-	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::NORMALS, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mNormalextureDir));
+	mEffectContext.AddTexture(Graphics::MeshTextureMaterial::NORMALS, Graphics::TextureManager::Get()->LoadTexture(mControlContext.mNormalextureDir.mFileName));
 
 	mEffectContext.light = &sApp.GetMainLight();
 
@@ -83,6 +90,12 @@ void NFGE::MeshRenderComponent::Render()
 	//mEffectContext.rotation = mTransformComponent->finalRotation;
 	//mEffectContext.scale = mTransformComponent->fianlScale;
 	mEffectContext.custumToWorldMatrix = mTransformComponent->finalTransform;
+
+	UpdateTexture(mControlContext.mDiffuseTextureDir);
+	UpdateTexture(mControlContext.mSpecularTextureDir);
+	UpdateTexture(mControlContext.mNormalextureDir);
+	UpdateTexture(mControlContext.mDisplacementTextureDir);
+	mEffectContext.bumpWeight = mControlContext.mBumpWeight;
 
 	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::DIFFUSE, mControlContext.mIsUsingDiffuse);
 	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::SPECULAR, mControlContext.mIsUsingSpecular);
@@ -103,4 +116,13 @@ void NFGE::MeshRenderComponent::Render()
 void NFGE::MeshRenderComponent::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass *, uint8_t *))
 {
 	ShowMetaClassInInspector(mControlContext.GetMetaClass(), (uint8_t*)&mControlContext);
+}
+
+void NFGE::MeshRenderComponent::UpdateTexture(EditorMeshTexture editorTexture)
+{
+	if (editorTexture.isUpdated)
+	{
+		mEffectContext.AddTexture(editorTexture.mType, Graphics::TextureManager::Get()->LoadTexture(editorTexture.mFileName));
+		editorTexture.isUpdated = false;
+	}
 }

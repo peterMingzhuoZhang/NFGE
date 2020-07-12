@@ -27,6 +27,14 @@ namespace NFGE
 		}
 	};
 
+	struct EditorMeshTexture
+	{
+		META_CLASS_DECLARE;
+		NFGE::Graphics::MeshTextureMaterial::ModelTextureType mType;
+		std::string mFileName;
+		bool isUpdated = false;
+	};
+
 	struct MeshRenderContext	// Thing that only expose to use to change
 	{
 		META_CLASS_DECLARE;
@@ -38,13 +46,13 @@ namespace NFGE
 		NFGE::Math::Vector4 mSpecularColor{ 1.0f,0.5f,0.5f, 1.0f};
 		float mSpecualrPower{10.0f};
 		float mBumpWeight{0.0f};
-		std::string mDiffuseTextureDir;
+		EditorMeshTexture mDiffuseTextureDir;
 		bool mIsUsingDiffuse = false;
-		std::string mSpecularTextureDir;
+		EditorMeshTexture mSpecularTextureDir;
 		bool mIsUsingSpecular = false;
-		std::string mNormalextureDir;
+		EditorMeshTexture mNormalextureDir;
 		bool mIsUsingNormal = false;
-		std::string mDisplacementTextureDir;
+		EditorMeshTexture mDisplacementTextureDir;
 		bool mIsUsingDisplacement = false;
 		bool mIsCastShadow = false;
 		NFGE::Graphics::MeshBuffer::Topology mTopology{ NFGE::Graphics::MeshBuffer::Topology::Triangles };
@@ -71,7 +79,9 @@ namespace NFGE
 		MeshRenderContext mControlContext;
 	
 		const TransformComponent* mTransformComponent = nullptr;
-		
+
+	private:
+		void UpdateTexture(EditorMeshTexture editorTexture);
 	};
 }
 

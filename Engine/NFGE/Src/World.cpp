@@ -135,9 +135,15 @@ GameObjectHandle World::Create(const std::filesystem::path& templateFileName, st
 	auto handle = mGameObjectHandlePool->Register(gameObject);
 
 	// Initialize the game object
+	std::string newName = std::move(name);
+	while (Find(newName).Get() != nullptr)
+	{
+		newName += "_";
+	}
+
 	gameObject->mWorld = this;
 	gameObject->mHandle = handle;
-	gameObject->mName = std::move(name);
+	gameObject->mName = std::move(newName);
 	gameObject->Initialize();
 
 	if (parent)
