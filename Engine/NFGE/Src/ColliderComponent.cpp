@@ -21,7 +21,17 @@ void NFGE::ColliderComponent::Render()
 {
 	//NFGE::Graphics::SimpleDraw::AddAABB(center + mTransformComponent->position - extend, center + mTransformComponent->position + extend, Graphics::Colors::Gray, true);
 	//NFGE::Graphics::SimpleDraw::AddAABB(center + mTransformComponent->position - extend, center + mTransformComponent->position + extend, Graphics::Colors::Cyan, false);
-	NFGE::Graphics::SimpleDraw::AddOBB({ center + mTransformComponent->position, extend, mTransformComponent->rotation.mQuaternion }, Graphics::Colors::Red);
+	//NFGE::Graphics::SimpleDraw::AddOBB({ center + mTransformComponent->position, extend, mTransformComponent->rotation.mQuaternion }, Graphics::Colors::Red);
+
+	auto finalVector = NFGE::Math::Vector3::ZAxis * mTransformComponent->finalTransform;
+	auto finalCenter = center + NFGE::Math::Vector3::Zero() * mTransformComponent->finalTransform;
+
+	auto finalScale = NFGE::Math::Magnitude(finalVector - finalCenter);
+	auto finalExtend = extend * finalScale;
+	
+	auto finalRotation = NFGE::Math::RotMatToQuaternion(NFGE::Math::Inverse( mTransformComponent->finalRotationMatrix));
+
+	NFGE::Graphics::SimpleDraw::AddOBB({ finalCenter, finalExtend, finalRotation}, Graphics::Colors::Red);
 }
 
 void NFGE::ColliderComponent::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass *, uint8_t *))

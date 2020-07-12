@@ -101,9 +101,15 @@ GameObjectHandle NFGE::World::CreateEmpty(std::string name, GameObject * parent)
 	// Register withe the handle pool
 	auto handle = mGameObjectHandlePool->Register(gameObject);
 
+	std::string newName = std::move(name);
+	while (Find(newName).Get() != nullptr)
+	{
+		newName += "_";
+	}
+
 	gameObject->mWorld = this;
 	gameObject->mHandle = handle;
-	gameObject->mName = std::move(name);
+	gameObject->mName = std::move(newName);
 	gameObject->AddComponent<NFGE::TransformComponent>();
 	
 	gameObject->Initialize();

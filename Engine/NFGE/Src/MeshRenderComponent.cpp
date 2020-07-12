@@ -82,9 +82,7 @@ void NFGE::MeshRenderComponent::Render()
 	//mEffectContext.position = mTransformComponent->finalPosition;
 	//mEffectContext.rotation = mTransformComponent->finalRotation;
 	//mEffectContext.scale = mTransformComponent->fianlScale;
-	mEffectContext.position = mTransformComponent->position;
-	mEffectContext.rotation = mTransformComponent->rotation.mQuaternion;
-	mEffectContext.scale = mTransformComponent->scale;
+	mEffectContext.custumToWorldMatrix = mTransformComponent->finalTransform;
 
 	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::DIFFUSE, mControlContext.mIsUsingDiffuse);
 	mEffectContext.TextureUsingSwitch(Graphics::MeshTextureMaterial::ModelTextureType::SPECULAR, mControlContext.mIsUsingSpecular);

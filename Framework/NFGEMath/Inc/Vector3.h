@@ -27,6 +27,7 @@ struct Vector3
 	constexpr Vector3 operator+(const Vector3& v) const	{ return { x + v.x, y + v.y, z + v.z }; }
 	constexpr Vector3 operator-(const Vector3& v) const	{ return { x - v.x, y - v.y, z - v.z }; }
 	constexpr Vector3 operator*(float s) const			{ return { x * s, y * s, z * s}; }
+	constexpr bool operator==(const Vector3& v) const { return x == v.x && y == v.y && z == v.z; }
 	Vector3 operator/(float s) const { return Vector3(x / s, y / s, z / s); }
 
 	Vector3& operator+=(const Vector3& v) { x += v.x; y += v.y; z += v.z; return *this; }

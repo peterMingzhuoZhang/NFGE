@@ -5,6 +5,7 @@
 
 namespace NFGE
 {
+	class GameObject;
 	class TransformComponent : public Component
 	{
 	public:
@@ -18,9 +19,12 @@ namespace NFGE
 		Math::EditorQuaternion rotation;
 		Math::Vector3 scale{1.0f,1.0f,1.0f};
 
-		Math::Vector3 finalPosition;
-		Math::Quaternion finalRotation;
-		Math::Vector3 fianlScale;
+		Math::Matrix4 finalTransform;
+		Math::Matrix4 finalRotationMatrix;
+
+		void UpdateFinalTransform(GameObject* parent);
+
+
 	};
 }
 

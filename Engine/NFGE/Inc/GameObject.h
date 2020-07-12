@@ -61,8 +61,10 @@ namespace NFGE
 		GameObjectHandle GetHandle() const { return mHandle; }
 
 		GameObject* GetParent() { return mParent; }
+		std::vector<GameObject*>& GetChildren() { return mChilds; }
 		void RemoveChild(GameObject* child);
 		void AddChild(GameObject* child);
+		void ResetParent(GameObject* newParent);
 	private:
 		friend class Editor;
 		friend class World;

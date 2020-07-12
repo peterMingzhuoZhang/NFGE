@@ -234,7 +234,7 @@ void Editor::ShowWorldView()
 						if (movingGameObj->mParent)
 						{
 							movingGameObj->mParent->RemoveChild(movingGameObj.Get());
-							movingGameObj->mParent = nullptr;
+							movingGameObj->ResetParent(nullptr);
 						}
 					}
 					ImGui::EndDragDropTarget();
@@ -478,15 +478,10 @@ void NFGE::Editor::ShowGameObjectInWorldView( GameObject* gameObject, std::strin
 			{
 				auto movingFrom = *(std::string*)payload->Data;
 				auto movingGameObj = mWorld.Find(movingFrom);
-				if (moveTo == "~root")
-				{
-					movingGameObj->mParent = nullptr;
-				}
-				else
-				{
-					auto moveToGameObj = mWorld.Find(gameObject->GetName());
-					moveToGameObj->AddChild(movingGameObj.Get());
-				}
+				
+				auto moveToGameObj = mWorld.Find(gameObject->GetName());
+				moveToGameObj->AddChild(movingGameObj.Get());
+				
 			}
 			ImGui::EndDragDropTarget();
 		}
