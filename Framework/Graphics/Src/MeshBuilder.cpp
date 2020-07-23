@@ -1205,9 +1205,9 @@ Mesh NFGE::Graphics::MeshBuilder::CreateTorus(int row, int col, float innerRadiu
 
 			if ((i == 0) && (j != 0) && (j != col - 1))
 			{
-				indices.push_back(static_cast<uint32_t>(0));							//|
-				indices.push_back(static_cast<uint32_t>(0 + j + 1));					//|--- top circle
-				indices.push_back(static_cast<uint32_t>(0 + j));						//|
+				//indices.push_back(static_cast<uint32_t>(0));							//|
+				//indices.push_back(static_cast<uint32_t>(0 + j + 1));					//|--- top circle
+				//indices.push_back(static_cast<uint32_t>(0 + j));						//|
 			}
 			if ((i != row - 1) && (j != col - 1))
 			{
@@ -1219,11 +1219,29 @@ Mesh NFGE::Graphics::MeshBuilder::CreateTorus(int row, int col, float innerRadiu
 				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j + 1)));		//|
 				indices.push_back(static_cast<uint32_t>((i * col + j + 1)));			//|--- right triangle
 			}
+			if ((i != row - 1) && (j == col - 1))
+			{
+				//indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				//indices.push_back(static_cast<uint32_t>(((i + 1) * col + j)));			//|
+				//indices.push_back(static_cast<uint32_t>(((i + 1) * col)));		//|--- left triangle
+				//
+				//indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				//indices.push_back(static_cast<uint32_t>(((i + 1) * col)));		//|
+				//indices.push_back(static_cast<uint32_t>((i * col)));			//|--- right triangle
+
+				indices.push_back(static_cast<uint32_t>((i * col)));				//|
+				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col)));		//|--- left trian
+
+				indices.push_back(static_cast<uint32_t>((i * col + j)));				//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col + j)));		//|
+				indices.push_back(static_cast<uint32_t>(((i + 1) * col)));		//|
+			}
 			if ((i == row - 1) && (j != 0) && (j != col - 1))
 			{
-				indices.push_back(static_cast<uint32_t>(i * col));						//|
-				indices.push_back(static_cast<uint32_t>(i * col + j));					//|--- bottom circle
-				indices.push_back(static_cast<uint32_t>(i * col + j + 1));				//|
+				//indices.push_back(static_cast<uint32_t>(i * col));						//|
+				//indices.push_back(static_cast<uint32_t>(i * col + j));					//|--- bottom circle
+				//indices.push_back(static_cast<uint32_t>(i * col + j + 1));				//|
 			}
 		}
 	}

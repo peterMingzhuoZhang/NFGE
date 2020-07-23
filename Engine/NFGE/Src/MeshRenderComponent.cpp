@@ -47,22 +47,22 @@ void NFGE::MeshRenderComponent::Initialize()
 	switch (gemotryType)
 	{
 	case NFGE::Plane:
-		mMesh = NFGE::Graphics::MeshBuilder::CreatePlane(5, 5, 1);
+		mMesh = NFGE::Graphics::MeshBuilder::CreatePlane(50, 50, 1);
 		break;
 	case NFGE::Sphere:
-		mMesh = NFGE::Graphics::MeshBuilder::CreateSphere(28,28,1.0f);
+		mMesh = NFGE::Graphics::MeshBuilder::CreateSphere(100,100,1.0f);
 		break;
 	case NFGE::Cube:
 		mMesh = NFGE::Graphics::MeshBuilder::CreateCube();
 		break;
 	case NFGE::Cylinder:
-		mMesh = NFGE::Graphics::MeshBuilder::CreateCylinder(8, 16, 1.0f,3.0f);
+		mMesh = NFGE::Graphics::MeshBuilder::CreateCylinder(80, 160, 1.0f,3.0f);
 		break;
 	case NFGE::Cone:
-		mMesh = NFGE::Graphics::MeshBuilder::CreateCone(8, 16, 1.0f, 3.0f);
+		mMesh = NFGE::Graphics::MeshBuilder::CreateCone(80, 160, 1.0f, 3.0f);
 		break;
 	case NFGE::Toro:
-		mMesh = NFGE::Graphics::MeshBuilder::CreateTorus(16, 16, 1.0f, 3.0f);
+		mMesh = NFGE::Graphics::MeshBuilder::CreateTorus(160, 160, 1.0f, 3.0f);
 		break;
 	default:
 		break;
