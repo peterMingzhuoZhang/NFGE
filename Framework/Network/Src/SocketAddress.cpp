@@ -1,8 +1,6 @@
 #include "Precompiled.h"
 #include "SocketAddress.h"
 
-
-
 using namespace Network;
 
 SocketAddress::SocketAddress()

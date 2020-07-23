@@ -10,10 +10,10 @@ void EditState::Initialize()
 	//camera.SetPosition({ 0.0f, 0.0f, -10.0f });
 	//camera.SetDirection({ 0.0f, 0.0f, 1.0f });
 
-	spherePC.Load({ 10.0f, 10.0f,10.0f }, 20, 20, 10.0f);
-	spherePN.Load({ -10.0f, 10.0f,10.0f }, 50, 50, 10.0f);
-	spherePX.Load({ -30.0f, 10.0f,10.0f }, 20, 20, 10.0f, "earth.jpg");
-	sphereStandard.Load({ 40.0f, 10.0f,10.0f }, 512, 512, 10.0f, "earth.jpg", "earth_spec.jpg", "earth_bump.jpg", "earth_normal.jpg");
+	//spherePC.Load({ 10.0f, 10.0f,10.0f }, 20, 20, 10.0f);
+	//spherePN.Load({ -10.0f, 10.0f,10.0f }, 50, 50, 10.0f);
+	//spherePX.Load({ -30.0f, 10.0f,10.0f }, 20, 20, 10.0f, "earth.jpg");
+	//sphereStandard.Load({ 40.0f, 10.0f,10.0f }, 512, 512, 10.0f, "earth.jpg", "earth_spec.jpg", "earth_bump.jpg", "earth_normal.jpg");
 	sphereSkydome.Load({ 0.0f, 0.0f,0.0f }, 50, 50, 200.0f, "universeDome2.jpg");
 	sphereSkydome.IsSkyDome = true;
 
@@ -34,10 +34,10 @@ void EditState::Initialize()
 
 void EditState::Terminate()
 {
-	spherePC.Unload();
-	spherePN.Unload();
-	spherePX.Unload();
-	sphereStandard.Unload();
+	//spherePC.Unload();
+	//spherePN.Unload();
+	//spherePX.Unload();
+	//sphereStandard.Unload();
 	sphereSkydome.Unload();
 	mWorld.Terminate();
 }
@@ -160,10 +160,10 @@ void EditState::RenderScene()
 	mWorld.Render();
 	//SimpleDraw::Render(*mCamera);
 
-	spherePC.Render(*mCamera);
-	spherePN.Render(*mCamera);
-	spherePX.Render(*mCamera);
-	sphereStandard.Render(*mCamera);
+	//spherePC.Render(*mCamera);
+	//spherePN.Render(*mCamera);
+	//spherePX.Render(*mCamera);
+	//sphereStandard.Render(*mCamera);
 	sphereSkydome.Render(*mCamera);
 
 }

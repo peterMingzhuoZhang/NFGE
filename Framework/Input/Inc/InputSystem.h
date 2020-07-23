@@ -1,8 +1,3 @@
-//====================================================================================================
-// Filename:	InputSystem.h
-// Created by:	Peter Chan
-//====================================================================================================
-
 #ifndef INCLUDED_NFGE_INPUT_INPUTSYSTEM_H
 #define INCLUDED_NFGE_INPUT_INPUTSYSTEM_H
 

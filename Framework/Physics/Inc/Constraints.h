@@ -1,6 +1,6 @@
 //====================================================================================================
-// SIEGE - Super Innovative Exciting Game Engine
-// Copyright (c) 2019 Peter Chan. All rights reserved.
+// NFGE - Nicolas Four Game Engine
+// Copyright (c) 2019 MingzhuoZhang. All rights reserved.
 //====================================================================================================
 
 #ifndef INCLUDED_NFGE_PHYSICS_CONSTRAINTS_H

@@ -1,3 +1,8 @@
+//====================================================================================================
+// NFGE - Nicolas Four Game Engine
+// Copyright (c) 2019 MingzhuoZhang. All rights reserved.
+//====================================================================================================
+
 #ifndef NFGE_GRAPHIC_PARTIALANIMATOR_H
 #define NFGE_GRAPHIC_PARTIALANIMATOR_H
 

@@ -1,7 +1,6 @@
 //====================================================================================================
 // Filename:	NFGE.h
 // Created by:	Mingzhuo Zhang
-// Description:	Nicolas Four Game Engine [Nicolas Four stands for едЫФ]
 //====================================================================================================
 
 #ifndef INCLIDED_NFGE_H

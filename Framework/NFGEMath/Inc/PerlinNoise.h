@@ -1,6 +1,6 @@
 //====================================================================================================
 // Filename:	PerlinNoise.h
-// Created by:	Peter Chan
+// Created by:	Peter Chan  (Peter Chan is Awesome)
 // Resources:	https://solarianprogrammer.com/2012/07/18/perlin-noise-cpp-11/
 //				https://flafla2.github.io/2014/08/09/perlinnoise.html
 //				https://www.redblobgames.com/maps/terrain-from-noise/

@@ -110,8 +110,6 @@ void NFGE::GameObject::ResetParent(GameObject * newParent)
 		transformComponent->position += NFGE::Math::Vector3::Zero() * mParent->GetComponent<TransformComponent>()->finalTransform;
 		//auto rotation = mParent->GetComponent<TransformComponent>()->finalTransform * Math::MatrixRotationQuaternion(transformComponent->rotation.mQuaternion);
 		//transformComponent->rotation.mQuaternion = Math::RotMatToQuaternion(rotation);
-
-
 	}
 	
 	if (newParent != nullptr)

@@ -1,3 +1,8 @@
+//====================================================================================================
+// NFGE - Nicolas Four Game Engine
+// Copyright (c) 2019 MingzhuoZhang. All rights reserved.
+//====================================================================================================
+
 #include "Precompiled.h"
 #include "PhysicsWorld.h"
 #include "RigBone.h"

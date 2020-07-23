@@ -7,8 +7,6 @@
 #include "World.h"
 #include "CameraService.h"
 
-
-
 #include "Graphics/Src/D3DUtil.h"
 #pragma comment(lib, "FW1FontWrapper.lib")
 

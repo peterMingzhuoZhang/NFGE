@@ -86,9 +86,6 @@ void NFGE::MeshRenderComponent::Render()
 	mMeshBuffer.SetTopology(mControlContext.mTopology);
 	mEffectContext.GetShadowPostProcessContextPtr()->isCastShadow = mControlContext.mIsCastShadow;
 
-	//mEffectContext.position = mTransformComponent->finalPosition;
-	//mEffectContext.rotation = mTransformComponent->finalRotation;
-	//mEffectContext.scale = mTransformComponent->fianlScale;
 	mEffectContext.custumToWorldMatrix = mTransformComponent->finalTransform;
 
 	UpdateTexture(mControlContext.mDiffuseTextureDir);

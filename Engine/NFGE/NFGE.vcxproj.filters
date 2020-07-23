@@ -16,7 +16,6 @@
     <ClInclude Include="Src\Precompiled.h">
       <Filter>Src</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\Timer.h" />
     <ClInclude Include="Inc\ColliderComponent.h">
       <Filter>Inc\Components</Filter>
     </ClInclude>
@@ -58,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="Inc\MeshRenderComponent.h">
       <Filter>Inc\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Inc\Timer.h">
+      <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

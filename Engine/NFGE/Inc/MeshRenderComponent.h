@@ -30,6 +30,9 @@ namespace NFGE
 	struct EditorMeshTexture
 	{
 		META_CLASS_DECLARE;
+		EditorMeshTexture() {}
+		EditorMeshTexture(NFGE::Graphics::MeshTextureMaterial::ModelTextureType type) :mType(type){}
+
 		NFGE::Graphics::MeshTextureMaterial::ModelTextureType mType;
 		std::string mFileName;
 		bool isUpdated = false;
@@ -46,13 +49,13 @@ namespace NFGE
 		NFGE::Math::Vector4 mSpecularColor{ 1.0f,0.5f,0.5f, 1.0f};
 		float mSpecualrPower{10.0f};
 		float mBumpWeight{0.0f};
-		EditorMeshTexture mDiffuseTextureDir;
+		EditorMeshTexture mDiffuseTextureDir{ NFGE::Graphics::MeshTextureMaterial::ModelTextureType::DIFFUSE };
 		bool mIsUsingDiffuse = false;
-		EditorMeshTexture mSpecularTextureDir;
+		EditorMeshTexture mSpecularTextureDir{ NFGE::Graphics::MeshTextureMaterial::ModelTextureType::SPECULAR };
 		bool mIsUsingSpecular = false;
-		EditorMeshTexture mNormalextureDir;
+		EditorMeshTexture mNormalextureDir{ NFGE::Graphics::MeshTextureMaterial::ModelTextureType::NORMALS };
 		bool mIsUsingNormal = false;
-		EditorMeshTexture mDisplacementTextureDir;
+		EditorMeshTexture mDisplacementTextureDir{ NFGE::Graphics::MeshTextureMaterial::ModelTextureType::DISPLACEMENT };
 		bool mIsUsingDisplacement = false;
 		bool mIsCastShadow = false;
 		NFGE::Graphics::MeshBuffer::Topology mTopology{ NFGE::Graphics::MeshBuffer::Topology::Triangles };

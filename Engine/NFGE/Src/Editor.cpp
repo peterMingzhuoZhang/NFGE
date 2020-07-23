@@ -165,7 +165,7 @@ namespace
 					if (ImGui::ImageButton(spriteId, { 50.0f,50.0f }))
 					{
 						fileDialog.SetTitle("Adding Texture");
-						fileDialog.SetTypeFilters({ ".png",".jpg", ".dds" });
+						fileDialog.SetTypeFilters({ ".jpg",".png", ".dds" });
 
 						fileDialog.Open();
 
@@ -309,18 +309,10 @@ void NFGE::Editor::ShowMenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			//ShowExampleMenuFile();
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Edit"))
-		{
-			//if (ImGui::MenuItem("Undo", "CTRL+Z")) {}
-			//if (ImGui::MenuItem("Redo", "CTRL+Y", false, false)) {}  // Disabled item
-			//ImGui::Separator();
-			//if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-			//if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-			//if (ImGui::MenuItem("Paste", "CTRL+V")) {}
-			
+		{	
 			if (ImGui::BeginMenu("Add GameObject"))
 			{
 				if(ImGui::MenuItem("Empty GameObject"))
@@ -496,7 +488,6 @@ void NFGE::Editor::ShowGameObjectInWorldView( GameObject* gameObject, std::strin
 
 	if (ImGui::IsItemHovered())
 	{
-		//moveTo = gameObject->GetName();
 		if (ImGui::IsMouseClicked(1))
 		{
 			isShowPop = true;
@@ -551,9 +542,6 @@ void NFGE::Editor::ShowGameObjectInWorldView( GameObject* gameObject, std::strin
 		{
 			isDroped = true;
 			ImGuiDragDropFlags target_flags = 0;
-			//target_flags |= ImGuiDragDropFlags_AcceptBeforeDelivery;    // Don't wait until the delivery (release mouse button on a target) to do something
-			//target_flags |= ImGuiDragDropFlags_AcceptNoDrawDefaultRect; // Don't display the yellow rectangle
-			//target_flags |= ImGuiDragDropFlags_SourceNoDisableHover;
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Choosing PayLoad", target_flags))
 			{
 				auto movingFrom = *(std::string*)payload->Data;
