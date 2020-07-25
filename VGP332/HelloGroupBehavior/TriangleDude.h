@@ -3,6 +3,10 @@
 
 #include <NFGE/Inc/NFGE.h>
 
+std::string DudeTexture = "interceptor_all.png";
+std::string DudeTextureAtlas = "interceptor_all.json";
+int totalDirection = 32;
+
 struct BehaviorControl
 {
 	float mSeparationWeight = 1.0f;
@@ -13,6 +17,60 @@ struct BehaviorControl
 	float mObsAvoidWeight = 1.0f;
 	float mNeighborRadius = 100.0f;
 };
+
+using AtlasInfo = std::vector<NFGE::Math::Rect>;
+
+void LoadAtlasInfo(const char* fileName, AtlasInfo& jsonInfo, int& infoCount)
+{
+	FILE* file = nullptr;
+	fopen_s(&file, fileName, "rb");
+
+	//create a new file  stream to in the json data.
+	char buffer[65536];
+	rapidjson::FileReadStream readStream(file, buffer, std::size(buffer));
+
+	//Feed the json data into the document object so it is
+	//easy to ask for the contents
+	rapidjson::Document document;
+	document.ParseStream(readStream);
+
+	ASSERT(document.HasMember("frames"), "AtlasJson format does not match");
+	auto& firstEntry = document["frames"];
+
+	if (infoCount != 0)
+		ASSERT(infoCount == firstEntry.MemberCount(), "[Animation] Load animations of A Unit, But animations does not have same direction count. NOT ALLOWED!");
+	else
+		infoCount = firstEntry.MemberCount();
+
+	for (auto it = firstEntry.MemberBegin(); it != firstEntry.MemberEnd(); ++it)
+	{
+		ASSERT(it->value.HasMember("frame"), "AtlasJson format does not match");
+		auto& rectInfoEntry = it->value["frame"];
+
+		//Then get the rectangle area.
+		ASSERT(rectInfoEntry.HasMember("x"), "AtlasJson format does not match");
+		float x = rectInfoEntry.FindMember("x")->value.GetFloat();
+		ASSERT(rectInfoEntry.HasMember("y"), "AtlasJson format does not match");
+		float y = rectInfoEntry.FindMember("y")->value.GetFloat();
+		ASSERT(rectInfoEntry.HasMember("w"), "AtlasJson format does not match");
+		float w = rectInfoEntry.FindMember("w")->value.GetFloat();
+		ASSERT(rectInfoEntry.HasMember("h"), "AtlasJson format does not match");
+		float h = rectInfoEntry.FindMember("h")->value.GetFloat();
+
+		NFGE::Math::Rect rect(
+			x,
+			y,
+			x + w,
+			y + h
+		);
+		//Add the info to our look up table.
+		jsonInfo.emplace_back(rect);
+	}
+
+
+
+	fclose(file);
+}
 
 struct TriangleDude : public NFGE::AI::Agent
 {
@@ -28,6 +86,10 @@ struct TriangleDude : public NFGE::AI::Agent
 		steeringModule = std::make_unique<NFGE::AI::SteeringModule>(*this);
 		//---- Seek --------------------------------------------------------------------------------------------------------
 		steeringModule->AddBehavior < NFGE::AI::SeekBehavior >("Seek")->SetActive(false);
+		//------------------------------------------------------------------------------------------------------------------
+
+		//---- flee --------------------------------------------------------------------------------------------------------
+		steeringModule->AddBehavior < NFGE::AI::FleeBehavior>("Flee")->SetActive(false);
 		//------------------------------------------------------------------------------------------------------------------
 
 		//---- Wander ------------------------------------------------------------------------------------------------------
@@ -85,9 +147,25 @@ struct TriangleDude : public NFGE::AI::Agent
 		screenHeight = (float)NFGE::sApp.GetScreenHeight();
 		position = NFGE::Math::Vector2(100.0f, 100.0f);
 		velocity = NFGE::Math::Vector2(0.0f, 1.0f);
+
+		if (mAllTextures.empty())
+		{
+			mAllTextures.reserve(1);
+			mAllTextures.push_back(NFGE::sApp.LoadTexture(DudeTexture.c_str()));
+			mAltasInfo.reserve(totalDirection);
+			LoadAtlasInfo(("../../Assets/Images/" + DudeTextureAtlas).c_str(), mAltasInfo, totalDirection);
+		}
 	}
 
-
+	void UpdateFleeBehavior(bool active, const NFGE::Math::Vector2& point,float panicDistance, float weight = 10.0f)
+	{
+		auto flee = steeringModule->GetBehavior< NFGE::AI::FleeBehavior >("Flee");
+		flee->SetActive(active);
+		flee->SetWeight(weight);
+		flee->panicPoint = point;
+		flee->panicDistance = panicDistance;
+	
+	}
 
 	void Update(const BehaviorControl& behaviorControl, float deltaTime)
 	{
@@ -120,20 +198,31 @@ struct TriangleDude : public NFGE::AI::Agent
 
 	void Render()
 	{
-		NFGE::Math::Vector2 forwardPoint = heading * radius * 2.0f;
-		forwardPoint = forwardPoint + position;
-		NFGE::Math::Vector2 leftPoint{ -heading.y * radius, heading.x * radius };
-		leftPoint -= heading * radius * 1.0f;
-		leftPoint = leftPoint + position;
-		NFGE::Math::Vector2 rightPoint{ heading.y* radius, -heading.x * radius };
-		rightPoint -= heading * radius * 1.0f;
-		rightPoint = rightPoint + position;
-		NFGE::sApp.DrawScreenLine(leftPoint, forwardPoint, mColor);
-		NFGE::sApp.DrawScreenLine(rightPoint, forwardPoint, mColor);
-		NFGE::sApp.DrawScreenLine(leftPoint, rightPoint, mColor);
+		if (isDrawTexture)
+		{
+			float angle = atan2(-heading.x, heading.y) + NFGE::Math::Constants::Pi;
+			int currentDirection = (int)(angle / NFGE::Math::Constants::TwoPi * 32.0f) % 32;
+			NFGE::sApp.DrawSprite(mAllTextures[0], position, 0.0f, 1.0f, 0.5f, 0.5f, 1.0f, 1.0f, mAltasInfo[currentDirection]);
+		}
+		else
+		{
+			NFGE::Math::Vector2 forwardPoint = heading * radius * 2.0f;
+			forwardPoint = forwardPoint + position;
+			NFGE::Math::Vector2 leftPoint{ -heading.y * radius, heading.x * radius };
+			leftPoint -= heading * radius * 1.0f;
+			leftPoint = leftPoint + position;
+			NFGE::Math::Vector2 rightPoint{ heading.y* radius, -heading.x * radius };
+			rightPoint -= heading * radius * 1.0f;
+			rightPoint = rightPoint + position;
+			NFGE::sApp.DrawScreenLine(leftPoint, forwardPoint, mColor);
+			NFGE::sApp.DrawScreenLine(rightPoint, forwardPoint, mColor);
+			NFGE::sApp.DrawScreenLine(leftPoint, rightPoint, mColor);
+			if (mIsDebugDraw)
+				DebugDraw(leftPoint, rightPoint);
+		}
+		
 
-		if (mIsDebugDraw)
-			DebugDraw(leftPoint, rightPoint);
+		
 	}
 
 	void DebugDraw(const NFGE::Math::Vector2& leftPoint, const NFGE::Math::Vector2& rightPoint )
@@ -159,6 +248,10 @@ struct TriangleDude : public NFGE::AI::Agent
 	float screenHeight;
 	bool mIsDebugDraw = false;
 
+	static std::vector<NFGE::Graphics::TextureId> mAllTextures;
+	static AtlasInfo mAltasInfo;
+
+	bool isDrawTexture = true;
 
 };
 

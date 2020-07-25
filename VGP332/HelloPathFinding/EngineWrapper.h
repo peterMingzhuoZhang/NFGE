@@ -112,8 +112,8 @@ namespace EngineWrapper
 				position = Vector2{ 0.0f,0.0f };
 			}
 
-			ImGui::SliderFloat("Scale", &scale, 0.2f, 5.0f);
-			ImGui::SliderFloat("Camera speed", &moveSpeed, 50.0f, 500.0f);
+			//ImGui::SliderFloat("Scale", &scale, 0.2f, 5.0f);
+			//ImGui::SliderFloat("Camera speed", &moveSpeed, 50.0f, 500.0f);
 
 		}
 

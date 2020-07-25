@@ -7,8 +7,8 @@
 struct TinyFish : PTEntity_Shell
 {
 	RTGCN(TinyFish)
-	//- static ------------------------------------------------------
-	static PTCone mGeometry;
+		//- static ------------------------------------------------------
+		static PTCone mGeometry;
 	static Graphics::Color mRegularColor;
 	static Graphics::Color mHappyColor;
 	static Graphics::Color mPanicColor;
@@ -20,10 +20,10 @@ struct TinyFish : PTEntity_Shell
 	void Initialize(float width, float height, float depth);
 	void Terminate();
 
-	void OnUpdate( float deltaTime) override;
+	void OnUpdate(float deltaTime) override;
 
 	void Render();
-	
+
 	void DebugDraw();
 
 	void ResetPosition(const Vector3& pos);
@@ -31,7 +31,7 @@ struct TinyFish : PTEntity_Shell
 
 	std::unique_ptr<AI::PerceptionModule3D> mPerceptionModule;
 	std::unique_ptr<AI::SteeringModule3D> steeringModule;
-	
+
 private:
 	std::unique_ptr<AI::StateMachine<TinyFish>> mStateMachine;
 	void BornAChild();

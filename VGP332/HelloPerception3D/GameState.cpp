@@ -4,7 +4,7 @@ BehaviorControl behaviorControl;
 bool isDrawDebugLine = false;
 
 int initTinyFishCOunt = 10;
-const int totalTinyFIsh = 1000;
+const int totalTinyFIsh = 700;
 int currentTinyFish = 0;
 
 int initPreditor = 10;
@@ -26,6 +26,9 @@ void GameState::Initialize()
 
 	world_3D.Initialize(mWorldWidth, mWorldHeight, mWorldDepth);
 	world_3D.world.mGrid.Init(col, row,height, size, totalTinyFIsh);
+
+	sphereSkydome.Load({ 0.0f, 0.0f,0.0f }, 50, 50, 3000.0f, "8k_stars.jpg");
+	sphereSkydome.IsSkyDome = true;
 
 	//- SeeWeedTree INIT -------------------------------------------------------------------------------------------
 	for (int i = 0; i < mTreeCount; ++i)
@@ -77,7 +80,7 @@ void GameState::Initialize()
 	}
 	//-----------------------------------------------------------------------------------------------------------
 
-	randomGenerateObs();
+	//randomGenerateObs();
 
 	auto& camera = NFGE::sApp.GetMainCamera();
 	camera.SetPosition({-50.0f,200.0f, -200.0f});
@@ -93,6 +96,7 @@ void GameState::Terminate()
 	DestroyerFish::mSphere.Terminate();
 	
 	world_3D.Terminate();
+	sphereSkydome.Unload();
 	for (int i = 0; i < mTreeCount; ++i)
 		mTrees[i].Terminate();
 	
@@ -135,6 +139,8 @@ void GameState::Render()
 	for (int i = 0; i < mTreeCount; ++i)
 		mTrees[i].Render();
 
+	sphereSkydome.Render(NFGE::sApp.GetMainCamera());
+
 	PTEntityManager<TinyFish>::Get()->Render();
 	PTEntityManager<PreditorFish>::Get()->Render();
 
@@ -159,16 +165,21 @@ void GameState::Render()
 
 void GameState::DebugUI()
 {
+	//NFGE::Graphics::PostProcessManager::Get()->OptionUI();
 	ImGui::Begin("Util");
 	ImGui::Text("FPS: %f", 1.0f / mDeltaTime);
 	ImGui::End();
 
-	for (int i = 0; i < mTreeCount; ++i)
-		mTrees[i].DebugDraw();
+	if (isDrawDebugLine)
+	{
+		for (int i = 0; i < mTreeCount; ++i)
+			mTrees[i].DebugDraw();
 
-	PTEntityManager<TinyFish>::Get()->DebugDraw();
-	PTEntityManager<PreditorFish>::Get()->DebugDraw();
+		PTEntityManager<TinyFish>::Get()->DebugDraw();
+		PTEntityManager<PreditorFish>::Get()->DebugDraw();
 
+	}
+	
 	ShowUI();
 }
 
@@ -259,6 +270,15 @@ void GameState::TinyFishBehaviorControl_DebugUI()
 	
 }
 
+void HookCamera(PTEntity_Shell* entity, NFGE::Graphics::Camera & camera, float deltaTime)
+{
+	camera.SetDirection(entity->position - camera.GetPosition());
+	auto cameraSupposePos = (entity->position - (entity->heading * 30.0f)) + Vector3(0.0f, 10.0f, 0.0f);
+
+	if (NFGE::Math::Magnitude(cameraSupposePos - camera.GetPosition()) > 0.001f)
+		camera.SetPosition(camera.GetPosition() + ((cameraSupposePos - camera.GetPosition()) * 0.3f)* 10.0f * deltaTime);
+}
+
 void GameState::CameraControl(Camera& camera)
 {
 	static auto lastTime = std::chrono::high_resolution_clock::now();
@@ -286,10 +306,8 @@ void GameState::CameraControl(Camera& camera)
 		auto theFish = PTEntityManager<TinyFish>::Get()->GetFirstActive();
 		if (theFish != nullptr)
 		{
-			Vector3 pos = { theFish->position.x, theFish->position.y , theFish->position.z};
-			Vector3 head = { theFish->heading.x, theFish->heading.y, theFish->heading.z};
-			NFGE::sApp.GetMainCamera().SetPosition(pos - head * 20.0f);
-			NFGE::sApp.GetMainCamera().SetDirection(head);
+			HookCamera(theFish, NFGE::sApp.GetMainCamera(),deltaTime);
+			
 		}
 	}
 	if (inputSystem->IsKeyDown(KeyCode::P))
@@ -297,10 +315,8 @@ void GameState::CameraControl(Camera& camera)
 		auto theFish = PTEntityManager<PreditorFish>::Get()->GetFirstActive();
 		if (theFish != nullptr)
 		{
-			Vector3 pos = { theFish->position.x, theFish->position.y, theFish->position.z};
-			Vector3 head = { theFish->heading.x, theFish->heading.y, theFish->heading.z };
-			NFGE::sApp.GetMainCamera().SetPosition(pos - head * 40.0f);
-			NFGE::sApp.GetMainCamera().SetDirection(head);
+			HookCamera(theFish, NFGE::sApp.GetMainCamera(), deltaTime);
 		}
 	}
 }
+

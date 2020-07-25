@@ -21,7 +21,7 @@ public:
 private:
 	
 private:
-	Camera2D myCamera2D;
+	EngineWrapper::Camera2D myCamera2D;
 	
 };
 

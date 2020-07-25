@@ -10,11 +10,11 @@ extern int currentTinyFish;
 
 PTCone TinyFish::mGeometry;
 Graphics::Color TinyFish::mRegularColor = Graphics::Colors::Gray;
-Graphics::Color TinyFish::mHappyColor= Graphics::Colors::LightGreen;
+Graphics::Color TinyFish::mHappyColor = Graphics::Colors::LightGreen;
 Graphics::Color TinyFish::mPanicColor = Graphics::Colors::OrangeRed;
 Graphics::Color TinyFish::mDefaultAmbient = Graphics::Colors::DarkGray;
 
-BehaviorControl FleeGrounpBehavior{1.5f, 1.5f, 1.0f, 1.0f, 5.0f, 200.0f};
+BehaviorControl FleeGrounpBehavior{ 1.5f, 1.5f, 1.0f, 1.0f, 5.0f, 200.0f };
 BehaviorControl EatGrounpBehavior{ 2.5f, 2.5f, 3.5f, 1.0f, 5.0f, 200.0f };
 BehaviorControl RegularGrounpBehavior{ 3.5f, 3.5f, 3.5f, 1.0f, 5.0f, 200.0f };
 
@@ -28,6 +28,7 @@ namespace
 	const int MeshCol = 8;
 	const float MeshRadius = 0.72f;
 	const wchar_t* MeshShaderFileName = L"../../Assets/Shaders/Standard_Material.fx";
+	float PanicDistance = 350.0f;
 }
 
 class TinyFish_VisualSensor : public AI::Sensor3D
@@ -164,7 +165,7 @@ struct TinyFish_SurviveState : public AI::State<TinyFish>
 			int entityIndex = topMemoryRecord.GetProperty<int>("EntityId");
 			auto& theEntityInMemory = AI::Entity3D::mAllEntity[entityIndex];
 
-			
+
 			if (theEntityInMemory->GetTypeName() == PreditorFish::GET_TYPE_NAME())
 			{
 				wander->SetActive(false);
@@ -190,15 +191,15 @@ struct TinyFish_SurviveState : public AI::State<TinyFish>
 					records.pop_front();
 					flee->SetActive(false);
 				}
-				
 
-				
+
+
 			}
 			else if (theEntityInMemory->GetTypeName() == SeeWeed::GET_TYPE_NAME())
 			{
 				Vector3 minaralPos = topMemoryRecord.GetProperty<Vector3>("LastSeenPosition");
 
-				flee->SetActive(false);				
+				flee->SetActive(false);
 				wander->SetActive(false);
 				arrive->SetActive(true);
 				seek->SetActive(true);
@@ -207,7 +208,7 @@ struct TinyFish_SurviveState : public AI::State<TinyFish>
 
 				AI::Entity3D* temp = theEntityInMemory;
 				mTargetSeeWeed = reinterpret_cast<SeeWeed*>(temp);
-				if ((agent.TryCollectSeeWeed(*mTargetSeeWeed)) || (mTargetSeeWeed->mIsGetEatting) )
+				if ((agent.TryCollectSeeWeed(*mTargetSeeWeed)) || (mTargetSeeWeed->mIsGetEatting))
 				{
 					arrive->SetActive(false);
 					seek->SetActive(false);
@@ -225,7 +226,7 @@ struct TinyFish_SurviveState : public AI::State<TinyFish>
 				}
 
 			}
-			
+
 		}
 		else
 		{
@@ -233,13 +234,13 @@ struct TinyFish_SurviveState : public AI::State<TinyFish>
 			arrive->SetActive(false);
 			seek->SetActive(false);
 			wander->SetActive(true);
-			
-			if(mLastSeenType != "")
+
+			if (mLastSeenType != "")
 				agent.mDiffuseColorLerper.Start(agent.mDiffuseColor, TinyFish::mRegularColor, 0.5f);
 			mLastSeenType = "";
 			agent.UpdateBehaviorControl(RegularGrounpBehavior);
 		}
-		
+
 	}
 	void Exit(TinyFish& agent) override
 	{
@@ -265,7 +266,7 @@ void TinyFish::Initialize(float width, float height, float depth)
 	//---- Seek --------------------------------------------------------------------------------------------------------
 	steeringModule->AddBehavior < AI::SeekBehavior3D >("Seek")->SetActive(false);
 	steeringModule->AddBehavior < AI::FleeBehavior3D >("Flee")->SetActive(false);
-	steeringModule->GetBehavior < AI::FleeBehavior3D >("Flee")->panicDistance = 350.0f;
+	steeringModule->GetBehavior < AI::FleeBehavior3D >("Flee")->panicDistance = PanicDistance;
 	//------------------------------------------------------------------------------------------------------------------
 
 	//---- Wander ------------------------------------------------------------------------------------------------------
@@ -285,10 +286,10 @@ void TinyFish::Initialize(float width, float height, float depth)
 	obsAvioid->SetActive(true);
 	obsAvioid->SetWeight(10.0f);
 	//------------------------------------------------------------------------------------------------------------------
-	
+
 	//---- WallAvoid      -----------------------------------------------------------------------------------------------
 	auto wallAvioid = steeringModule->AddBehavior < AI::WallAvoidBehavior3D>("wallAvoid");
-	wallAvioid->SetDebugDraw(true);
+	wallAvioid->SetDebugDraw(false);
 	wallAvioid->SetActive(true);
 	wallAvioid->SetWeight(10.0f);
 	//------------------------------------------------------------------------------------------------------------------
@@ -315,7 +316,7 @@ void TinyFish::Initialize(float width, float height, float depth)
 		auto entityInMemory = AI::Entity3D::mAllEntity[memory.GetProperty<int>("EntityId")];
 		if (entityInMemory->GetTypeName() == PreditorFish::GET_TYPE_NAME())
 		{
-			if(NFGE::Math::Distance(entityInMemory->position, position) < 400.0f)
+			if (NFGE::Math::Distance(entityInMemory->position, position) < 400.0f)
 				memory.importance = 3.0f;
 			else
 				memory.importance = 0.0f;
@@ -348,14 +349,14 @@ void TinyFish::Terminate()
 {
 }
 
-void TinyFish::OnUpdate( float deltaTime)
+void TinyFish::OnUpdate(float deltaTime)
 {
 	mPerceptionModule->Update(deltaTime);
 	//if(mPerceptionModule->GetMemoryRecords().empty())
-		//mDiffuseColorLerper.Start(mDiffuseColor, TinyFish::mRegularColor, 0.5f);
+	//mDiffuseColorLerper.Start(mDiffuseColor, TinyFish::mRegularColor, 0.5f);
 
 	mStateMachine->Update(deltaTime);
-	
+
 	//UpdateBehaviorControl(behaviorControl);
 
 	steeringModule->GetBehavior< AI::WanderBehavior3D >("Wander")->SetWeight(mBehaviorControl.mWanderWeight);
@@ -386,12 +387,13 @@ void TinyFish::Render()
 	Render_2D();
 
 	auto sphereRadius = radius * 0.5f;
-	mGeometry.Render({ position.x, position.y, position.z }, heading, { sphereRadius, sphereRadius, sphereRadius }, camera, mDiffuseColor, mAmbientColor);
+	if (!isDrawDebugLine)
+		mGeometry.Render({ position.x, position.y, position.z }, heading, { sphereRadius, sphereRadius, sphereRadius }, camera, mDiffuseColor, mAmbientColor);
 }
 
 void TinyFish::DebugDraw()
 {
-	
+
 }
 
 void TinyFish::ResetPosition(const Vector3 & pos)

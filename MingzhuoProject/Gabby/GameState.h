@@ -64,7 +64,7 @@ private:
 
 
 	NFGE::AI::AIWorld world;
-	std::vector<TriangleDude> dudes;
+	std::vector<TriangleDude> dudes; 
 
 	PTButton mStartButton;
 

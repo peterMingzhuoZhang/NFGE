@@ -14,6 +14,46 @@ using namespace NFGE::Graphics;
 using namespace NFGE::Input;
 using namespace NFGE::Math;
 
+struct MySphere
+{
+	MeshBuffer mMeshBuffer;
+	float mRadius;
+	MeshPX mesh;
+	TextureId diffuseTexture;
+	NFGE::Graphics::Effects::TextureMeshEffect::TextureMeshEffectContext mEffectContext;
+
+	bool IsSkyDome = false;
+
+	void Load(Vector3 position, int row, int col, float mRadius, std::filesystem::path textureName)
+	{
+		mEffectContext.position = position;
+		mesh = MeshBuilder::CreateSpherePX(row, col, mRadius);
+
+		mMeshBuffer.Initialize(mesh);
+		mMeshBuffer.SetTopology();
+
+		mEffectContext.rasterizerState = (IsSkyDome ? "CullFrontSolid" : "Solid");
+
+		mEffectContext.textureId = TextureManager::Get()->LoadTexture(textureName);
+		mEffectContext.rasterizerState = "CullFrontSolid";
+	}
+	void Unload()
+	{
+		mMeshBuffer.Terminate();
+	}
+	void Render(const Camera& camera)
+	{
+		mEffectContext.rasterizerState = (IsSkyDome ? "CullFrontSolid" : "Solid");
+		if (IsSkyDome)
+			mEffectContext.position = camera.GetPosition();
+		auto effectManager = EffectManager::Get();
+		Effect* effect = NFGE::Graphics::EffectManager::Get()->GerEffect(NFGE::Graphics::EffectType::TextureMesh);
+
+		effectManager->RegisterRenderObject(effect, &mEffectContext, &mMeshBuffer, camera);
+		
+	}
+};
+
 class GameState : public NFGE::AppState
 {
 public:
@@ -31,6 +71,7 @@ private:
 	float mDeltaTime;
 
 	AIWorld_3D world_3D;
+	MySphere sphereSkydome{};
 
 	const int col = 16;
 	const int row = 28;

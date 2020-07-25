@@ -1,0 +1,75 @@
+{
+  "GameObject": {
+    "Components": {
+      "TransformComponent": {
+        "Position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "Rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 0
+        },
+		"Scale": {
+          "x": 1,
+          "y": 1,
+          "z": 1
+        }
+      },
+	  "MeshRenderComponent": {
+        "GeometryType": 1 ,
+        "Mesh Render Context": {
+          "Ambient Color": {
+			"x" : 1.0,
+			"y" : 1.0,
+			"z" : 1.0,
+			"w" : 1.0
+		  },
+		  "Diffuse Color": {
+			"x" : 1.0,
+			"y" : 1.0,
+			"z" : 1.0,
+			"w" : 1.0
+		  },
+		  "Specular Color": {
+			"x" : 1.0,
+			"y" : 1.0,
+			"z" : 1.0,
+			"w" : 1.0
+		  },
+          "Specular Power": 10.0,
+          "Diffuse Texture": 
+		  {
+			"Texture Type" : 0,
+			"File Name" : "Cobblestone_001_COLOR.jpg"
+		  },
+		  "Is Using Diffuse Texture" : true,
+		  "Specular Texture": 
+		  {
+			"Texture Type" : 1,
+			"File Name" : "earth_spec.jpg"
+		  },
+		  "Is Using Specular Texture" : true,
+		  "Normal Texture": 
+		  {
+			"Texture Type" : 5,
+			"File Name" : "Cobblestone_001_NORM.jpg"
+		  },
+		  "Is Using Normal Texture" : true,
+		  "Displacement Texture": 
+		  {
+			"Texture Type" : 8,
+			"File Name" : "earth_bump.jpg"
+		  },
+		  "Is Using Displacement Texture" : false,
+		  "Displacement Weight" : 0.0,
+		  "Is Casting Shadow" : true,
+		  "Topology" : 2
+        }
+      }
+	}
+  }
+}

@@ -456,6 +456,11 @@ namespace NFGE::Graphics
 
 				void UpdateTransform(int index);
 
+				void SetTexture(MeshTextureMaterial::ModelTextureType textureType, TextureId& textureId)
+				{
+					modelMaterials[0].LoadTexture( textureType, textureId);
+				}
+
 				void GetTexture(MeshTextureMaterial::ModelTextureType textureType, TextureId& textureId) override
 				{
 					textureId = modelMaterials[0].GetTexture(textureType);

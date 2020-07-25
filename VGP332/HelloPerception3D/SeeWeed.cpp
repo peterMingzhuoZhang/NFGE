@@ -1,6 +1,7 @@
 #include "SeeWeed.h"
 
 PTSphere SeeWeed::mSphere;
+extern bool isDrawDebugLine;
 namespace
 {
 	const float SeeWeedRadius = 10.0f;
@@ -92,6 +93,8 @@ void SeeWeedTree::Update(float deltaTime)
 
 void SeeWeedTree::Render()
 {
+	if (isDrawDebugLine)
+		return;
 	for (int i = 0; i < mSeeWeedGraph.GetNodeCount(); i++)
 	{
 		if (!mSeeWeedGraph.GetNode(i)->mIsActive)

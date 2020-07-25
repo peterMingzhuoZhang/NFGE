@@ -46,8 +46,13 @@ public:
 		for (int i = 0; i < dudes.size(); i++)
 		{
 			dudes[i]->Update(behaviorControl, deltaTime);
+			
+			Vector2 mousePos = { (float)NFGE::Input::InputSystem::Get()->GetMouseScreenX(),(float)NFGE::Input::InputSystem::Get()->GetMouseScreenY() };
+			dudes[i]->UpdateFleeBehavior(isFlee, mousePos, 200.0f, 20.0f);
+			
 		}
 
+		
 		
 
 		auto inputSystem = InputSystem::Get();
@@ -65,6 +70,7 @@ public:
 		for (int i = 0; i < dudes.size(); i++)
 		{
 			dudes[i]->mIsDebugDraw = isDrawDebugLine;
+			dudes[i]->isDrawTexture = isSpriteRender;
 			dudes[i]->Render();
 		}
 
@@ -105,6 +111,8 @@ private:
 	BehaviorControl behaviorControl;
 
 	bool isDrawDebugLine = false;
+	bool isSpriteRender = true;
+	bool isFlee = false;
 
 	float mDeltaTime;
 
@@ -122,6 +130,7 @@ private:
 
 	void ShowUI()
 	{
+		
 		ImGui::Begin("Util");
 		ImGui::Text("FPS: %f", 1.0f / mDeltaTime);
 		ImGui::End();
@@ -164,12 +173,29 @@ private:
 			behaviorControl.mSeparationWeight = 1.0f;
 			behaviorControl.mCohesionWeight = 3.0f;
 		}
+
+		if (ImGui::Button("Toggle Flee"))
+		{
+			isFlee = isFlee ? false : true;
+		}
+
 		ImGui::End();
 
 		ImGui::Begin("Eyes Blind Alert!");
 		if (ImGui::Button("Toggle Debug Line"))
 		{
+			
 			isDrawDebugLine = isDrawDebugLine ? false : true;
+		}
+		if (ImGui::Button("Toggle Sprite Render"))
+		{
+
+			isSpriteRender = isSpriteRender? false : true;
+		}
+
+		if (isDrawDebugLine)
+		{
+			world.DebugUI();
 		}
 		ImGui::End();
 	}

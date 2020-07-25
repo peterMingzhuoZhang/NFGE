@@ -67,7 +67,7 @@ void PreditorFish::Initialize(float width, float height, float depth)
 	steeringModule = std::make_unique<AI::SteeringModule3D>(*this);
 	//---- Wander ------------------------------------------------------------------------------------------------------
 	auto wanderBehavior = steeringModule->AddBehavior < AI::WanderBehavior3D >("Wander");
-	wanderBehavior->SetParama(200.0f, 50.0f, 100.0f);
+	wanderBehavior->SetParama(200.0f, 200.0f, 200.0f);
 	wanderBehavior->SetActive(false);
 	//------------------------------------------------------------------------------------------------------------------
 
@@ -123,7 +123,9 @@ void PreditorFish::Render()
 	Render_2D();
 
 	auto sphereRadius = radius * 0.5f;
-	mGeometry.Render({ position.x,  position.y, position.z }, heading, { sphereRadius, sphereRadius, sphereRadius }, camera);
+
+	if (!isDrawDebugLine)
+		mGeometry.Render({ position.x,  position.y, position.z }, heading, { sphereRadius, sphereRadius, sphereRadius }, camera);
 
 }
 

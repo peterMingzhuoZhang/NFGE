@@ -13,6 +13,6 @@ int WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	auto nameIndex = NFGE::Math::Random() % names.size();
 	NFGEApp::AddState<GameState>("GameState");
-	NFGEApp::Run({names[nameIndex], L"../Assets"});
+	NFGEApp::Run({names[nameIndex], L"../../Assets"});
 	return 0;
 }

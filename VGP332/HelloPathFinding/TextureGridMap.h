@@ -35,8 +35,7 @@ struct TextureGridMap : PathFindingMapShell
 	void Unload() override;
 	
 	template<typename CanOpenPolicy_Djika, typename CanOpenPolicy_DFSnDFS, typename GetGCostPolicy, typename GetHCostPolicy>
-	void Update(float deltaTime);
-
+	void DebugUI();
 	
 	void Render(const Camera2D& camera) override;
 	
@@ -45,7 +44,7 @@ struct TextureGridMap : PathFindingMapShell
 
 // Template implemention ------------------------------------------------------------------------------------------------------
 template<typename CanOpenPolicy_Djika, typename CanOpenPolicy_DFSnDFS, typename GetGCostPolicy, typename GetHCostPolicy>
-void TextureGridMap::Update(float deltaTime)
+void TextureGridMap::DebugUI()
 {
 	
 	ImGui::Text("Grid Graph");
@@ -151,12 +150,12 @@ void TextureGridMap::Update(float deltaTime)
 				activeNode = i;
 				mouseNotInAll = false;
 
-				if (IsMouseDown(LBUTTON))
+				if (IsMouseDown((int)NFGE::Input::MouseButton::LBUTTON))
 				{
 					gridGraph.GetNode(i).tileType = currentPaintTile;
 					isGraphPathFinded = false;
 				}
-				if (IsMouseDown(RBUTTON))
+				if (IsMouseDown((int)NFGE::Input::MouseButton::RBUTTON))
 				{
 					gridGraph.GetNode(i).tileType = 0;
 					isGraphPathFinded = false;
@@ -205,8 +204,6 @@ void TextureGridMap::Update(float deltaTime)
 		startX = 0; startY = 0;
 		endX = 0; endY = 0;
 	}
-
-	
 }
 
 #endif // !HELLOPATHFINDING_TEXTUREGRIDMAP_HEADER

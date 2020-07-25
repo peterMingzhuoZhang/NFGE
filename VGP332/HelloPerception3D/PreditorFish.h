@@ -24,8 +24,8 @@ struct PreditorFish : PTEntity_Shell
 	void ResetPosition(const NFGE::Math::Vector3& pos);
 	std::unique_ptr<AI::SteeringModule3D> steeringModule;
 	
-	float mDetectedRange = 100.0f;
-	float mKillRange = 80.0f;
+	float mDetectedRange = 200.0f;
+	float mKillRange = 180.0f;
 
 	std::unique_ptr<AI::StateMachine<PreditorFish>> mStateMachine;
 };

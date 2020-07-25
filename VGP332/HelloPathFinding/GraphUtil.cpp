@@ -148,7 +148,7 @@ void DrawLineBetweenNeighbor(T& graph, const MapNode& currentNode)
 	for (size_t j = 0; j < currentNode.neighbors.size(); j++)
 	{
 		MapNode& neighbourNode = graph.GetNode(currentNode.neighbors[j]);
-		DrawScreenLine(currentNode.position, neighbourNode.position, Color::Gray());
+		DrawScreenLine(currentNode.position, neighbourNode.position, NFGE::Graphics::Colors::Gray);
 	}	
 }
 
@@ -159,7 +159,7 @@ void DrawLineBetweenNeighbor(T& graph, const MapNode& currentNode, const Camera2
 	for (size_t j = 0; j < currentNode.neighbors.size(); j++)
 	{
 		MapNode& neighbourNode = graph.GetNode(currentNode.neighbors[j]);
-		DrawScreenLine(camera.ConvertToScreen(currentNode.position), camera.ConvertToScreen(neighbourNode.position), Color::Gray());
+		DrawScreenLine(camera.ConvertToScreen(currentNode.position), camera.ConvertToScreen(neighbourNode.position), NFGE::Graphics::Colors::Gray);
 	}
 
 }

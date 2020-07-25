@@ -27,7 +27,7 @@ void EditState::Initialize()
 	auto terrainService = mWorld.AddService<NFGE::TerrainService>();
 
 	mWorld.Initialize(10000);
-	mWorld.Create("../../Assets/Templates/test.json", "testObject");
+	//mWorld.Create("../../Assets/Templates/test.json", "testObject");
 
 }
 

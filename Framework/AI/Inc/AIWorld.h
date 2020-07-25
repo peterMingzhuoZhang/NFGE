@@ -123,6 +123,7 @@ namespace NFGE::AI
 
 		void Update();
 		void Update(float newCellSize);
+		void DebugUI();
 
 	private:
 		EntitiesMap mEntitiesMap{};

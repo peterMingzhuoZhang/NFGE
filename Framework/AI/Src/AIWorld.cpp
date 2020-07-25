@@ -57,6 +57,18 @@ void AI::AIWorld::Update()
 	{
 		mGrid.FenPeiAgent(agentPtr);
 	}
+	
+}
+
+void NFGE::AI::AIWorld::Update(float neiborRange)
+{
+	float newCellSize = neiborRange * 2.0f;
+	mGrid.mSize = newCellSize > 10.0f ? newCellSize : 10.0f;
+	Update();																				// This is an extra function call, make it inline to improve perfomance
+}
+
+void NFGE::AI::AIWorld::DebugUI()
+{
 	//------------------------------------------------------------------------------------
 	//-|||||||||||-- Debug Function ------------------------------------------------------
 	//-|||||||||||------------------------------------------------------------------------
@@ -66,13 +78,6 @@ void AI::AIWorld::Update()
 	//-|||||||||||------------------------------------------------------------------------
 	//-|||||||||||------------------------------------------------------------------------
 	//------------------------------------------------------------------------------------
-}
-
-void NFGE::AI::AIWorld::Update(float neiborRange)
-{
-	float newCellSize = neiborRange * 2.0f;
-	mGrid.mSize = newCellSize > 10.0f ? newCellSize : 10.0f;
-	Update();																				// This is an extra function call, make it inline to improve perfomance
 }
 
 void AI::AIWorld::GetNeighborhood(Agents& neigbor, const NFGE::Math::Circle & range) const

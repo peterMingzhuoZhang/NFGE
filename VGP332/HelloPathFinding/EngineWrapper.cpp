@@ -7,87 +7,87 @@
 
 EngineWrapper::TextureId EngineWrapper::LoadTexture(const char * filename)
 {
-	return X::LoadTexture(filename);
+	return NFGE::Graphics::TextureManager::Get()->LoadTexture(filename);
 }
 
 void EngineWrapper::DrawSprite(TextureId textureId, Vector2 position, float rotation, float alpha, float anchorX, float anchorY, float xScale, float yScale)
 {
-	X::DrawSprite(textureId, position, rotation, alpha, anchorX, anchorY, xScale, yScale);
+	NFGE::sApp.DrawSprite(textureId, position, rotation, alpha, anchorX, anchorY, xScale, yScale);
 }
 
 float EngineWrapper::GetSpriteWidth(TextureId texture)
 {
-	return static_cast<float>(X::GetSpriteWidth(texture));
+	return static_cast<float>(NFGE::sApp.GetSpriteWidth(texture));
 }
 
 float EngineWrapper::GetSpriteHeight(TextureId texuture)
 {
-	return static_cast<float>(X::GetSpriteHeight(texuture));
+	return static_cast<float>(NFGE::sApp.GetSpriteHeight(texuture));
 }
 
 void * EngineWrapper::GetSprite(TextureId texture)
 {
-	return X::GetSprite(texture);
+	return NFGE::sApp.GetSprite(texture);
 }
 
 
 
 void EngineWrapper::DrawScreenCircle(const Vector2 & vector, float radius, const Color & color)
 {
-	X::DrawScreenCircle(vector, radius, color);
+	NFGE::sApp.DrawScreenCircle(vector, radius, color);
 }
 
 void EngineWrapper::DrawScreenRect(const Rect & rect, const Color & color)
 {
-	X::DrawScreenRect(rect, color);
+	NFGE::sApp.DrawScreenRect(rect, color);
 }
 
 void EngineWrapper::DrawScreenLine(const Vector2 & pos1, const Vector2 & pos2, const Color & color)
 {
-	X::DrawScreenLine(pos1, pos2, color);
+	NFGE::sApp.DrawScreenLine(pos1, pos2, color);
 }
 
 int EngineWrapper::GetMouseScreenX()
 {
-	return X::GetMouseScreenX();
+	return NFGE::Input::InputSystem::Get()->GetMouseScreenX();
 }
 
 int EngineWrapper::GetMouseScreenY()
 {
-	return X::GetMouseScreenY();
+	return NFGE::Input::InputSystem::Get()->GetMouseScreenY();
 }
 
 bool EngineWrapper::IsMousePressed(int mouseButton)
 {
-	return X::IsMousePressed(mouseButton);
+	return NFGE::Input::InputSystem::Get()->IsMousePressed(static_cast<NFGE::Input::MouseButton>(mouseButton));
 }
 
 bool EngineWrapper::IsMouseDown(int mouseButton)
 {
-	return X::IsMouseDown(mouseButton);
+	return NFGE::Input::InputSystem::Get()->IsMouseDown(static_cast<NFGE::Input::MouseButton>(mouseButton));
 }
 
 bool EngineWrapper::IsKeyPressed(int button)
 {
-	return X::IsKeyPressed(button);
+	return NFGE::Input::InputSystem::Get()->IsKeyPressed(static_cast<NFGE::Input::KeyCode>(button));
 }
 
 bool EngineWrapper::PointInCircle(const Vector2 & mousePosition, const Circle & circle)
 {
-	return X::Math::PointInCircle(mousePosition, circle);
+	return NFGE::Math::PointInCircle(mousePosition, circle);
 }
 
 bool EngineWrapper::PointInRect(const Vector2 & mousePosition, const Rect & rect)
 {
-	return X::Math::PointInRect(mousePosition, rect);
+	return NFGE::Math::PointInRect(mousePosition, rect);
 }
 
 bool EngineWrapper::OpenFileDialog(char fileName[MAX_PATH], const char * title, const char * filter)
 {
-	return X::OpenFileDialog(fileName, title, filter);
+	return NFGE::sApp.OpenFileDialog(fileName, title, filter);
 }
 
 bool EngineWrapper::SaveFileDialog(char fileName[MAX_PATH], const char * title, const char * filter)
 {
-	return X::SaveFileDialog(fileName, title, filter);
+	return NFGE::sApp.SaveFileDialog(fileName, title, filter);
 }

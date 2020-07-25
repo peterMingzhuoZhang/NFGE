@@ -1,0 +1,75 @@
+{
+  "GameObject": {
+    "Components": {
+      "TransformComponent": {
+        "Position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "Rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0,
+          "w": 0
+        },
+		"Scale": {
+          "x": 0.001,
+          "y": 1,
+          "z": 1
+        }
+      },
+	  "MeshRenderComponent": {
+        "GeometryType": 5 ,
+        "Mesh Render Context": {
+          "Ambient Color": {
+			"x" : 1.0,
+			"y" : 1.0,
+			"z" : 1.0,
+			"w" : 1.0
+		  },
+		  "Diffuse Color": {
+			"x" : 1.0,
+			"y" : 1.0,
+			"z" : 1.0,
+			"w" : 1.0
+		  },
+		  "Specular Color": {
+			"x" : 1.0,
+			"y" : 1.0,
+			"z" : 1.0,
+			"w" : 1.0
+		  },
+          "Specular Power": 10.0,
+          "Diffuse Texture": 
+		  {
+			"Texture Type" : 0,
+			"File Name" : "8k_saturn_ring_alpha.png"
+		  },
+		  "Is Using Diffuse Texture" : true,
+		  "Specular Texture": 
+		  {
+			"Texture Type" : 1,
+			"File Name" : "earth_spec.jpg"
+		  },
+		  "Is Using Specular Texture" : false,
+		  "Normal Texture": 
+		  {
+			"Texture Type" : 5,
+			"File Name" : "earth_normal.jpg"
+		  },
+		  "Is Using Normal Texture" : false,
+		  "Displacement Texture": 
+		  {
+			"Texture Type" : 8,
+			"File Name" : "earth_bump.jpg"
+		  },
+		  "Is Using Displacement Texture" : false,
+		  "Displacement Weight" : 0.0,
+		  "Is Casting Shadow" : true,
+		  "Topology" : 2
+        }
+      }
+	}
+  }
+}

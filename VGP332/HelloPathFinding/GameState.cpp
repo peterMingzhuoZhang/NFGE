@@ -128,21 +128,23 @@ void GameState::Terminate()
 void GameState::Update(float deltaTime)
 {
 	// GridGraph
-	myGridMap.Update<GridMap_CanOpenNode_Djika, GridMap_CanOpenNode_DFSnBFS, GridMap_GetGCost, GridMap_GetHCost>(deltaTime);
-	myGridMap.Render(myCamera2D);
-	myRandomMap.Update<RandomMap_CanOpenNode_Djika, RandomMap_CanOpenNode_DFSnBFS, RandomMap_GetGCost, RandomMap_GetHCost>(deltaTime);
-	myRandomMap.Render(myCamera2D);
+	
+	
+	myRandomMap.Update(deltaTime);
 
 	myCamera2D.Update(deltaTime);
 }
 
 void GameState::Render()
 {
-	
+	myGridMap.Render(myCamera2D);
+
+	myRandomMap.Render(myCamera2D);
 }
 
 void GameState::DebugUI()
 {
-	
+	myGridMap.DebugUI<GridMap_CanOpenNode_Djika, GridMap_CanOpenNode_DFSnBFS, GridMap_GetGCost, GridMap_GetHCost>();
+	myRandomMap.DebugUI<RandomMap_CanOpenNode_Djika, RandomMap_CanOpenNode_DFSnBFS, RandomMap_GetGCost, RandomMap_GetHCost>();
 }
 

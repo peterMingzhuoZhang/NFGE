@@ -10,8 +10,8 @@ void Scene::Load()
 	mLight.specular = { 0.5f, 0.5f, 0.5f, 1.0f };
 	mLightBuffer.Initialize();
 
-	mTentaclePC.Load(3, 10.0f, "earth.jpg", "earth_normal.jpg", "earth_spec.jpg", "earth_bump.jpg");
-	mTentaclePA.Load(3, 10.0f, "earth.jpg", "earth_normal.jpg", "earth_spec.jpg", "earth_bump.jpg");
+	mTentaclePC.Load(2, 10.0f, "earth.jpg", "earth_normal.jpg", "earth_spec.jpg", "earth_bump.jpg");
+	mTentaclePA.Load(2, 10.0f, "earth.jpg", "earth_normal.jpg", "earth_spec.jpg", "earth_bump.jpg");
 }
 
 void Scene::Update(float deltaTime)

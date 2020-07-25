@@ -27,17 +27,28 @@ struct RandomSpringMap : PathFindingMapShell
 	void Load() override;
 	void Unload() override;
 
-	template<typename CanOpenPolicy_Djika, typename CanOpenPolicy_DFSnDFS, typename GetGCostPolicy, typename GetHCostPolicy>
 	void Update(float deltaTime);
+	
+	template<typename CanOpenPolicy_Djika, typename CanOpenPolicy_DFSnDFS, typename GetGCostPolicy, typename GetHCostPolicy>
+	void DebugUI();
 
 	void Render(const Camera2D& camera) override;
 };
 
 #endif // !HELLOPATHFINDING_RANDOMSPRINGMAP_HEADER
 
+inline void RandomSpringMap::Update(float deltaTime)
+{
+	randomGraph.GetNode(0).position = initPosition + Vector2{ graphMaxArea.x * 0.5f , graphMaxArea.y * 0.5f };
+	for (size_t i = 0; i < randomGraph.GetNodeCount(); i++)
+	{
+		randomGraph.GetNode(i).Update(randomGraph, randomGraph.GetNode(0).position, deltaTime);
+	}
+}
+
 // Template implemention ------------------------------------------------------------------------------------------------------
 template<typename CanOpenPolicy_Djika, typename CanOpenPolicy_DFSnDFS, typename GetGCostPolicy, typename GetHCostPolicy>
-inline void RandomSpringMap::Update(float deltaTime)
+inline void RandomSpringMap::DebugUI()
 {
 	// Random Graph
 	ImGui::Text("\nRandom Graph");
@@ -68,7 +79,7 @@ inline void RandomSpringMap::Update(float deltaTime)
 			{
 				mouseNotInAll = false;
 				activeNode = i;
-				if (IsMousePressed(LBUTTON))
+				if (IsMousePressed((int)NFGE::Input::MouseButton::LBUTTON))
 				{
 					PathEndPoints[clickCount % 2] = i;
 					clickCount++;
@@ -113,9 +124,6 @@ inline void RandomSpringMap::Update(float deltaTime)
 		}
 	}
 
-	randomGraph.GetNode(0).position = initPosition + Vector2{ graphMaxArea.x * 0.5f , graphMaxArea.y * 0.5f };
-	for (size_t i = 0; i < randomGraph.GetNodeCount(); i++)
-	{
-		randomGraph.GetNode(i).Update(randomGraph, randomGraph.GetNode(0).position, deltaTime);
-	}
+	
+	
 }
