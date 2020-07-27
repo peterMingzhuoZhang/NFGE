@@ -14,7 +14,7 @@ namespace
 	const wchar_t* PostProcessDepthBlur_0 = L"PostProcesses/PostProcess_DepthBlue_Pre.fx";
 	const wchar_t* PostProcessDepthBlur_1 = L"PostProcesses/PostProcess_DepthBlur_Post.fx";
 
-	const uint32_t ShadowCameraResulotionMultiplier = 8;
+	const uint32_t ShadowCameraResulotionMultiplier = 4;
 	const uint32_t shadowRenderTargetWidth = 1280;
 	const uint32_t shadowRenderTargetHeight = 720;
 }

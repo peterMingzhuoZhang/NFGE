@@ -363,17 +363,62 @@ void NFGE::Physics::PhysicsWorld::SatisfyConstraints()
 		{
 			if (Math::Intersect(p->position, obb))
 			{
+				bool isParticleInObb = false;
 				auto velocity = p->position - p->lastPosition;
-				auto direction = Math::Normalize(velocity);
 
-				Math::Ray ray{ p->lastPosition, direction };
+				Math::Vector3 direction;
+				if (velocity == Math::Vector3::Zero())
+					direction = Math::Normalize(obb.center - p->position);
+				else
+					direction = Math::Normalize(velocity);
+
+				Math::Ray ray;
+				if (Math::Intersect(p->lastPosition, obb))
+				{
+
+					auto c2P = (p->position - obb.center);
+
+					NFGE::Math::Matrix4 rotationQuat = NFGE::Math::MatrixRotationQuaternion(obb.orientation);
+					std::vector <std::pair< NFGE::Math::Vector3,float> > obbNormals =
+					{
+						{NFGE::Math::Vector3::XAxis * rotationQuat,obb.extend.x },
+						{NFGE::Math::Vector3::YAxis * rotationQuat,obb.extend.y },
+						{NFGE::Math::Vector3::ZAxis * rotationQuat,obb.extend.z },
+						{-NFGE::Math::Vector3::XAxis * rotationQuat,obb.extend.x },
+						{-NFGE::Math::Vector3::YAxis * rotationQuat,obb.extend.y },
+						{-NFGE::Math::Vector3::ZAxis * rotationQuat,obb.extend.z}
+					};
+
+					float miniDistance = FLT_MAX;
+					NFGE::Math::Vector3 rayDir;
+					for (auto& nor : obbNormals)
+					{
+						float distance = NFGE::Math::Dot(c2P, nor.first);
+						if (distance <= 0.0f)
+							continue;
+						if (nor.second - distance < miniDistance)
+						{
+							miniDistance = distance;
+							rayDir = nor.second;
+						}
+					}
+
+					ray = { p->position + ( rayDir * (obb.extend.x + obb.extend.y + obb.extend.z)), -rayDir };
+					isParticleInObb = true;
+				}
+				else
+					ray = { p->lastPosition, direction };
+
 				Math::Vector3 point, normal;
 				Math::GetContactPoint(ray, obb, point, normal);
 
 				auto velocityPerpendicular = normal * Math::Dot(velocity, normal);
 				auto velocityParallel = velocity - velocityPerpendicular;												// Get new velocity by flip the perpendicular velocity
 				auto newVelocity = (velocityParallel * (1.0f - mSettings.drag)) - (velocityPerpendicular * p->bounce);
-				p->SetPosition(p->position - velocityPerpendicular);
+				if (isParticleInObb)
+					p->SetPosition(point);
+				else
+					p->SetPosition(p->position - velocityPerpendicular);
 				p->SetVelocity(newVelocity);
 			}
 		}

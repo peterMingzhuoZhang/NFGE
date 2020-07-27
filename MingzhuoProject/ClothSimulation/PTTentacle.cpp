@@ -6,7 +6,11 @@ using namespace NFGE::Math;
 
 namespace
 {
+	const wchar_t* MeshShaderFileName = L"../../Assets/Shaders/Standard_Skining.fx";
 	float RotationSpeed = 0.20f;
+	Vector3 hookPosition = { 0.0f,30.0f,0.0f };
+	float SupportRootDistance = 10.0f;
+	float grassGrowingLevelDiff = 0.05f;
 
 	void UpdateTransfrom(Bone* bone, std::vector<PC::TentacleSegment>& armSegments)
 	{
@@ -19,19 +23,42 @@ namespace
 	}
 }
 
-void PCTentacle::Load(int totalSeg, float baseLength, const char* diffuseMap, const char* nomralMap, const char* specularMap, const char* displaceMentMap)
+bool PTTentacle::IsMeshInit = false;
+NFGE::Graphics::BoneMesh PTTentacle::mMesh;
+NFGE::Graphics::MeshBuffer PTTentacle::mMeshBuffer;
+
+void PTTentacle::Load(int totalSeg, float baseLength, const char* diffuseMap, const char* nomralMap, const char* specularMap, const char* displaceMentMap)
 {
 	//ASSERT(__assume(totalSeg < NFGE::Graphics::MaxBoneCount), "[HelloTentacle] try to initlize a tentacle that have more than MaxBoneCount of bone");
 
 	// - Bone Initlize -----------------------------------------------------------
 	mTotalSeg = totalSeg;
-	mMesh = NFGE::Graphics::MeshBuilder::CreateTentacle(mTotalSeg, 500, 10, 2.0f, baseLength, NFGE::Math::Ease::EaseNone);
-	mMeshBuffer.Initialize(mMesh, true);
-	mMeshBuffer.SetTopology();
-	
 	BuildBoneSkelton(mTotalSeg, baseLength);
+	// - Mesh Initlize -----------------------------------------------------------
+	if (!IsMeshInit)
+	{
+		mMesh = NFGE::Graphics::MeshBuilder::CreateTentacle(mTotalSeg, 500, 40, 2.0f, baseLength, NFGE::Math::Ease::EaseNone);
+		mMeshBuffer.Initialize(mMesh, true);
+		mMeshBuffer.SetTopology();
+		IsMeshInit = true;
+	}
 
-	mEffectContext.
+	mMatrices[0].Identity();
+	mMatrices[1].Identity();
+	mMatrices[2].Identity();
+
+	mVertexShader.Initialize(MeshShaderFileName, NFGE::Graphics::BoneVertex::Format);
+	mPixelShader.Initialize(MeshShaderFileName);
+
+	mTransformBuffer.Initialize();
+	mMaterialBuffer.Initialize();
+	mBoneTransferBuffer.Initialize();
+	mOptionBuffer.Initialize();
+
+	mMaterial.ambient = NFGE::Graphics::Colors::LightGray;
+	mMaterial.diffuse = NFGE::Graphics::Colors::LightSlateGray;
+	mMaterial.specular = { 0.8f, 0.8f, 0.8f, 1.0f };
+	mMaterial.power = 10.0f;
 
 	mDiffuseTexture = TextureManager::Get()->LoadTexture(diffuseMap);
 	mNormalTexture = TextureManager::Get()->LoadTexture(nomralMap);
@@ -45,12 +72,56 @@ void PCTentacle::Load(int totalSeg, float baseLength, const char* diffuseMap, co
 
 }
 
-void PCTentacle::Update(float deltaTime)
+void PTTentacle::InitPhysics(NFGE::Physics::PhysicsWorld& world)
 {
-	ControlSegment(deltaTime);
+	//mRootParticle = world.AddParticle(new NFGE::Physics::Particle());
+
+	NFGE::Math::Vector3 lastSpwanPos = mPosition;
+	
+	auto newParticle_root = world.AddParticle(mGrassParticles.emplace_back(new NFGE::Physics::Particle()));
+	newParticle_root->SetPosition(mPosition);
+	newParticle_root->invMass = 1.0f;
+	world.AddConstraint(new NFGE::Physics::Fixed(newParticle_root));
+
+	NFGE::Physics::Particle* lastParticle;
+
+	int index = 0;
+	for (auto& seg : mSegs)
+	{
+		lastParticle = mGrassParticles.back();
+
+		auto newParticle_grass = world.AddParticle(mGrassParticles.emplace_back(new NFGE::Physics::Particle()));
+		newParticle_grass->SetPosition(seg.mChildSpwanPoint + lastSpwanPos + Vector3(0.0f, 0.0f, index * grassGrowingLevelDiff));
+		newParticle_grass->invMass = 1.0f;
+		lastSpwanPos = newParticle_grass->position;
+
+		world.AddConstraint(new NFGE::Physics::Spring(lastParticle, newParticle_grass));
+		lastParticle = newParticle_grass;
+
+		AddSupport(world, Vector3(0.0f, 0.0f, SupportRootDistance));
+		AddSupport(world, Vector3(0.0f, 0.0f, -SupportRootDistance));
+		AddSupport(world, Vector3(SupportRootDistance, 0.0f, 0.0f));
+		AddSupport(world, Vector3(-SupportRootDistance, 0.0f, 0.0f));
+
+		//auto newParticle_support = world.AddParticle(new NFGE::Physics::Particle());
+		//newParticle_support->SetPosition(newParticle_grass->position + Vector3(0.0f,0.0f,index * grassGrowingLevelDiff));
+		//newParticle_support->invMass = 10.0f * (index + 1);
+		//world.AddConstraint(new NFGE::Physics::Spring(newParticle_grass, newParticle_support));
+		//world.AddConstraint(new NFGE::Physics::Fixed(newParticle_support));
+		++index;
+	}
+
+	
 }
 
-void PCTentacle::Render(const Camera & camera)
+void PTTentacle::Update(float deltaTime)
+{
+	//ControlSegment(deltaTime);
+	UpdateSegmentTransform_FromPhysics();
+
+}
+
+void PTTentacle::Render(const Camera & camera)
 {
 	mVertexShader.Bind();
 	mPixelShader.Bind();
@@ -101,10 +172,10 @@ void PCTentacle::Render(const Camera & camera)
 	rs->Clear();
 }
 
-void PCTentacle::DebugUI()
+void PTTentacle::DebugUI()
 {
 	// - Imgui control -------------------------------------------------------------------------------------------------------------------------------
-	ImGui::Begin("Control PCTentacle");
+	ImGui::Begin("Control PTTentacle");
 
 	ImGui::Text("Control Individual Segment");
 
@@ -164,7 +235,7 @@ void PCTentacle::DebugUI()
 
 }
 
-void PCTentacle::UnLoad()
+void PTTentacle::UnLoad()
 {
 	// - Mesh Initlize -----------------------------------------------------------
 	mMeshBuffer.Terminate();
@@ -177,7 +248,7 @@ void PCTentacle::UnLoad()
 	// ---------------------------------------------------------------------------
 }
 
-void PCTentacle::BuildBoneSkelton(int totalBone, float baseLength)
+void PTTentacle::BuildBoneSkelton(int totalBone, float baseLength)
 {
 	mSegs.reserve(totalBone);
 
@@ -218,76 +289,54 @@ void PCTentacle::BuildBoneSkelton(int totalBone, float baseLength)
 	mCurrentControlSeg = 0;
 }
 
-void PCTentacle::ControlSegment(float deltaTime)
-{
 
-	// Button Control --------------------------------------------------------------------------------------------------------------------------------
-	auto& currentSegment = mSegs[mCurrentControlSeg];
-	auto inputSystem = InputSystem::Get();
 
-	if (inputSystem->IsKeyDown(KeyCode::NUMPAD4))
-	{
-		currentSegment.mAnitmateRotation = currentSegment.mAnitmateRotation * QuaternionRotationAxis(Vector3::ZAxis, RotationSpeed * deltaTime);
-		UpdateSegmentTransform(mCurrentControlSeg);
-	}
-	if (inputSystem->IsKeyDown(KeyCode::NUMPAD6))
-	{
-		currentSegment.mAnitmateRotation = currentSegment.mAnitmateRotation * QuaternionRotationAxis(-Vector3::ZAxis, RotationSpeed * deltaTime);
-		UpdateSegmentTransform(mCurrentControlSeg);
-	}
-
-	if (inputSystem->IsKeyDown(KeyCode::NUMPAD7))
-	{
-		for (int i = 0; i < mSegs.size(); i++)
-		{
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(Vector3::ZAxis, RotationSpeed * deltaTime);
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(Vector3::XAxis, RotationSpeed * deltaTime);
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(Vector3::YAxis, RotationSpeed * deltaTime);
-			UpdateSegmentTransform(i);
-		}
-
-	}
-	if (inputSystem->IsKeyDown(KeyCode::NUMPAD9))
-	{
-		for (int i = 0; i < mSegs.size(); i++)
-		{
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(-Vector3::ZAxis, RotationSpeed * deltaTime);
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(-Vector3::XAxis, RotationSpeed * deltaTime);
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(-Vector3::YAxis, RotationSpeed * deltaTime);
-			UpdateSegmentTransform(i);
-		}
-	}
-
-	if (inputSystem->IsKeyDown(KeyCode::NUMPAD1))
-	{
-		for (int i = 1; i < mSegs.size(); i++)
-		{
-			float direction = i % 2 == 0 ? 1.0f : -1.0f;
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(Vector3::ZAxis * direction, RotationSpeed * deltaTime);
-			//mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(Vector3::XAxis * direction, RotationSpeed * deltaTime);
-			//mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(Vector3::YAxis * direction, RotationSpeed * deltaTime);
-			UpdateSegmentTransform(i);
-		}
-
-	}
-	if (inputSystem->IsKeyDown(KeyCode::NUMPAD3))
-	{
-		for (int i = 1; i < mSegs.size(); i++)
-		{
-			float direction = i % 2 == 0 ? 1.0f : -1.0f;
-			mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(-Vector3::ZAxis* direction, RotationSpeed * deltaTime);
-			//mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(-Vector3::XAxis* direction, RotationSpeed * deltaTime);
-			//mSegs[i].mAnitmateRotation = mSegs[i].mAnitmateRotation * QuaternionRotationAxis(-Vector3::YAxis* direction, RotationSpeed * deltaTime);
-			UpdateSegmentTransform(i);
-		}
-	}
-	// -----------------------------------------------------------------------------------------------------------------------------------------------
-}
-
-void PCTentacle::UpdateSegmentTransform(int index)
+void PTTentacle::UpdateSegmentTransform(int index)
 {
 	auto& currentToParent = mSegs[index].mBone.toParentTransform;
 
 	currentToParent = NFGE::Math::MatrixRotationQuaternion(mSegs[index].mAnitmateRotation) * Matrix4::sTranslation(mSegs[index].mAnitmatePosition);
 	UpdateTransfrom(&mSegs[index].mBone, mSegs);
 }
+
+void PTTentacle::UpdateSegmentTransform_FromPhysics()
+{
+
+	// mGrassParticle has two element more than mSeg, because of root and hook
+	NFGE::Math::Vector3 lastDirection = NFGE::Math::Vector3::YAxis; // assume all grass initially faceing up
+	for (size_t i = 0; i < mSegs.size(); i++)
+	{
+		NFGE::Math::Vector3 direction = NFGE::Math::Normalize(mGrassParticles[i + 1]->position - mGrassParticles[i]->position);
+		
+		if (lastDirection == direction)
+		{
+			mSegs[i].mAnitmateRotation = NFGE::Math::Quaternion::Identity();
+		}
+		else
+		{
+			mSegs[i].mAnitmateRotation = NFGE::Math::QuaternionFromTo(lastDirection, direction);
+		}
+
+		lastDirection = direction;
+		if (i == 0)
+			mSegs[i].mAnitmatePosition = NFGE::Math::Vector3::Zero();
+		else
+			mSegs[i].mAnitmatePosition = mGrassParticles[i + 1]->position - mGrassParticles[i]->position;
+
+		auto& currentToParent = mSegs[i].mBone.toParentTransform;
+		currentToParent = NFGE::Math::MatrixRotationQuaternion(mSegs[i].mAnitmateRotation) * Matrix4::sTranslation(mSegs[i].mAnitmatePosition);
+	}
+
+	
+	UpdateTransfrom(&mSegs[0].mBone, mSegs);
+}
+
+void PTTentacle::AddSupport(NFGE::Physics::PhysicsWorld& world, Vector3 displacement)
+{
+	auto newParticle_supportRoot00 = world.AddParticle(new NFGE::Physics::Particle());
+	newParticle_supportRoot00->SetPosition(mPosition + displacement);
+	newParticle_supportRoot00->invMass = 10.0f;
+	world.AddConstraint(new NFGE::Physics::Spring(mGrassParticles.back(), newParticle_supportRoot00));
+	world.AddConstraint(new NFGE::Physics::Fixed(newParticle_supportRoot00));
+}
+

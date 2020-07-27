@@ -1,5 +1,6 @@
 #pragma once
 #include <NFGE/Inc/NFGE.h>
+#include "PTTentacle.h"
 
 using namespace NFGE;
 using namespace NFGE::Core;
@@ -19,9 +20,16 @@ public:
 
 private:
 	
+	NFGE::GameObject groundPlane;
+	NFGE::GameObject skyDom;
+	std::vector<PTTentacle> grasses;
 	
+	NFGE::Physics::PhysicsWorld mPhysicsWorld;
+	NFGE::Math::OBB* mCollisionOBB;
 
 private:
-	
+	void CameraControl(Camera& camera,float deltaTime);
+	void OBBControl();
+
 };
 

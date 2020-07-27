@@ -20,6 +20,7 @@ namespace NFGE::Math
 		inline Quaternion operator*(const Quaternion& rhs) const;
 		inline Quaternion operator*(float s) const { return Quaternion(x * s, y * s, z * s, w * s); }
 		inline Quaternion operator/(float s) const { return Quaternion(x / s, y / s, z / s, w / s); }
+		inline bool operator==(const Quaternion& rhs) const { return (x == rhs.x && y == rhs.y && z == rhs.z && w == rhs.w); }
 
 		static Quaternion ToQuaternion(float pitch, float yaw, float roll) // yaw (Z), pitch (Y), roll (X)
 		{

@@ -20,12 +20,14 @@ void NFGE::TransformComponent::Initialize()
 
 void NFGE::TransformComponent::Render()
 {
-	auto finalCenter = NFGE::Math::Vector3::Zero() * finalTransform;
-	NFGE::Graphics::SimpleDraw::AddSphere({ finalCenter , 0.25f }, NFGE::Graphics::Colors::Green);
+	
+	
 }
 
 void NFGE::TransformComponent::InspectorUI(void(*ShowMetaClassInInspector)(const NFGE::Core::Meta::MetaClass *, uint8_t *))
 {
+	auto finalCenter = NFGE::Math::Vector3::Zero() * finalTransform;
+	NFGE::Graphics::SimpleDraw::AddSphere({ finalCenter , 0.25f }, NFGE::Graphics::Colors::Green);
 	ShowMetaClassInInspector(GetMetaClass(), (uint8_t*)this);
 }
 

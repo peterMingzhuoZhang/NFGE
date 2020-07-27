@@ -172,6 +172,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PostProcesses", "PostProces
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Gabby", "MingzhuoProject\Gabby\Gabby.vcxproj", "{C2F0D4CC-20B7-4E8B-AEE1-8DAEB568D3EC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "YBot_Simulation", "MingzhuoProject\YBot_Simulation\YBot_Simulation.vcxproj", "{740DBB66-516E-4476-8AF3-B0417A2A2778}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -588,6 +590,14 @@ Global
 		{C2F0D4CC-20B7-4E8B-AEE1-8DAEB568D3EC}.Release|x64.Build.0 = Release|x64
 		{C2F0D4CC-20B7-4E8B-AEE1-8DAEB568D3EC}.Release|x86.ActiveCfg = Release|Win32
 		{C2F0D4CC-20B7-4E8B-AEE1-8DAEB568D3EC}.Release|x86.Build.0 = Release|Win32
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Debug|x64.ActiveCfg = Debug|x64
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Debug|x64.Build.0 = Debug|x64
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Debug|x86.ActiveCfg = Debug|Win32
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Debug|x86.Build.0 = Debug|Win32
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Release|x64.ActiveCfg = Release|x64
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Release|x64.Build.0 = Release|x64
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Release|x86.ActiveCfg = Release|Win32
+		{740DBB66-516E-4476-8AF3-B0417A2A2778}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -647,6 +657,7 @@ Global
 		{0A3627B6-996B-4A69-B486-801E7110549B} = {AE9816CC-5DEC-48A5-B9FA-774182C92212}
 		{A82554A5-51BC-400B-81CD-E7760DD52B51} = {AE9816CC-5DEC-48A5-B9FA-774182C92212}
 		{C2F0D4CC-20B7-4E8B-AEE1-8DAEB568D3EC} = {91F11436-5857-40CD-808D-4E63B5ADBD19}
+		{740DBB66-516E-4476-8AF3-B0417A2A2778} = {91F11436-5857-40CD-808D-4E63B5ADBD19}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9862787-C6A7-4378-AFB7-1AD73FC23A0C}

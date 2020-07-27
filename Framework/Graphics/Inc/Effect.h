@@ -456,7 +456,7 @@ namespace NFGE::Graphics
 
 				void UpdateTransform(int index);
 
-				void SetTexture(MeshTextureMaterial::ModelTextureType textureType, TextureId& textureId)
+				void SetTexture(MeshTextureMaterial::ModelTextureType textureType, TextureId textureId)
 				{
 					modelMaterials[0].LoadTexture( textureType, textureId);
 				}

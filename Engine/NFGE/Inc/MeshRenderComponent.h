@@ -44,9 +44,9 @@ namespace NFGE
 		float mRadius;
 
 		//Editor control variables
-		NFGE::Math::Vector4 mAmbientColor{ 1.0f,0.5f,0.5f, 1.0f};
-		NFGE::Math::Vector4 mDiffuseColor{ 1.0f,0.5f,0.5f, 1.0f};
-		NFGE::Math::Vector4 mSpecularColor{ 1.0f,0.5f,0.5f, 1.0f};
+		NFGE::Math::Vector4 mAmbientColor{ 1.0f,1.0f,1.0f, 1.0f};
+		NFGE::Math::Vector4 mDiffuseColor{ 1.0f,1.0f,1.0f, 1.0f};
+		NFGE::Math::Vector4 mSpecularColor{ 1.0f,1.0f,1.0f, 1.0f};
 		float mSpecualrPower{10.0f};
 		float mBumpWeight{0.0f};
 		EditorMeshTexture mDiffuseTextureDir{ NFGE::Graphics::MeshTextureMaterial::ModelTextureType::DIFFUSE };

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="PTBoneMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="PTGeometry_Shell.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="PTCone.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="PTSphere.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="PTModel.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="PTSkeleton.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="PTPlane.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementController.h" />
+    <ClInclude Include="MovementController_AllDirection.h" />
+    <ClInclude Include="MovementControllerShell.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{24c1d91a-22c7-4ced-b188-09307a8bf8bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{1bce0080-8c95-4a8a-9cef-8449678def4c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="winmain.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="MovementController.cpp" />
+    <ClCompile Include="MovementController_AllDirection.cpp" />
+  </ItemGroup>
+</Project>
