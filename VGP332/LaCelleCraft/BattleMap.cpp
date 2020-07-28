@@ -246,6 +246,7 @@ void BattleMap::Deserialize_txt(std::ifstream & theFile)
 	tokenizer >> mTotalCommander;
 
 	mBases.clear();
+	mBases.reserve(mTotalCommander);
 	for (int i = 0; i < mTotalCommander; ++i)
 	{
 		mBases.emplace_back();
