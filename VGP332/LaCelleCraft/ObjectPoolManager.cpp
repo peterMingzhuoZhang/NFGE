@@ -13,6 +13,8 @@
 
 using namespace LCUnit;
 
+int ObjectPoolManager::PoolIncreaseAmout = 50;
+
 namespace
 {
 	std::unique_ptr<ObjectPoolManager> sObjectPoolManager;

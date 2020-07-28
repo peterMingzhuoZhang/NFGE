@@ -81,38 +81,6 @@ namespace NFGE::Graphics
 			return keyframes[frameSize - 1].value;
 		}
 
-		/*template<typename T>	// [Question for Peter Chan] is following faster than above
-		T GetValue_OnKeyframes(const Keyframes<T>& keyframes, float time) const
-		{
-			T ret;
-			size_t frameSize = keyframes.size();
-			if (frameSize == 0)
-				ret = T();
-			else
-			{
-				ret = keyframes[frameSize - 1].value;
-				for (size_t i = 0; i + 1 < frameSize; i++)
-				{
-					if (i == frameSize - 1)
-					{
-						ret = keyframes[i].value;
-						break;
-					}
-					if ((time >= keyframes[i].time) && (time < keyframes[i + 1].time))
-					{
-						float timePass = time - keyframes[i].time;
-						float keyFrameDuration = keyframes[i + 1].time - keyframes[i].time;
-						float ratio = timePass / keyFrameDuration;
-						ratio = mEaser.easing(time, ratio);
-						ret = Animation::InterpolationChannelKeys(keyframes[i].value, keyframes[i + 1].value, ratio);
-						break;
-					}
-				}
-			}
-
-			return ret;
-		}*/
-
 		NFGE::Math::Matrix4 GetAllTransform(float time, size_t* positionHint = nullptr, size_t* rotationHint = nullptr, size_t* scaleHint = nullptr) const;
 		void SetEaseMode(float(*funcPtr)(float));
 		

@@ -44,6 +44,8 @@ struct ObjectPoolManager
 	std::unordered_map<std::string, std::vector<Projectile*>> mProjectilePools;
 	std::unordered_map<std::string, std::function<void*()>> mCreators;
 private:
+	static int PoolIncreaseAmout;
+
 	template<class T>
 	void Register()
 	{
@@ -84,7 +86,7 @@ private:
 			}
 		}
 		// increase the pool by 50;
-		IncreaseUnitPoolSize(poolName, 50);
+		IncreaseUnitPoolSize(poolName, PoolIncreaseAmout);
 		return thePool[i];
 	}
 
@@ -109,7 +111,7 @@ private:
 			}
 		}
 		// increase the pool by 50;
-		IncreaseBuildingPoolSize(poolName, 50);
+		IncreaseBuildingPoolSize(poolName, PoolIncreaseAmout);
 		return thePool[i];
 	}
 
@@ -134,7 +136,7 @@ private:
 			}
 		}
 		// increase the pool by 50;
-		IncreaseProjectilePoolSize(poolName, 50);
+		IncreaseProjectilePoolSize(poolName, PoolIncreaseAmout);
 		return thePool[i];
 	}
 

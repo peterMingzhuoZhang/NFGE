@@ -2,7 +2,7 @@
 #include "Base.h"
 
 //-------------------------------------------------------------------------------------------------------------------------------------//|
-BattleMap myBattleMap;																											   //|
+BattleMap myBattleMap;																												   //|
 struct GridMap_CanOpenNode_Djika																									   //|
 {																																	   //|
 	bool operator()(AI::GraphSearch::Context& context, size_t n)																	   //|
@@ -46,16 +46,16 @@ struct GridMap_GetHCost																												   //|
 	float operator()(AI::GraphSearch::Context& context, size_t nodeIndex)															   //|
 	{																																   //|
 																																	   //|
-		size_t fromColumn = nodeIndex % myBattleMap.col;																				   //|
-		size_t fromRow = nodeIndex / myBattleMap.col;																					   //|
-		size_t toColume = context.end % myBattleMap.col;																				   //|
-		size_t toRow = context.end / myBattleMap.col;																					   //|
+		size_t fromColumn = nodeIndex % myBattleMap.col;																			   //|
+		size_t fromRow = nodeIndex / myBattleMap.col;																				   //|
+		size_t toColume = context.end % myBattleMap.col;																			   //|
+		size_t toRow = context.end / myBattleMap.col;																				   //|
 																																	   //|
 		return  sqrtf(static_cast<float>((toColume - fromColumn) * (toColume - fromColumn) + (toRow - fromRow) *(toRow - fromRow)));   //|
 	}																																   //|
 };																																	   //|
 																																	   //|
-																																	   //-------------------------------------------------------------------------------------------------------------------------------------//|
+//-------------------------------------------------------------------------------------------------------------------------------------//|
 
 void BattleMap::Load(std::string fileName)
 {
