@@ -45,7 +45,7 @@ void LevelManager::Initlialize()
 
 	mWorldCamera = &myCamera2D;
 
-	mInLevelBuilding = std::list<Building*>(); // Clear the building add by Map initilazation
+ 	mInLevelBuilding = std::list<Building*>(); // Clear the building add by Map initilazation
 
 	int commanderCount = static_cast<int>(myBattleMapPtr->mBases.size());
 	ASSERT(commanderCount <= 8, "[BattleMap] has more than 8 commander in the map");
