@@ -52,7 +52,7 @@
 
 > Mingzhuo Zhang
 
-| <a href="https://github.com/peterMingzhuoZhang" target="_blank">**GitHub**</a>| <a href="https://www.linkedin.com/in/mingzhuo-zhang-a4115b178/" target="_blank">**LinkedIn**</a> | <a href="" target="_blank">**School Profile**</a> |
+| <a href="https://github.com/peterMingzhuoZhang" target="_blank">**GitHub**</a>| <a href="https://www.linkedin.com/in/mingzhuo-zhang-a4115b178/" target="_blank">**LinkedIn**</a> | <a href="https://www.lcieducation.com/en/portfolios/students/62606#fndtn-projects" target="_blank">**School Profile**</a> |
 | :---:| :---: |:---:|
 | <img src="https://avatars2.githubusercontent.com/u/48110473?s=460&v=4" width="100"/>  | <img src="https://lh3.googleusercontent.com/fqYJHtyzZzA4vacRzeJoB93QNvA5-mvR-8UB5oVLxdYDSTpfLp_KgYD4IqVGJUgFEJo" width="100" />  | <img src="https://pbs.twimg.com/profile_images/1207081801077776384/Ba8-rA5Z_400x400.jpg" width="100" /> |
 ---
