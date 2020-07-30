@@ -5,12 +5,14 @@
 
 ## Frameworks of the engine
 - **AI**
-    - the `code`
-    - nothing
+    - Implemented `Finite State Machine` for AI agent's state switching
+    - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Seach` path-finding algorithm with policy design pattern
+    - Implemented `Perception Module` that allows adding customized sensor and importance caculation to manipulate the memory record to achieve decision making.
+    - Implemented `Steering Module` that can calculate a final velocity for agent base on added Steering Behaviors. This can allow AI agent to have a natrul and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
 
 - **Core**
-    - 1 the `code`
-    - 2 nothing
+    - Implemented the window initialization and window message handling. System who need to monitering the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from other system. And by using ForwardMessage to achieve chain of callback functions.
+    - Implemented `Block Allocator`
     
 - **Graphics**
     - 1 the `code`
