@@ -54,10 +54,5 @@
 #include "GroupSeparationBehavior3D.h"
 #include "WallAvoidBehavior.h"
 #include "WallAvoidBehavior3D.h"
-#include "DecisionModule.h"
-#include "Goal.h"
-#include "GoalComposite.h"
-#include "Strategy.h"
-
 
 #endif // INCLIDED_NFGE_AI_H
