@@ -11,12 +11,19 @@
     - Implemented `Steering Module` that can calculate a final velocity for agent base on added Steering Behaviors. This can allow AI agent to have a natrul and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
 
 - **Core**
-    - Implemented the window initialization and window message handling. System who need to monitering the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from other system. And by using ForwardMessage to achieve chain of callback functions.
-    - Implemented `Block Allocator`
+    - Implemented the window initialization using Win32.
+    - Implemented `WindowMessageHandler` for window's message handling between system. System who need to monitering the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from other system. And by using ForwardMessage to achieve chain of callback functions.
+    - Implemented `Block Allocator` that can allcoate a chunk of memroy for smaller data to use which can avoid memory fregments.
+    - Implemented `Handle` system that monitoring the pointer validity by tracking the generation of each pointer which can avoid danglging pointer and memory stomp.
+    - Implemented `Meta` system allows to create a class that stores information of how to 'Create, destory, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of a certain class.
+    
     
 - **Graphics**
-    - 1 the `code`
-    - 2 nothing
+    - Implemented a graphic system that contains `Direct3D11 Device` pointer and `Direct3D11 Context` pointer which can achieve the interaction with 3D rendering pipeline in Direct3D11. 
+    - Implemented `MeshBuffer`, `ConstantBuffer`, `RenderTarget`, `Sampler`, `BlendState`, `RasterizerState`, `PixelShader`, `VertexShader` to achieve the loading and manipulating of Direct3D11 data in the CPU side.
+    - Implemented `Effect` system that manage the render task of all supported Mesh type in NFGE, such as: `OnScreen2DMesh Effect`, `StandardMesh Effect`, `SkeletonModelMesh Effect`. Using of different `Effect` required different `Effect Context` to be used.
+    - Implemented `Post-processing` system that bind with `Effect` system, so it can apply active post-processing to what ever mesh that render by the `Effect` system. There are four function in the main loop to achieve post-processing pipelin: `RegisterRenderObject()` which allows render object register itself into the active post-process unit. `PreparePostProcess()` that allows active post-process unit to create essential data like z-value texture and lightWVP matrix for shadow post-process unit. Each post-process unit has its own `RenderTarget` for creating customize texture. `MainRender()` is the real render function that render every render objects with certain post-process data that create in the last function into the master render target. `FianlPostProcess()` is allow active post-process unit to manipulate the pixel on the final picture.
+    -
 
 - **Math**
     - 1 the `code`
