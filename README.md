@@ -94,7 +94,8 @@
  ---
  
 ### YBot Simulation
-> Demonstrate the use of skeleton Animation system
+> Demonstrate the use of skeleton Animation system.
+
 > This demo had implemented a `BlendTree` with project specific `ControlContext` and `BlendPolicy`s to achieve nature movement blend from 21 `AnimationClip`s.
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
 - Ybot blend tree mechanism:
