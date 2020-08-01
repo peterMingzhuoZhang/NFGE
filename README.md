@@ -10,17 +10,17 @@
 - **AI**
     - Implemented `Finite State Machine` for AI agent's state switching
     - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Search' path-finding algorithm with policy design pattern
-    - Implemented `Perception Module` that allows adding customized sensor and importance calculation to manipulate the memory record to achieve decision making.
+    - Implemented `Perception Module` that allows adding customized sensor and importance calculation to manipulate and prioritize the memory record for decision making.
     [Project Demo: Perception 3D](#perception-3d)
-    - Implemented `Steering Module` that can calculate a final velocity for agent based on added Steering Behaviors. This can allow AI agents to have a natural and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
+    - Implemented `Steering Module` that can calculate a final velocity for an agent based on added individual Steering Behaviors. This can allow AI agents to have a natural and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
     [Project Demo: Lacelle Craft](#lacelle-craft)
 
 - **Core**
-    - Implemented the window initialization using Win32.
+    - Implemented the window initialization using Win32 API.
     - Implemented `WindowMessageHandler` for window's message handling between system. System who need to monitor the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from another system. And by using ForwardMessage to achieve chain of callback functions.
-    - Implemented `Block Allocator` that can allocate a chunk of memory for smaller data to use which can avoid memory fragments.
-    - Implemented a `Handle` system that monitoring the pointer validity by tracking the generation of each pointer which can avoid dangling pointer and memory stomp.
-    - Implemented `Meta` system allows to create a class that stores information on how to 'Create, destroy, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of a certain class.[Project Demo: NFGE Editor](#nfge-editor)
+    - Implemented `Block Allocator` that can preallocate a chunk of memory for smaller data to use which can avoid memory fragmentation.
+    - Implemented a `Handle` system that verifies the pointer validity by tracking the generation of each pointer which can avoid dangling pointer and memory stomp.
+    - Implemented `Meta` system to stores information on how to 'Create, destroy, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of class instances at runtime.[Project Demo: NFGE Editor](#nfge-editor)
     
     
 - **Graphics**
