@@ -19,7 +19,7 @@
     - Implemented `WindowMessageHandler` for window's message handling between system. System who need to monitering the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from other system. And by using ForwardMessage to achieve chain of callback functions.
     - Implemented `Block Allocator` that can allcoate a chunk of memroy for smaller data to use which can avoid memory fregments.
     - Implemented `Handle` system that monitoring the pointer validity by tracking the generation of each pointer which can avoid danglging pointer and memory stomp.
-    - Implemented `Meta` system allows to create a class that stores information of how to 'Create, destory, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of a certain class.
+    - Implemented `Meta` system allows to create a class that stores information of how to 'Create, destory, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of a certain class.[Project Demo: NFGE Editor](#nfge-editor)
     
     
 - **Graphics**
@@ -27,6 +27,7 @@
     - Implemented `MeshBuffer`, `ConstantBuffer`, `RenderTarget`, `Sampler`, `BlendState`, `RasterizerState`, `PixelShader`, `VertexShader` to achieve the loading and manipulating of Direct3D11 data in the CPU side.
     - Implemented `Effect` system that manage the render task of all supported Mesh type in NFGE, such as: `OnScreen2DMesh Effect`, `StandardMesh Effect`, `SkeletonModelMesh Effect`. Using of different `Effect` required different `Effect Context` to be used.
     - Implemented `Post-processing` system that bind with `Effect` system, so it can apply active post-processing to what ever mesh that render by the `Effect` system. There are four function in the main loop to achieve post-processing pipeline: `RegisterRenderObject()` which allows render object register itself with the active post-process unit. `PreparePostProcess()` that allows active post-process unit to create essential data like z-value texture and lightWVP matrix for shadow post-process unit. Each post-process unit has its own `RenderTarget` for creating customize texture. `MainRender()` is the real render function that render every render objects with certain post-process data that create in the last function into the master render target. `FinalPostProcess()` is allow active post-process unit to manipulate the pixel on the final picture.
+    [Project Demo: 3D Graphic Model](#3d-graphic-model)
     - Implemented `AnimationClip`, `BoneAnimation`, `AnimationBuilder` to achieve creation and management of skeleton animations. Using of `Hint` machinic achieves the optimsation when retriving keyframe from very long animation. (Skipping loop through all keyframe by know what next key frame should be from `Hint`).
     - Implemented `Animator`, `PartialAnimator`, `BlendTree` to achieve smooth and dynamic skeleton animation transition that include:
         * Playing single animation
@@ -70,11 +71,21 @@
 
  ---
  
- ### LeCelle Craft
+ ### LaCelle Craft
 > Demonstrate the use of AI:Path-finding, AI:Steering behavior and AI:State Machine
 
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/LacelleCraft_00.gif?raw=true)
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/LacelleCraft_01.gif?raw=true)
+ 
+ ---
+ 
+ ### 3D Graphic Model
+> Demonstrate the use of post-processing
+
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_DepthBlur_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_shadow_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_shadow_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_Pixelate_00.gif?raw=true)
  
  ---
  
@@ -89,6 +100,7 @@
 - Dear Imgui                    -- For Debug UI
 - DirectXTK                    -- For graphic & audio
 - RapidJSON                   -- For loading and saving Json file
+- Mixamo                        --For 3D model resources
  
  ## Authors
 
