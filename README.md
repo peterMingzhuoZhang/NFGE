@@ -10,8 +10,9 @@
     - Implemented `Finite State Machine` for AI agent's state switching
     - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Seach` path-finding algorithm with policy design pattern
     - Implemented `Perception Module` that allows adding customized sensor and importance caculation to manipulate the memory record to achieve decision making.
-    [Project Demo](#perception-3d)
+    [Project Demo: Perception 3D](#perception-3d)
     - Implemented `Steering Module` that can calculate a final velocity for agent base on added Steering Behaviors. This can allow AI agent to have a natrul and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
+    [Project Demo: Lacelle Craft](#lacelle-craft)
 
 - **Core**
     - Implemented the window initialization using Win32.
@@ -66,6 +67,14 @@
 > Demonstrate the use of AI:Perception modual and AI:Steering behavior
 
 ![Alt Text](https://1.bp.blogspot.com/-mKGvKU25zUA/XyT6vBlJN_I/AAAAAAAAAW8/NLzK-Y6jt3UwbbUICGt18GOhzZq3RVe0ACLcBGAsYHQ/s480/Perception.gif)
+
+ ---
+ 
+ ### LeCelle Craft
+> Demonstrate the use of AI:Path-finding and AI:Steering behavior
+
+![Alt Text](https://1.bp.blogspot.com/-lhQ3WIITBQQ/XyUTYzxjaBI/AAAAAAAAAXI/npYYnO2oIks7dRkLJj2rGkyfEkG2QDwpACLcBGAsYHQ/s480/LacelleCraft_00.gif)
+![Alt Text](https://1.bp.blogspot.com/-vhuQvTPTqKo/XyUTZGl0nLI/AAAAAAAAAXM/lM8o3aU74YMxISCLETbRWOiKRZnNuJOLgCLcBGAsYHQ/s480/LacelleCraft_01.gif)
  
  ---
  
