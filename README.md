@@ -9,34 +9,36 @@
 ## Frameworks of the engine
 - **AI**
     - Implemented `Finite State Machine` for AI agent's state switching
-    - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Seach` path-finding algorithm with policy design pattern
-    - Implemented `Perception Module` that allows adding customized sensor and importance caculation to manipulate the memory record to achieve decision making.
+    - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Search' path-finding algorithm with policy design pattern
+    - Implemented `Perception Module` that allows adding customized sensor and importance calculation to manipulate the memory record to achieve decision making.
     [Project Demo: Perception 3D](#perception-3d)
-    - Implemented `Steering Module` that can calculate a final velocity for agent base on added Steering Behaviors. This can allow AI agent to have a natrul and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
+    - Implemented `Steering Module` that can calculate a final velocity for agent based on added Steering Behaviors. This can allow AI agents to have a natural and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
     [Project Demo: Lacelle Craft](#lacelle-craft)
 
 - **Core**
     - Implemented the window initialization using Win32.
-    - Implemented `WindowMessageHandler` for window's message handling between system. System who need to monitering the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from other system. And by using ForwardMessage to achieve chain of callback functions.
-    - Implemented `Block Allocator` that can allcoate a chunk of memroy for smaller data to use which can avoid memory fregments.
-    - Implemented `Handle` system that monitoring the pointer validity by tracking the generation of each pointer which can avoid danglging pointer and memory stomp.
-    - Implemented `Meta` system allows to create a class that stores information of how to 'Create, destory, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of a certain class.[Project Demo: NFGE Editor](#nfge-editor)
+    - Implemented `WindowMessageHandler` for window's message handling between system. System who need to monitor the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from another system. And by using ForwardMessage to achieve chain of callback functions.
+    - Implemented `Block Allocator` that can allocate a chunk of memory for smaller data to use which can avoid memory fragments.
+    - Implemented a `Handle` system that monitoring the pointer validity by tracking the generation of each pointer which can avoid dangling pointer and memory stomp.
+    - Implemented `Meta` system allows to create a class that stores information on how to 'Create, destroy, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of a certain class.[Project Demo: NFGE Editor](#nfge-editor)
     
     
 - **Graphics**
     - Implemented a graphic system that contains `Direct3D11 Device` pointer and `Direct3D11 Context` pointer which can achieve the interaction with 3D rendering pipeline in Direct3D11. 
     - Implemented `MeshBuffer`, `ConstantBuffer`, `RenderTarget`, `Sampler`, `BlendState`, `RasterizerState`, `PixelShader`, `VertexShader` to achieve the loading and manipulating of Direct3D11 data in the CPU side.
-    - Implemented `Effect` system that manage the render task of all supported Mesh type in NFGE, such as: `OnScreen2DMesh Effect`, `StandardMesh Effect`, `SkeletonModelMesh Effect`. Using of different `Effect` required different `Effect Context` to be used.
-    - Implemented `Post-processing` system that bind with `Effect` system, so it can apply active post-processing to what ever mesh that render by the `Effect` system. There are four function in the main loop to achieve post-processing pipeline: `RegisterRenderObject()` which allows render object register itself with the active post-process unit. `PreparePostProcess()` that allows active post-process unit to create essential data like z-value texture and lightWVP matrix for shadow post-process unit. Each post-process unit has its own `RenderTarget` for creating customize texture. `MainRender()` is the real render function that render every render objects with certain post-process data that create in the last function into the master render target. `FinalPostProcess()` is allow active post-process unit to manipulate the pixel on the final picture.
+    - Implemented an `Effect` system that manages the render task of all supported Mesh types in NFGE, such as: `OnScreen2DMesh Effect`, `StandardMesh Effect`, `SkeletonModelMesh Effect`. The Use of different `Effect` required different `Effect Context` to be used.
+    - Implemented `Post-processing` system that binds with `Effect` system, so it can apply active post-processing to whatever mesh that is rendered by the `Effect` system. There are four functions in the main loop to achieve the post-processing pipeline: `RegisterRenderObject()` which allows the render object register itself with the active post-process unit. `PreparePostProcess()` allows active post-process units to create essential data like z-value texture and lightWVP matrix for shadow post-process units. Each post-process unit has its own `RenderTarget` for creating customized texture. `MainRender()` is the real render function that renders every render object with certain post-process data that create in the last function into the master render target. `FinalPostProcess()` allows an active post-process unit to manipulate the pixel on the final picture.
     [Project Demo: 3D Graphic Model](#3d-graphic-model)
-    - Implemented `AnimationClip`, `BoneAnimation`, `AnimationBuilder` to achieve creation and management of skeleton animations. Using of `Hint` machinic achieves the optimsation when retriving keyframe from very long animation. (Skipping loop through all keyframe by know what next key frame should be from `Hint`).
+    - Implemented `AnimationClip`, `BoneAnimation`, `AnimationBuilder` to achieve creation and management of skeleton animations. Using the `Hint` mechanic achieves the optimization when retrieving keyframes from very long animation. (Skipping loop through all keyframe by know what next keyframe should be from `Hint`).
     - Implemented `Animator`, `PartialAnimator`, `BlendTree` to achieve smooth and dynamic skeleton animation transition that include:
         * Playing single animation
         * Transition from 1st animation to 2rd animation with percentage of how much of 2rd animation will blend in.
         * Transition from a mixed animation to 2rd animation with percentage of how much of 2rd animation will blend in.
         * Partially playing animation or blend animation
-        * Blend of more than two animation with custom `ControlContext`, and `BlendPolicy` with blend tree.
-
+        * Blend of more than two animations with custom `ControlContext`, and `BlendPolicy` with blend tree.
+        [Project Demo: YBot Simulation](#ybot-simulation)
+        
+        
 - **Math**
     - Implemented essential data structure for 3D graphic calculation include:
         * Vector2,3,4
@@ -66,7 +68,7 @@
  ---
  
  ### Perception 3D
-> Demonstrate the use of AI:Perception modual and AI:Steering behavior
+> Demonstrate the use of AI:Perception module and AI:Steering behavior
 
 ![Alt Text](https://1.bp.blogspot.com/-mKGvKU25zUA/XyT6vBlJN_I/AAAAAAAAAW8/NLzK-Y6jt3UwbbUICGt18GOhzZq3RVe0ACLcBGAsYHQ/s480/Perception.gif)
 
@@ -91,8 +93,25 @@
  ---
  
 ### YBot Simulation
-> Demonstrate the use of Animation system
-
+> Demonstrate the use of skeleton Animation system
+> This demo had implemented a `BlendTree` with project specific `ControlContext` and `BlendPolicy`s to achieve nature movement blend from 21 `AnimationClip`s.
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
+- Ybot blend tree mechanism:
+    * All leaf nodes contain blend information of a `AnimationClips` and a default `BlendPolicy`, They are going to share total weight of 100%.
+    * Non-leaf nodes have a custom `BlendPolicy` about how to distribute current weight to its child. There are:
+        + Stand_To_Move_Policy: Distribute current weight based on `mCurrentSpeed` from 0 to MAX_WALK_SPEED to 2 nodes.
+        + Idle_To_Turn_Policy: Distribute current weight based on the dot product of `mCameraFacing` and `mFacingDirection` to 3 nodes.
+        + Walk_To_Run_Policy: Distribute current weight based on `mCurrentSpeed` from MAX_WALK_SPEED to RUN_MAX_SPEED to 2 nodes.
+        + Move_Policy: Distribute current weight based on dot product of `mMoveDirection` and `mFacingDirection` to 8 nodes.
+ 
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_clipSpeedModdifier.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_Partial.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_HeadRigging.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
+        
+    
 ---
 
 ## Integrated External Library:
@@ -123,4 +142,5 @@
 
  
  
+
 
