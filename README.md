@@ -1,3 +1,4 @@
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/NFGE.gif?raw=true)
 # NFGE
 > Nicolas Four Game Engine
 
