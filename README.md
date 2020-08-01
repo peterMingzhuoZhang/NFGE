@@ -52,6 +52,7 @@
         * CutumlRomspline
 - **Physics**
     - Implemented `Verlet` particle physics system
+    [Project Demo: Grass Simulation](#grass-simulation)
     
 ---
 
@@ -111,8 +112,15 @@
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
         
-    
 ---
+
+ ### Grass Simulation
+> Demonstrate the use of Verlet Particle Phhysics
+
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_01.gif?raw=true)
+ 
+ ---
 
 ## Integrated External Library:
 
