@@ -1,7 +1,7 @@
 //====================================================================================================
-// Filename:	DoTransform.fx
-// Created by:	Peter Chan
-// Description: Shader that applies transformation matrices.
+// Filename:	Effect_ColorMesh.fx
+// Created by:	Mingzhuo Zhang
+// Description: Shader that that do transform on ColorMesh.
 //====================================================================================================
 
 cbuffer ConstantBuffer : register(b0)

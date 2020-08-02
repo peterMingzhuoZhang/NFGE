@@ -1,7 +1,7 @@
 //====================================================================================================
-// Filename:	DoLighting.fx
-// Created by:	Peter Chan
-// Description: Shader that applies transformation matrices.
+// Filename:	Effect_SkeletonModelMesh.fx
+// Created by:	Mingzhuo Zhang
+// Description: Shader that does texture mapping, transform and post-process on the SkeletonModelMesh.
 //====================================================================================================
 
 static matrix Identity =

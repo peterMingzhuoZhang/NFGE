@@ -1,7 +1,7 @@
 //====================================================================================================
-// Filename:	Texturing.fx
-// Created by:	Peter Chan
-// Description:	Simple shader for PostProcess.
+// Filename:	PostProcess_None.fx
+// Created by:	Mingzhuo Zhang
+// Description:	Shader that renders a NDC quad on the screen.
 //====================================================================================================
 
 Texture2D diffuseMap : register(t0);

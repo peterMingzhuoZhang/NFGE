@@ -1,7 +1,7 @@
 //====================================================================================================
-// Filename:	DoLighting.fx
-// Created by:	Peter Chan
-// Description: Shader that applies transformation matrices.
+// Filename:	PostProcess_DepthBlur_Post.fx
+// Created by:	Mingzhuo Zhang
+// Description: Shader that Blur the final picture from a NDC quad base on the depth texture.
 //====================================================================================================
 Texture2D diffuseMap : register(t0);
 Texture2D depthMap : register(t1);

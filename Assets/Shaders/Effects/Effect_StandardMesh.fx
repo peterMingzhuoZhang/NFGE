@@ -1,8 +1,9 @@
 //====================================================================================================
-// Filename:	DoLighting.fx
-// Created by:	Peter Chan
-// Description: Shader that applies transformation matrices.
+// Filename:	Effect_StandardMesh.fx
+// Created by:	Mingzhuo Zhang
+// Description: Shader that does texture mapping, transform and post-process on the StandardMesh.
 //====================================================================================================
+
 static const uint TextureType_DIFFUSE = 0x1 << 0;
 static const uint TextureType_SPECULAR = 0x1 << 1;
 static const uint TextureType_AMBIENT = 0x1 << 2;

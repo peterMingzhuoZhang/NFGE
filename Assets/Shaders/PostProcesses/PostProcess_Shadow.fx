@@ -1,7 +1,7 @@
 //====================================================================================================
-// Filename:	DoLighting.fx
-// Created by:	Peter Chan
-// Description: .
+// Filename:	PostProcess_Shadow.fx
+// Created by:	MingzhuoZhang
+// Description: Shader that output a depth map base on the light camera
 //====================================================================================================
 
 static matrix Identity =

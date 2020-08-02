@@ -1,7 +1,7 @@
 //====================================================================================================
-// Filename:	Texturing.fx
-// Created by:	Peter Chan
-// Description:	Simple shader for PostProcess.
+// Filename:	PostProcess_Pixelate.fx
+// Created by:	Mingzhuo Zhang
+// Description:	Shader for applying pixelate on the NDC quad.
 //====================================================================================================
 
 Texture2D diffuseMap : register(t0);

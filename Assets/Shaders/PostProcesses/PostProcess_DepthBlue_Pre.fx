@@ -1,7 +1,7 @@
  //====================================================================================================
-// Filename:	DoLighting.fx
-// Created by:	Peter Chan
-// Description: Shader that applies transformation matrices.
+// Filename:	PostProcess_DepthBlue_Pre.fx
+// Created by:	Mingzhuo Zhang
+// Description: Shader that output a depth-texture of StandartMesh, ModelMesh and SkeletonModelMesh.
 //====================================================================================================
 static matrix Identity =
 {

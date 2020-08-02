@@ -1,7 +1,7 @@
 //====================================================================================================
-// Filename:	Texturing.fx
-// Created by:	Peter Chan
-// Description:	Simple shader for texturing.
+// Filename:	Effect_TextureMesh.fx
+// Created by:	Mingzhuo Zhang
+// Description:	Simple shader for applying diffuse texture to TextureMesh.
 //====================================================================================================
 
 cbuffer ConstantBuffer : register(b0)
