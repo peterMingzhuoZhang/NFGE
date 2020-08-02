@@ -52,6 +52,7 @@
         * CutumlRomspline
 - **Physics**
     - Implemented `Verlet` particle physics system
+    [Project Demo: Grass Simulation](#grass-simulation)
     
 ---
 
@@ -93,8 +94,9 @@
  ---
  
 ### YBot Simulation
-> Demonstrate the use of skeleton Animation system
-> This demo had implemented a `BlendTree` with project specific `ControlContext` and `BlendPolicy`s to achieve nature movement blend from 21 `AnimationClip`s.
+> Demonstrate the use of skeleton Animation system.
+
+> This demo had implemented a `BlendTree` with project specific `ControlContext` and `BlendPolicy`s to achieve nature movement blending from 21 `AnimationClip`s.
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
 - Ybot blend tree mechanism:
     * All leaf nodes contain blend information of a `AnimationClips` and a default `BlendPolicy`, They are going to share total weight of 100%.
@@ -111,8 +113,15 @@
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
         
-    
 ---
+
+ ### Grass Simulation
+> Demonstrate the use of Verlet Particle Phhysics
+
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_01.gif?raw=true)
+ 
+ ---
 
 ## Integrated External Library:
 
