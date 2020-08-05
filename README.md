@@ -1,4 +1,4 @@
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/NFGE.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/NFGE.gif?raw=true)
 # NFGE
 > Nicolas Four Game Engine
 
@@ -78,18 +78,18 @@
  ### LaCelle Craft
 > Demonstrate the use of AI:Path-finding, AI:Steering behavior and AI:State Machine
 
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/LacelleCraft_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/LacelleCraft_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/LacelleCraft_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/LacelleCraft_01.gif?raw=true)
  
  ---
  
  ### 3D Graphic Model
 > Demonstrate the use of post-processing
 
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_DepthBlur_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_shadow_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_shadow_01.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_Pixelate_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_DepthBlur_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_shadow_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_shadow_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_Pixelate_00.gif?raw=true)
  
  ---
  
@@ -97,7 +97,7 @@
 > Demonstrate the use of skeleton Animation system.
 
 > This demo had implemented a `BlendTree` with project specific `ControlContext` and `BlendPolicy`s to achieve nature movement blending from 21 `AnimationClip`s.
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
 - Ybot blend tree mechanism:
     * All leaf nodes contain blend information of a `AnimationClips` and a default `BlendPolicy`, They are going to share total weight of 100%.
     * Non-leaf nodes have a custom `BlendPolicy` about how to distribute current weight to its child. There are:
@@ -106,20 +106,20 @@
         + Walk_To_Run_Policy: Distribute current weight based on `mCurrentSpeed` from MAX_WALK_SPEED to RUN_MAX_SPEED to 2 nodes.
         + Move_Policy: Distribute current weight based on dot product of `mMoveDirection` and `mFacingDirection` to 8 nodes.
  
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_clipSpeedModdifier.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_Partial.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_HeadRigging.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_clipSpeedModdifier.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_Partial.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_HeadRigging.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
         
 ---
 
  ### Grass Simulation
 > Demonstrate the use of Verlet Particle Phhysics
 
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Grass_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Grass_01.gif?raw=true)
  
  ---
 
