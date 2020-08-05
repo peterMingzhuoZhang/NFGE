@@ -2,7 +2,9 @@
 # NFGE
 > Nicolas Four Game Engine
 
-> This my own C++ game engine that developed using Direct3D 11.
+> This is my own C++ game engine that developed using Direct3D 11.
+
+> I build this engine for exploring and understanging what happens under the hood when making games.
 
 ---
 
