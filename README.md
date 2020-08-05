@@ -70,14 +70,14 @@
  
  ---
  
- ### Perception 3D
+ ### <a href="http://www.peterzmzprojects.com/2020/07/ai-demo-3d-perception.html">**Perception 3D**</a>
 > Demonstrate the use of AI:Perception module and AI:Steering behavior
 
 ![Alt Text](https://1.bp.blogspot.com/-mKGvKU25zUA/XyT6vBlJN_I/AAAAAAAAAW8/NLzK-Y6jt3UwbbUICGt18GOhzZq3RVe0ACLcBGAsYHQ/s480/Perception.gif)
 
  ---
  
- ### LaCelle Craft
+ ### <a href="http://www.peterzmzprojects.com/2020/08/lacelle-craft-in-process.html">**LaCelle Craft**</a> 
 > Demonstrate the use of AI:Path-finding, AI:Steering behavior and AI:State Machine
 
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/LacelleCraft_00.gif?raw=true)
@@ -85,7 +85,7 @@
  
  ---
  
- ### 3D Graphic Model
+ ### <a href="http://www.peterzmzprojects.com/2020/08/3d-graphic-demo-effect-post-processing.html">**3D Graphic Model**</a> 
 > Demonstrate the use of post-processing
 
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_DepthBlur_00.gif?raw=true)
@@ -95,7 +95,7 @@
  
  ---
  
-### YBot Simulation
+### <a href="http://www.peterzmzprojects.com/2020/08/3d-graphic-demo-ybot-simulationin.html">**YBot Simulation**</a> 
 > Demonstrate the use of skeleton Animation system.
 
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
@@ -119,7 +119,7 @@
         
 ---
 
- ### Grass Simulation
+ ### <a href="http://www.peterzmzprojects.com/2020/08/physics-demo-grass-simulation.html">**Grass Simulation**</a> 
 > Demonstrate the use of Verlet Particle Phhysics
 
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Grass_00.gif?raw=true)
