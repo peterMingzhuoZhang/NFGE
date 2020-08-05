@@ -127,11 +127,11 @@
 
 ## Integrated External Library:
 
-- Assimp                          -- For 3D model importing
-- Dear Imgui                    -- For Debug UI
-- DirectXTK                    -- For graphic & audio
-- RapidJSON                   -- For loading and saving Json file
-- Mixamo                        --For 3D model resources
+- <a href="https://github.com/assimp/assimp">**Assimp**</a>                          -- For 3D model importing
+- <a href="https://github.com/ocornut/imgui">**Dear Imgui**</a>                    -- For Debug UI
+- <a href="https://github.com/microsoft/DirectXTK">**DirectXTK**</a>                    -- For graphic & audio
+- <a href="https://github.com/Tencent/rapidjson">**RapidJSON**</a>                   -- For loading and saving Json file
+- <a href="https://www.mixamo.com/#/">**Mixamo**</a>                        --For 3D model resources
  
  ## Authors
 
