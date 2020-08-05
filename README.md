@@ -98,6 +98,11 @@
 ### YBot Simulation
 > Demonstrate the use of skeleton Animation system.
 
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_clipSpeedModdifier.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_Partial.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_HeadRigging.gif?raw=true)
+
 > This demo had implemented a `BlendTree` with project specific `ControlContext` and `BlendPolicy`s to achieve nature movement blending from 21 `AnimationClip`s.
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
 - Ybot blend tree mechanism:
@@ -108,10 +113,7 @@
         + Walk_To_Run_Policy: Distribute current weight based on `mCurrentSpeed` from MAX_WALK_SPEED to RUN_MAX_SPEED to 2 nodes.
         + Move_Policy: Distribute current weight based on dot product of `mMoveDirection` and `mFacingDirection` to 8 nodes.
  
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_clipSpeedModdifier.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_Partial.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_HeadRigging.gif?raw=true)
+
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
         
