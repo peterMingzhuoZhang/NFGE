@@ -61,7 +61,7 @@
 
 ## Projects using NFGE
 
-### NFGE Editor
+### <a href="http://www.peterzmzprojects.com/2020/07/nfge-editor.html">**NFGE Editor**</a> 
 > Demonstrate the use of reflection system
 
 ![Alt Text](https://1.bp.blogspot.com/-XPqueHSjVPA/XxnixJoj-OI/AAAAAAAAAWY/YKpd0rUa2RA4zbkK5268pLUNBbAYala7ACLcBGAsYHQ/s1600/ComponentEditing.gif)
