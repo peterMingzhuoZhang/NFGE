@@ -1,0 +1,31 @@
+{
+  "Services": {
+    "CameraService": {},
+    "TerrainService": {
+      "NumRows": 200,
+      "NumCols": 200,
+      "CellSize": 1
+    }
+  },
+  "GameObjects": [
+    {
+      "Name": "Peter",
+      "Template": "test.json",
+      "Components": {
+        "TransformComponent": {
+          "Position": {
+            "x": 2,
+            "y": 0,
+            "z": 5
+          },
+          "Rotation": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "w": 1
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+#
+#
+#
+
+newmtl default Mesh_08___Default
+illum 2
+Ka 0.588200 0.588200 0.588200
+Kd 0.588200 0.588200 0.588200
+Ks 1.242000 1.242000 1.242000
+Ns 31.000000
+map_Kd tank_diffuse.jpg
+

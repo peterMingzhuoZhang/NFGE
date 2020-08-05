@@ -1,6 +1,0 @@
-#ifndef INCLIDED_NFGE_PRECOMPILED_H
-#define INCLIDED_NFGE_PRECOMPILED_H
-
-#include "Common.h"
-
-#endif // !INCLIDED_NFGE_PRECOMPILED_H

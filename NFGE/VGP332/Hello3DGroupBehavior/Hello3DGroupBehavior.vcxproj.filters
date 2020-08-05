@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="GameState.h" />
+    <ClInclude Include="SphereDude.h" />
+    <ClInclude Include="AIWorld_3D.h" />
+    <ClInclude Include="PTSphere.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="winmain.cpp" />
+    <ClCompile Include="AIWorld_3D.cpp" />
+    <ClCompile Include="SphereDude.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="PTSphere.cpp" />
+  </ItemGroup>
+</Project>

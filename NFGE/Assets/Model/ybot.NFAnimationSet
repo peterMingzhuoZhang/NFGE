@@ -1,0 +1,173 @@
+Total_AniamtionClip: 1
+Bone_Aniamtion_Clip_Name: mixamo.com
+Duration: 1.000000
+Tick_Per_Second: 30.000000
+Total_Bone_Animation: 70
+IsEmpty: 0
+Bone_Name: mixamorig:Hips
+Position Channel: 
+Value: -0.000007, 99.791939, -0.000048. Time: 0.000000
+Rotation Channel: 
+Value: -0.000000, 0.000000, 0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: -0.000000, 0.000000, 0.000000. Time: 0.000000
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 0
+Bone_Name: mixamorig:LeftHand
+Position Channel: 
+Value: 27.614464, 0.000029, -0.000020. Time: 0.000000
+Rotation Channel: 
+Value: -0.000026, 0.000000, 0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: -0.000026, 0.000000, 0.000000. Time: 0.000000
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 0
+Bone_Name: mixamorig:LeftHandThumb1
+Position Channel: 
+Value: 3.788810, -2.166997, -3.003088. Time: 0.000000
+Rotation Channel: 
+Value: 0.000010, 0.000008, 0.000010, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: 0.000010, 0.000008, 0.000010. Time: 0.000000
+IsEmpty: 0
+Bone_Name: mixamorig:LeftHandThumb2
+Position Channel: 
+Value: 3.675443, -2.122008, -2.122012. Time: 0.000000
+Rotation Channel: 
+Value: -0.000005, -0.000003, -0.000006, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: -0.000005, -0.000003, -0.000006. Time: 0.000000
+IsEmpty: 0
+Bone_Name: mixamorig:LeftHandThumb3
+Position Channel: 
+Value: 3.394359, -1.959744, -1.959793. Time: 0.000000
+Rotation Channel: 
+Value: 0.000005, 0.000010, -0.000001, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: 0.000005, 0.000010, -0.000001. Time: 0.000000
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 0
+Bone_Name: mixamorig:RightHand
+Position Channel: 
+Value: -27.614464, 0.000023, -0.000018. Time: 0.000000
+Rotation Channel: 
+Value: -0.000026, -0.000000, -0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: -0.000026, -0.000000, -0.000000. Time: 0.000000
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 0
+Bone_Name: mixamorig:RightHandThumb1
+Position Channel: 
+Value: -3.788809, -2.166998, -3.003087. Time: 0.000000
+Rotation Channel: 
+Value: 0.000010, -0.000008, -0.000010, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: 0.000010, -0.000008, -0.000010. Time: 0.000000
+IsEmpty: 0
+Bone_Name: mixamorig:RightHandThumb2
+Position Channel: 
+Value: -3.675443, -2.122009, -2.122012. Time: 0.000000
+Rotation Channel: 
+Value: -0.000005, 0.000003, 0.000006, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: -0.000005, 0.000003, 0.000006. Time: 0.000000
+IsEmpty: 0
+Bone_Name: mixamorig:RightHandThumb3
+Position Channel: 
+Value: -3.394358, -1.959746, -1.959793. Time: 0.000000
+Rotation Channel: 
+Value: 0.000005, -0.000010, 0.000001, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: 0.000005, -0.000010, 0.000001. Time: 0.000000
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 0
+Bone_Name: mixamorig:RightLeg
+Position Channel: 
+Value: -0.244680, -40.595436, 0.514528. Time: 0.000000
+Rotation Channel: 
+Value: -0.000007, -0.000000, -0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: -0.000007, -0.000000, -0.000000. Time: 0.000000
+IsEmpty: 0
+Bone_Name: mixamorig:RightFoot
+Position Channel: 
+Value: 0.244669, -42.047871, 2.060231. Time: 0.000000
+Rotation Channel: 
+Value: 0.000004, 0.000000, -0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: 0.000004, 0.000000, -0.000000. Time: 0.000000
+IsEmpty: 1
+IsEmpty: 0
+Bone_Name: mixamorig:LeftUpLeg
+Position Channel: 
+Value: 9.124453, -6.656399, 0.055378. Time: 0.000000
+Rotation Channel: 
+Value: 0.000018, -0.000000, -0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: 0.000018, -0.000000, -0.000000. Time: 0.000000
+IsEmpty: 0
+Bone_Name: mixamorig:LeftLeg
+Position Channel: 
+Value: 0.244680, -40.595406, 0.517041. Time: 0.000000
+Rotation Channel: 
+Value: -0.000036, 0.000000, -0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: -0.000036, 0.000000, -0.000000. Time: 0.000000
+IsEmpty: 0
+Bone_Name: mixamorig:LeftFoot
+Position Channel: 
+Value: -0.244670, -42.048000, 2.057641. Time: 0.000000
+Rotation Channel: 
+Value: 0.000018, -0.000000, 0.000000, 1.000000. Time: 0.000000
+Scale Channel: 
+Value: 0.000018, -0.000000, 0.000000. Time: 0.000000
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
+IsEmpty: 1
