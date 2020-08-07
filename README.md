@@ -11,7 +11,7 @@
 ## Frameworks of the engine
 - **AI**
     - Implemented `Finite State Machine` for AI agent's state switching
-    - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Search' path-finding algorithm with policy design pattern
+    - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Search` path-finding algorithm with policy design pattern
     - Implemented `Perception Module` that allows adding customized sensor and importance calculation to manipulate and prioritize the memory record for decision making.
     [Project Demo: Perception 3D](#perception-3d)
     - Implemented `Steering Module` that can calculate a final velocity for an agent based on added individual Steering Behaviors. This can allow AI agents to have a natural and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
