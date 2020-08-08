@@ -1,15 +1,17 @@
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/NFGE.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/NFGE.gif?raw=true)
 # NFGE
 > Nicolas Four Game Engine
 
-> This my own C++ game engine that developed using Direct3D 11.
+> This is my own C++ game engine that developed using Direct3D 11.
+
+> I build this engine for exploring and understanging what happens under the hood when making games.
 
 ---
 
 ## Frameworks of the engine
 - **AI**
     - Implemented `Finite State Machine` for AI agent's state switching
-    - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Search' path-finding algorithm with policy design pattern
+    - Implemented `Breadth First Search`, `Depth First Search`, `Dijkstra Search`, `A-Star Search` path-finding algorithm with policy design pattern
     - Implemented `Perception Module` that allows adding customized sensor and importance calculation to manipulate and prioritize the memory record for decision making.
     [Project Demo: Perception 3D](#perception-3d)
     - Implemented `Steering Module` that can calculate a final velocity for an agent based on added individual Steering Behaviors. This can allow AI agents to have a natural and smooth movement. Supported Behaviors are : `Arrive Behavior`, `Evade Behavior`, `Flee Behavior`, `Hide Behavior`, `Obstacle Avoid Behavior`, `Path Follow Behavior`, `Seek Behavior`, `Wall Avoid Behavior`, `Group Alignment Behavior`, `Group Cohesion Behavior`, `Group Separation Behavior`
@@ -59,7 +61,7 @@
 
 ## Projects using NFGE
 
-### NFGE Editor
+### <a href="http://www.peterzmzprojects.com/2020/07/nfge-editor.html">**NFGE Editor**</a> 
 > Demonstrate the use of reflection system
 
 ![Alt Text](https://1.bp.blogspot.com/-XPqueHSjVPA/XxnixJoj-OI/AAAAAAAAAWY/YKpd0rUa2RA4zbkK5268pLUNBbAYala7ACLcBGAsYHQ/s1600/ComponentEditing.gif)
@@ -68,36 +70,41 @@
  
  ---
  
- ### Perception 3D
+ ### <a href="http://www.peterzmzprojects.com/2020/07/ai-demo-3d-perception.html">**Perception 3D**</a>
 > Demonstrate the use of AI:Perception module and AI:Steering behavior
 
 ![Alt Text](https://1.bp.blogspot.com/-mKGvKU25zUA/XyT6vBlJN_I/AAAAAAAAAW8/NLzK-Y6jt3UwbbUICGt18GOhzZq3RVe0ACLcBGAsYHQ/s480/Perception.gif)
 
  ---
  
- ### LaCelle Craft
+ ### <a href="http://www.peterzmzprojects.com/2020/08/lacelle-craft-in-process.html">**LaCelle Craft**</a> 
 > Demonstrate the use of AI:Path-finding, AI:Steering behavior and AI:State Machine
 
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/LacelleCraft_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/LacelleCraft_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/LacelleCraft_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/LacelleCraft_01.gif?raw=true)
  
  ---
  
- ### 3D Graphic Model
+ ### <a href="http://www.peterzmzprojects.com/2020/08/3d-graphic-demo-effect-post-processing.html">**3D Graphic Model**</a> 
 > Demonstrate the use of post-processing
 
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_DepthBlur_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_shadow_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_shadow_01.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Graphic3D_Pixelate_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_DepthBlur_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_shadow_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_shadow_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Graphic3D_Pixelate_00.gif?raw=true)
  
  ---
  
-### YBot Simulation
+### <a href="http://www.peterzmzprojects.com/2020/08/3d-graphic-demo-ybot-simulationin.html">**YBot Simulation**</a> 
 > Demonstrate the use of skeleton Animation system.
 
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_clipSpeedModdifier.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_Partial.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_HeadRigging.gif?raw=true)
+
 > This demo had implemented a `BlendTree` with project specific `ControlContext` and `BlendPolicy`s to achieve nature movement blending from 21 `AnimationClip`s.
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/YBot_BlendTree.png?raw=true)
 - Ybot blend tree mechanism:
     * All leaf nodes contain blend information of a `AnimationClips` and a default `BlendPolicy`, They are going to share total weight of 100%.
     * Non-leaf nodes have a custom `BlendPolicy` about how to distribute current weight to its child. There are:
@@ -106,30 +113,27 @@
         + Walk_To_Run_Policy: Distribute current weight based on `mCurrentSpeed` from MAX_WALK_SPEED to RUN_MAX_SPEED to 2 nodes.
         + Move_Policy: Distribute current weight based on dot product of `mMoveDirection` and `mFacingDirection` to 8 nodes.
  
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blending.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_clipSpeedModdifier.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_Partial.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_HeadRigging.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
+
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
         
 ---
 
- ### Grass Simulation
+ ### <a href="http://www.peterzmzprojects.com/2020/08/physics-demo-grass-simulation.html">**Grass Simulation**</a> 
 > Demonstrate the use of Verlet Particle Phhysics
 
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_00.gif?raw=true)
-![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/Assets/Images/DemoGif/Grass_01.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Grass_00.gif?raw=true)
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/Grass_01.gif?raw=true)
  
  ---
 
 ## Integrated External Library:
 
-- Assimp                          -- For 3D model importing
-- Dear Imgui                    -- For Debug UI
-- DirectXTK                    -- For graphic & audio
-- RapidJSON                   -- For loading and saving Json file
-- Mixamo                        --For 3D model resources
+- <a href="https://github.com/assimp/assimp">**Assimp**</a>                          -- For 3D model importing
+- <a href="https://github.com/ocornut/imgui">**Dear Imgui**</a>                    -- For Debug UI
+- <a href="https://github.com/microsoft/DirectXTK">**DirectXTK**</a>                    -- For graphic & audio
+- <a href="https://github.com/Tencent/rapidjson">**RapidJSON**</a>                   -- For loading and saving Json file
+- <a href="https://www.mixamo.com/#/">**Mixamo**</a>                        --For 3D model resources
  
  ## Authors
 
