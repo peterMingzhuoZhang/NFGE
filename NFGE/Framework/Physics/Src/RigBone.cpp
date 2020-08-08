@@ -21,46 +21,47 @@ namespace
 }
 
 
-NFGE::Physics::RigBone::RigBone(PhysicsWorld& world, const std::vector<NFGE::Math::Matrix4>& boneMatrixes, NFGE::Graphics::Bone* bone, NFGE::Physics::Particle* parentOriParticle)
+NFGE::Physics::RigBone::RigBone(PhysicsWorld& world, const std::vector<NFGE::Math::Matrix4>& tPosToParentMatrixes, NFGE::Graphics::Bone* bone)
 	: mInitHeading(mInitHeading)
 	, mBone(bone)
 {
-	mIdle_hori = world.AddLine({}, {0.0f,0.0f,1.0f});
-	mIdle_hori->mVertices.back()->gravityScale = 0.0f;
-	mIdle_hori->mVertices.front()->gravityScale = 0.0f;
-	mSuppose_hori = world.AddLine({}, { 0.0f,0.0f,1.0f });
-	mSuppose_hori->mVertices.back()->gravityScale = 0.0f;
-	mSuppose_hori->mVertices.front()->gravityScale = 0.0f;
+	mIdle_front = world.AddLine({}, {0.0f,0.0f,1.0f});
+	mIdle_front->mVertices.back()->gravityScale = 0.0f;
+	mIdle_front->mVertices.front()->gravityScale = 0.0f;
+	mSuppose_front = world.AddLine({}, { 0.0f,0.0f,1.0f });
+	mSuppose_front->mVertices.back()->gravityScale = 0.0f;
+	mSuppose_front->mVertices.front()->gravityScale = 0.0f;
 
-	mIdle_vert = world.AddLine({}, { 0.0f,1.0f,0.0f });
-	mIdle_vert->mVertices.back()->gravityScale = 0.0f;
-	mIdle_vert->mVertices.front()->gravityScale = 0.0f;
-	mSuppose_vert = world.AddLine({}, { 0.0f,1.0f,.0f });
-	mSuppose_vert->mVertices.back()->gravityScale = 0.0f;
-	mSuppose_vert->mVertices.front()->gravityScale = 0.0f;
+	mIdle_up = world.AddLine({}, { 0.0f,1.0f,0.0f });
+	mIdle_up->mVertices.back()->gravityScale = 0.0f;
+	mIdle_up->mVertices.front()->gravityScale = 0.0f;
+	mSuppose_up = world.AddLine({}, { 0.0f,1.0f,.0f });
+	mSuppose_up->mVertices.back()->gravityScale = 0.0f;
+	mSuppose_up->mVertices.front()->gravityScale = 0.0f;
+
+	mIdle_right = world.AddLine({}, { 1.0f,0.0f,0.0f });
+	mIdle_right->mVertices.back()->gravityScale = 0.0f;
+	mIdle_right->mVertices.front()->gravityScale = 0.0f;
+	mSuppose_right = world.AddLine({}, { 1.0f,0.0f,.0f });
+	mSuppose_right->mVertices.back()->gravityScale = 0.0f;
+	mSuppose_right->mVertices.front()->gravityScale = 0.0f;
 
 	mParticles.reserve(4);
-	mParticles.push_back(mSuppose_hori->mVertices[0]);
-	mParticles.push_back(mSuppose_hori->mVertices[1]);
-	mParticles.push_back(mSuppose_vert->mVertices[0]);
-	mParticles.push_back(mSuppose_vert->mVertices[1]);
+	mParticles.push_back(mSuppose_front->mVertices[0]);
+	mParticles.push_back(mSuppose_front->mVertices[1]);
+	mParticles.push_back(mSuppose_up->mVertices[0]);
+	mParticles.push_back(mSuppose_up->mVertices[1]);
+	mParticles.push_back(mSuppose_right->mVertices[0]);
+	mParticles.push_back(mSuppose_right->mVertices[1]);
 
-	if (parentOriParticle == nullptr)
-	{
-		mParentOri = world.AddParticle(new Particle());
-		mParentOri->SetPosition(Vector3{ 0.0f, 0.0f, 0.0f });
-		mOri = world.AddParticle(new Particle());
-		mOri->SetPosition(Vector3{ 0.0f, 0.1f, 0.0f });
-	}
-	else
-	{
-		mParentOri = parentOriParticle;
-		mOri = world.AddParticle(new Particle());
-		mOri->SetPosition(mParentOri->position * NFGE::Math::Inverse(boneMatrixes[bone->index]));
-	}
-	mParentOri->gravityScale = 0.0f;
+	
+	mOri = world.AddParticle(new Particle());
+	mOri->SetPosition(Vector3{ 0.0f, 0.1f, 0.0f });
+	mOri->invMass = 1.0f;
 	mOri->gravityScale = 0.0f;
-	world.AddConstraint(new Spring(mParentOri, mOri));
+	
+	
+	
 	//mCurrentToSuppose = ;
 	//world.AddConstraint(new Spring(mSuppose_hori->mVertices.back(), mCurrent->mVertices.back()));
 	//mFixedSuppose = new Fixed(mSuppose_hori->mVertices.back());
@@ -69,161 +70,103 @@ NFGE::Physics::RigBone::RigBone(PhysicsWorld& world, const std::vector<NFGE::Mat
 	world.AddRigBone(this);
 }
 
+NFGE::Physics::RigBone::RigBone(PhysicsWorld & world, const std::vector<NFGE::Math::Matrix4>& tPosToParentMatrixes, NFGE::Graphics::Bone * bone, RigBone * childBone)
+	: RigBone(world, tPosToParentMatrixes, bone)
+{
+	ConnectChildRigBone(world, childBone, tPosToParentMatrixes);
+}
+
 void NFGE::Physics::RigBone::Binding(const std::vector<NFGE::Math::Matrix4>& boneMatrixes, const std::vector<NFGE::Math::Matrix4>& tPosToParentMatrixes, const NFGE::Math::Matrix4& toWorld)
 {
 	currentBoneMatrix = boneMatrixes[mBone->index] * toWorld;
 	auto allInOneMat = tPosToParentMatrixes[mBone->index] * boneMatrixes[mBone->parentIndex] * toWorld;
 	toWorldMat = allInOneMat;
 	//auto allInOneMat = boneMatrixes[mBone->index] * toWorld;
-	mIdle_hori->mVertices.front()->SetPosition (Vector3::Zero() * allInOneMat);
-	mIdle_hori->mVertices.back()->SetPosition(Vector3{ 0.0f,0.0f,-1.0f } *allInOneMat);	// direction match with model initial direction
-	mIdle_vert->mVertices.front()->SetPosition(Vector3::Zero() * allInOneMat);
-	mIdle_vert->mVertices.back()->SetPosition(Vector3{ 0.0f,1.0f,0.0f } *allInOneMat);
+	mIdle_front->mVertices.front()->SetPosition (Vector3::Zero() * allInOneMat);
+	mIdle_front->mVertices.back()->SetPosition(Vector3{ 0.0f,0.0f,-1.0f } *allInOneMat);	// direction match with model initial direction
+	mIdle_up->mVertices.front()->SetPosition(Vector3::Zero() * allInOneMat);
+	mIdle_up->mVertices.back()->SetPosition(Vector3{ 0.0f,1.0f,0.0f } *allInOneMat);
+	mIdle_right->mVertices.front()->SetPosition(Vector3::Zero() * allInOneMat);
+	mIdle_right->mVertices.back()->SetPosition(Vector3{ 1.0f,0.0f,0.0f } *allInOneMat);
 }
 
 void NFGE::Physics::RigBone::LookTo(const NFGE::Math::Vector3& target)
 {
-	mParentOri->SetPosition(mIdle_hori->mVertices.front()->position);
+	mOri->SetPosition(mIdle_front->mVertices.front()->position);
 	if (isnan( mOri->position.x ))
 	{
-		mSuppose_vert->mVertices.front()->SetPosition(mParentOri->position);
-		mSuppose_hori->mVertices.front()->SetPosition(mParentOri->position);
+		mSuppose_up->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_front->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_right->mVertices.front()->SetPosition(mOri->position);
 	}
 	else
 	{
-		mSuppose_vert->mVertices.front()->SetPosition(mOri->position);
-		mSuppose_hori->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_up->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_front->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_right->mVertices.front()->SetPosition(mOri->position);
 	}
 
 	if (mIsDominateByPhysics)
 		return;
-	Vector3 dir = Normalize(target - mSuppose_hori->mVertices.front()->position);
-	mSuppose_hori->mVertices.back()->SetPosition(mSuppose_hori->mVertices.front()->position + dir);
-	mSuppose_vert->mVertices.back()->SetPosition(mSuppose_vert->mVertices.front()->position + Vector3{0.0f,1.0f,0.0f});
+	Vector3 dir = Normalize(target - mSuppose_front->mVertices.front()->position);
+	mSuppose_front->mVertices.back()->SetPosition(mSuppose_front->mVertices.front()->position + dir);
+	mSuppose_up->mVertices.back()->SetPosition(mSuppose_up->mVertices.front()->position + Vector3{0.0f,1.0f,0.0f});
+	mSuppose_right->mVertices.back()->SetPosition(mSuppose_right->mVertices.front()->position + Vector3{ 1.0f,0.0f,0.0f });
 }
 
 void NFGE::Physics::RigBone::RotateWith(const NFGE::Math::Matrix4& animationToParent)
 {
 	//TODO
-	mParentOri->SetPosition(Vector3::Zero() * currentBoneMatrix);
+	mOri->SetPosition(Vector3::Zero() * currentBoneMatrix);
 	if (isnan(mOri->position.x ))
 	{
-		mSuppose_vert->mVertices.front()->SetPosition(mParentOri->position);
-		mSuppose_hori->mVertices.front()->SetPosition(mParentOri->position);
+		mSuppose_up->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_front->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_right->mVertices.front()->SetPosition(mOri->position);
 	}
 	else
 	{
-		mSuppose_vert->mVertices.front()->SetPosition(mOri->position);
-		mSuppose_hori->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_up->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_front->mVertices.front()->SetPosition(mOri->position);
+		mSuppose_right->mVertices.front()->SetPosition(mOri->position);
 	}
 	
 	if (mIsDominateByPhysics)
 		return;
-	mSuppose_hori->mVertices.back()->SetPosition(Vector3{0.0f,0.0f,-1.0f} * currentBoneMatrix);// direction match with model initial direction
-	mSuppose_vert->mVertices.back()->SetPosition(Vector3{ 0.0f,1.0f,0.0f } * currentBoneMatrix);
+	
+	mSuppose_front->mVertices.back()->SetPosition(Vector3{ 0.0f,0.0f,-1.0f } *currentBoneMatrix);// direction match with model initial direction
+	mSuppose_up->mVertices.back()->SetPosition(Vector3{ 0.0f,1.0f,0.0f } *currentBoneMatrix);
+	mSuppose_right->mVertices.back()->SetPosition(Vector3{ 1.0f,0.0f,0.0f } *currentBoneMatrix);
+	
+	
 }
  
-NFGE::Math::Matrix4 NFGE::Physics::RigBone::GetRotationTransformQuaternion() const
-{
-	//[Hard code Fix] unknow problem by flip y
 
-	if (mSuppose_hori->mVertices.back()->position.z > mSuppose_hori->mVertices.front()->position.z)
-	{
-		float delta = mSuppose_hori->mVertices.back()->position.y - mSuppose_hori->mVertices.front()->position.y;
-		mSuppose_hori->mVertices.back()->position.y = mSuppose_hori->mVertices.front()->position.y;
-		mSuppose_hori->mVertices.back()->position.y -= delta;
-	}
-	//[Hard code Fix] finish
-
-	auto idleDir = /*NFGE::Math::Normalize*/(mIdle_hori->mVertices.back()->position - mIdle_hori->mVertices.front()->position);
-	auto currentDir = /*NFGE::Math::Normalize*/(mSuppose_hori->mVertices.back()->position - mSuppose_hori->mVertices.front()->position);
-
-	auto toWorldMatrix = NFGE::Math::MatrixRotationQuaternion(NFGE::Math::QuaternionLookRotation(idleDir, Vector3::YAxis));
-	auto toLocalMatrix = NFGE::Math::Inverse(toWorldMatrix);
-
-	idleDir = idleDir * toLocalMatrix;
-	currentDir = currentDir * toLocalMatrix;
-
-
-	//Constrix X rotation--- 
-	auto xCross = Cross({ 0.0f, idleDir.y, idleDir.z }, { 0.0f, currentDir.y,currentDir.z });
-	bool xRotDir = xCross.x > 0.0f;
-	float xRotRad = acosf(Dot(Normalize({ 0.0f,idleDir.y, idleDir.z }), Normalize({ 0.0f,currentDir.y, currentDir.z })));
-	NFGE::Math::Quaternion bringBackRotation_x;
-	if (!xRotDir)
-	{
-		if (xRotRad > mXMaxRad)
-			bringBackRotation_x = QuaternionRotationAxis(xCross, mXMaxRad - xRotRad);
-	}
-	else
-	{
-		if (xRotRad > mXMinRad)
-			bringBackRotation_x = QuaternionRotationAxis(xCross, mXMinRad - xRotRad);
-	}
-	//Constrix X rotation--- 
-
-	//Constrix Y rotation--- 
-	auto yCross = Cross({ idleDir.x, 0.0f, idleDir.z }, { currentDir.x, 0.0f, currentDir.z });
-	bool yRotDir = yCross.y > 0.0f;
-	float yRotRad = acosf(Dot(Normalize({ idleDir.x, 0.0f, idleDir.z }), Normalize({ currentDir.x, 0.0f, currentDir.z })));
-	NFGE::Math::Quaternion bringBackRotation_y;
-	if (!yRotDir)
-	{
-		if (yRotRad > mYMaxRad)
-			bringBackRotation_y = QuaternionRotationAxis(yCross, mYMaxRad - yRotRad);
-	}
-	else
-	{
-		if (yRotRad > mYMinRad)
-			bringBackRotation_y = QuaternionRotationAxis(yCross, mYMinRad - yRotRad);
-	}
-	//Constrix Y rotation--- 
-
-	//Constrix Z rotation--- 
-	auto zCross = Cross({ idleDir.x, idleDir.y , 0.0f }, { currentDir.x, currentDir.y , 0.0f });
-	bool zRotDir = zCross.z > 0.0f;
-	float zRotRad = acosf(Dot(Normalize({ idleDir.x, idleDir.y , 0.0f }), Normalize({ currentDir.x, currentDir.y , 0.0f })));
-	NFGE::Math::Quaternion bringBackRotation_z;
-	if (!zRotDir)
-	{
-		if (zRotRad > mZMaxRad)
-			bringBackRotation_z = QuaternionRotationAxis(zCross, mZMaxRad - zRotRad);
-	}
-	else
-	{
-		if (zRotRad > mZMinRad)
-			bringBackRotation_z = QuaternionRotationAxis(zCross, mZMinRad - zRotRad);
-	}
-	//Constrix Z rotation--- 
-
-	currentDir = currentDir * MatrixRotationQuaternion(bringBackRotation_x * bringBackRotation_y /** bringBackRotation_z*/);
-	currentDir = currentDir * toWorldMatrix;
-	mSuppose_hori->mVertices.back()->SetPosition(mSuppose_hori->mVertices.front()->position + currentDir);
-
-	idleDir = /*NFGE::Math::Normalize*/( mIdle_hori->mVertices.back()->position - mIdle_hori->mVertices.front()->position);
-	currentDir = /*NFGE::Math::Normalize*/( mSuppose_hori->mVertices.back()->position - mSuppose_hori->mVertices.front()->position);
-	return MatrixRotationQuaternion(QuaternionFromTo(idleDir, currentDir));
-	//return MatrixRotationQuaternion(QuaternionLookRotation(currentDir_hori, Vector3::YAxis));
-}
 
 void NFGE::Physics::RigBone::CaculateRotationTransformAixes()
 {
-	idleDir_hori = /*NFGE::Math::Normalize*/(mIdle_hori->mVertices.back()->position - mIdle_hori->mVertices.front()->position);
-	auto currentDir_hori = /*NFGE::Math::Normalize*/(mSuppose_hori->mVertices.back()->position - mSuppose_hori->mVertices.front()->position);
-	idleDir_vert = /*NFGE::Math::Normalize*/(mIdle_vert->mVertices.back()->position - mIdle_vert->mVertices.front()->position);
-	auto currentDir_vert = /*NFGE::Math::Normalize*/(mSuppose_vert->mVertices.back()->position - mSuppose_vert->mVertices.front()->position);
+	idleDir_front = /*NFGE::Math::Normalize*/(mIdle_front->mVertices.back()->position - mIdle_front->mVertices.front()->position);
+	auto currentDir_front = /*NFGE::Math::Normalize*/(mSuppose_front->mVertices.back()->position - mSuppose_front->mVertices.front()->position);
+	idleDir_up = /*NFGE::Math::Normalize*/(mIdle_up->mVertices.back()->position - mIdle_up->mVertices.front()->position);
+	auto currentDir_up = /*NFGE::Math::Normalize*/(mSuppose_up->mVertices.back()->position - mSuppose_up->mVertices.front()->position);
+	idleDir_right = /*NFGE::Math::Normalize*/(mIdle_right->mVertices.back()->position - mIdle_right->mVertices.front()->position);
+	auto currentDir_right = /*NFGE::Math::Normalize*/(mSuppose_right->mVertices.back()->position - mSuppose_right->mVertices.front()->position);
 
-	auto toWorldRotMat = NFGE::Math::MatrixRotationQuaternion(NFGE::Math::QuaternionLookRotation(idleDir_hori, Vector3::YAxis));
+	auto toWorldRotMat = NFGE::Math::MatrixRotationQuaternion(NFGE::Math::QuaternionLookRotation(idleDir_front, Vector3::YAxis));
 	auto toLocalMatrix = NFGE::Math::Inverse(toWorldRotMat);
 
-	idleDir_hori = idleDir_hori * toLocalMatrix;
-	currentDir_hori = currentDir_hori * toLocalMatrix;
-	idleDir_vert = idleDir_vert * toLocalMatrix;
+	idleDir_front = TransformCoord( idleDir_front, toLocalMatrix);
+	currentDir_front = TransformCoord( currentDir_front , toLocalMatrix);
+	idleDir_up = idleDir_up * toLocalMatrix;
+	currentDir_up = currentDir_up * toLocalMatrix;
+
+	idleDir_right = TransformCoord(idleDir_right, toLocalMatrix);
+	currentDir_right = TransformCoord(currentDir_right, toLocalMatrix);
 
 	//Constrix X rotation--- 
-	auto xCross = Cross({ 0.0f, idleDir_hori.y, idleDir_hori.z }, { 0.0f, currentDir_hori.y,currentDir_hori.z });
+	auto xCross = Cross({ 0.0f, idleDir_up.y, idleDir_up.z }, { 0.0f, currentDir_up.y,currentDir_up.z });
 	bool xRotDir = xCross.x > 0.0f;
-	float xRotRad = acosf(Dot(Normalize({ 0.0f,idleDir_hori.y, -1.0f }), Normalize({ 0.0f,currentDir_hori.y, -1.0f })));
+	float xRotRad = acosf(Dot(Normalize({ 0.0f,idleDir_up.y, idleDir_up.z }), Normalize({ 0.0f,currentDir_up.y, currentDir_up.z })));
 	//if (xRotRad >= Constants::Pi * 0.5f) xRotRad = Constants::Pi - xRotRad;
 	if (!xRotDir)
 	{
@@ -242,9 +185,9 @@ void NFGE::Physics::RigBone::CaculateRotationTransformAixes()
 	}
 
 	//Constrix Y rotation--- 
-	auto yCross = Cross({ idleDir_hori.x, 0.0f, idleDir_hori.z }, { currentDir_hori.x, 0.0f, currentDir_hori.z });
+	auto yCross = Cross({ idleDir_front.x, 0.0f, idleDir_front.z }, { currentDir_front.x, 0.0f, currentDir_front.z });
 	bool yRotDir = yCross.y > 0.0f;
-	float yRotRad = acosf(Dot(Normalize({ idleDir_hori.x, 0.0f, idleDir_hori.z }), Normalize({ currentDir_hori.x , 0.0f, currentDir_hori.z })));
+	float yRotRad = acosf(Dot(Normalize({ idleDir_front.x, 0.0f, idleDir_front.z }), Normalize({ currentDir_front.x , 0.0f, currentDir_front.z })));
 	if (yRotDir)
 	{
 		if (yRotRad > mYMaxRad)
@@ -261,16 +204,55 @@ void NFGE::Physics::RigBone::CaculateRotationTransformAixes()
 			mSupposeYRotation = (-yRotRad);
 	}
 
-	//auto ret = xRotation * yRotation;
-	//mSuppose_hori->mVertices.back()->SetPosition(mSuppose_hori->mVertices.front()->position + idleDir_hori * xRotation * Matrix4::sRotationZ(Constants::Pi) * yRotation * toWorldMatrix);
-	//mSuppose_vert->mVertices.back()->SetPosition(mSuppose_vert->mVertices.front()->position + idleDir_vert * xRotation * Matrix4::sRotationY(Constants::Pi) * yRotation * toWorldMatrix); // todo add zrotation
+	//Constrix Z rotation--- 
+	auto zCross = Cross({ idleDir_right.x, idleDir_right.y , 0.0f}, { currentDir_right.x, currentDir_right.y , 0.0f});
+	bool zRotDir = zCross.z > 0.0f;
+	float zRotRad = acosf(Dot(Normalize({ idleDir_right.x, idleDir_right.y , 0.0f}), Normalize({ currentDir_right.x , currentDir_right.y , 0.0f})));
+	if (isnan(zRotRad))
+		zRotRad = 0.0f;
+	if (zRotDir)
+	{
+		if (zRotRad > mZMaxRad)
+			mSupposeZRotation = (-mZMaxRad); // Negate in the max rad because the model from Maxium is in the right-handed rule system
+		else
+			mSupposeZRotation = (-zRotRad); // Negate in the max rad because the model from Maxium is in the right-handed rule system
+	
+	}
+	else
+	{
+		if (zRotRad > mZMinRad)
+			mSupposeZRotation = (mZMinRad); 
+		else
+			mSupposeZRotation = (zRotRad); 
+	}
 
-	//return ret;
 }
 
 NFGE::Math::Matrix4 NFGE::Physics::RigBone::GetRotationTransform() const
 {
 	return mXRotMat * mYRotMat * mZRotMat;
+}
+
+void NFGE::Physics::RigBone::ConnectChildRigBone(PhysicsWorld& world, RigBone * childBone, const std::vector<NFGE::Math::Matrix4>& tPosToParentMatrixes)
+{
+	mChildBoneOri = world.AddParticle(new Particle());
+	mChildBoneOri->SetPosition(childBone->GetPosition() + Vector3{ 0.0f, -0.1f, 0.0f });
+	mChildBoneOri->gravityScale = 0.0f;
+	mChildBoneOri->invMass = 1.0f;
+	world.AddConstraint(new Spring(childBone->mOri, mChildBoneOri));
+
+	mChildBoneOri->SetPosition(NFGE::Math::TransformCoord(mChildBoneOri->position, tPosToParentMatrixes[childBone->mBone->index]));
+	world.AddConstraint(new Spring(mSuppose_front->mVertices.back(), mChildBoneOri));
+	world.AddConstraint(new Spring(mSuppose_front->mVertices.front(), mChildBoneOri));
+	world.AddConstraint(new Spring(mSuppose_up->mVertices.back(), mChildBoneOri));
+	world.AddConstraint(new Spring(mSuppose_up->mVertices.front(), mChildBoneOri));
+	world.AddConstraint(new Spring(mSuppose_right->mVertices.back(), mChildBoneOri));
+	world.AddConstraint(new Spring(mSuppose_right->mVertices.front(), mChildBoneOri));
+
+	world.AddConstraint(new Spring(mSuppose_right->mVertices.back(), mSuppose_front->mVertices.back()));
+	world.AddConstraint(new Spring(mSuppose_front->mVertices.back(), mSuppose_up->mVertices.back()));
+	world.AddConstraint(new Spring(mSuppose_up->mVertices.back(), mSuppose_right->mVertices.back()));
+
 }
 
 void NFGE::Physics::RigBone::Update(float deltaTime, bool isLooking, const NFGE::Math::Vector3 & target)
@@ -301,22 +283,22 @@ void NFGE::Physics::RigBone::Update(float deltaTime, bool isLooking, const NFGE:
 	CaculateRotationTransformAixes();
 	//msuppose_verticle & msuppose_horiz
 
-	mSuppose_hori->mVertices.back()->SetPosition(mSuppose_hori->mVertices.front()->position + (Vector3{0.0f,0.0f,-1.0f} * mXRotMat * mYRotMat * toWorldMat - Vector3::Zero() * toWorldMat));
-	//mSuppose_hori->mVertices.back()->SetPosition(mSuppose_hori->mVertices.front()->position + idleDir_hori * mXRotMat * Matrix4::sRotationZ(Constants::Pi) * mYRotMat * toWorldMat); [OPTIMAS]
-	mSuppose_vert->mVertices.back()->SetPosition(mSuppose_vert->mVertices.front()->position + (Vector3{ 0.0f,1.0f,0.0f } *mXRotMat * mYRotMat * toWorldMat - Vector3::Zero() * toWorldMat));
-	//mSuppose_hori->mVertices.back()->SetPosition(mSuppose_hori->mVertices.front()->position + idleDir_hori * mXRotMat * Matrix4::sRotationZ(Constants::Pi) * mYRotMat * toWorldMat); [OPTIMAS]
+	// make sure the suppose follow the constraining setting
+	mSuppose_front->mVertices.back()->SetPosition(mSuppose_front->mVertices.front()->position + (Vector3{0.0f,0.0f,-1.0f} * mXRotMat * mYRotMat * mZRotMat * toWorldMat - Vector3::Zero() * toWorldMat));
+	mSuppose_up->mVertices.back()->SetPosition(mSuppose_up->mVertices.front()->position + (Vector3{ 0.0f,1.0f,0.0f } *mXRotMat * mYRotMat * mZRotMat * toWorldMat - Vector3::Zero() * toWorldMat));
+	mSuppose_right->mVertices.back()->SetPosition(mSuppose_right->mVertices.front()->position + (Vector3{ 1.0f,0.0f,0.0f } *mXRotMat * mYRotMat * mZRotMat * toWorldMat - Vector3::Zero() * toWorldMat));
 	// todo add zrotation
 }
 
 void NFGE::Physics::RigBone::DebugDraw() const
 {
-	NFGE::Graphics::SimpleDraw::AddSphere(mIdle_hori->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Red, 4, 2);
-	NFGE::Graphics::SimpleDraw::AddSphere(mIdle_vert->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Red, 4, 2);
-	NFGE::Graphics::SimpleDraw::AddSphere(mSuppose_hori->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Yellow , 4, 2);
-	NFGE::Graphics::SimpleDraw::AddSphere(mSuppose_vert->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Pink, 4, 2);
+	NFGE::Graphics::SimpleDraw::AddSphere(mIdle_front->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Red, 4, 2);
+	NFGE::Graphics::SimpleDraw::AddSphere(mIdle_up->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Red, 4, 2);
+	NFGE::Graphics::SimpleDraw::AddSphere(mSuppose_front->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Yellow , 4, 2);
+	NFGE::Graphics::SimpleDraw::AddSphere(mSuppose_up->mVertices.back()->position, 0.2f, NFGE::Graphics::Colors::Pink, 4, 2);
 }
 
 NFGE::Math::Vector3 NFGE::Physics::RigBone::GetPosition() const
 {
-	return mSuppose_hori->mVertices.front()->position; 
+	return mSuppose_front->mVertices.front()->position; 
 }

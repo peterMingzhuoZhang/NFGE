@@ -599,6 +599,11 @@ struct EaseMachine
 		}
 		return t;
 	}
+
+	float easing(float t) const
+	{
+		return funcPtr(t);
+	}
 };
 
 } // namespace NFGE 

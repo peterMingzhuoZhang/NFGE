@@ -361,6 +361,9 @@ void NFGE::Physics::PhysicsWorld::SatisfyConstraints()
 		}
 		for (auto p : mParticles)
 		{
+			if (isnan(p->position.x))
+				continue;
+
 			if (Math::Intersect(p->position, obb))
 			{
 				bool isParticleInObb = false;
@@ -375,33 +378,10 @@ void NFGE::Physics::PhysicsWorld::SatisfyConstraints()
 				Math::Ray ray;
 				if (Math::Intersect(p->lastPosition, obb))
 				{
-
 					auto c2P = (p->position - obb.center);
 
-					NFGE::Math::Matrix4 rotationQuat = NFGE::Math::MatrixRotationQuaternion(obb.orientation);
-					std::vector <std::pair< NFGE::Math::Vector3,float> > obbNormals =
-					{
-						{NFGE::Math::Vector3::XAxis * rotationQuat,obb.extend.x },
-						{NFGE::Math::Vector3::YAxis * rotationQuat,obb.extend.y },
-						{NFGE::Math::Vector3::ZAxis * rotationQuat,obb.extend.z },
-						{-NFGE::Math::Vector3::XAxis * rotationQuat,obb.extend.x },
-						{-NFGE::Math::Vector3::YAxis * rotationQuat,obb.extend.y },
-						{-NFGE::Math::Vector3::ZAxis * rotationQuat,obb.extend.z}
-					};
-
 					float miniDistance = FLT_MAX;
-					NFGE::Math::Vector3 rayDir;
-					for (auto& nor : obbNormals)
-					{
-						float distance = NFGE::Math::Dot(c2P, nor.first);
-						if (distance <= 0.0f)
-							continue;
-						if (nor.second - distance < miniDistance)
-						{
-							miniDistance = distance;
-							rayDir = nor.second;
-						}
-					}
+					NFGE::Math::Vector3 rayDir = NFGE::Math::Normalize(c2P);;
 
 					ray = { p->position + ( rayDir * (obb.extend.x + obb.extend.y + obb.extend.z)), -rayDir };
 					isParticleInObb = true;

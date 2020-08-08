@@ -41,7 +41,7 @@ namespace NFGE::Graphics
 					float timePass = time - channel.mKeyFrames[i].time;
 					float keyFrameDuration = channel.mKeyFrames[i + 1].time - channel.mKeyFrames[i].time;
 					float ratio = timePass / keyFrameDuration;
-					ratio = mEaser.easing(time, ratio);
+					ratio = mEaser.easing(ratio);
 					return ChannelKeyFrameToMatrix(channel, Animation::InterpolationChannelKeys(channel.mKeyFrames[i].value, channel.mKeyFrames[i + 1].value, ratio));
 				}
 			}
@@ -72,7 +72,7 @@ namespace NFGE::Graphics
 					float timePass = time - keyframes[i].time;
 					float keyFrameDuration = keyframes[i + 1].time - keyframes[i].time;
 					float ratio = timePass / keyFrameDuration;
-					ratio = mEaser.easing(time, ratio);
+					ratio = mEaser.easing(ratio);
 					return Animation::InterpolationChannelKeys(keyframes[i].value, keyframes[i + 1].value, ratio);
 				}
 			}

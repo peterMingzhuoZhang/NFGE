@@ -17,21 +17,25 @@ namespace NFGE::Physics
 	class Fixed;
 	struct RigBone
 	{
-		RigBone(PhysicsWorld& world, const std::vector<NFGE::Math::Matrix4>& boneMatrixes, NFGE::Graphics::Bone* bone, NFGE::Physics::Particle* parentOriParticle = nullptr);
+		RigBone(PhysicsWorld& world, const std::vector<NFGE::Math::Matrix4>& tPosToParentMatrixes, NFGE::Graphics::Bone* bone);
+		RigBone(PhysicsWorld& world, const std::vector<NFGE::Math::Matrix4>& tPosToParentMatrixes, NFGE::Graphics::Bone* bone, RigBone* childBone);
 
 		NFGE::Graphics::Bone* mBone = nullptr;
 
-		PhysicsShape* mIdle_hori = nullptr;
-		PhysicsShape* mIdle_vert = nullptr;
-		PhysicsShape* mSuppose_hori = nullptr;
-		PhysicsShape* mSuppose_vert = nullptr;
+		PhysicsShape* mIdle_front = nullptr;
+		PhysicsShape* mIdle_up = nullptr;
+		PhysicsShape* mIdle_right = nullptr;
+		PhysicsShape* mSuppose_front = nullptr;
+		PhysicsShape* mSuppose_up = nullptr;
+		PhysicsShape* mSuppose_right = nullptr;
 		std::vector<Particle*> mParticles;
-		NFGE::Math::Vector3 mInitHeading{};
-		Particle* mParentOri = nullptr;
+		NFGE::Math::Vector3 mInitHeading{};	//TODO:: Seems useless, take it out when confirmed.
 		Particle* mOri = nullptr;
+		Particle* mChildBoneOri = nullptr;
 
-		NFGE::Math::Vector3 idleDir_hori{};
-		NFGE::Math::Vector3 idleDir_vert{};
+		NFGE::Math::Vector3 idleDir_front{};
+		NFGE::Math::Vector3 idleDir_up{};
+		NFGE::Math::Vector3 idleDir_right{};
 		NFGE::Math::Matrix4 toWorldMat{};
 		NFGE::Math::Matrix4 temp{};
 		NFGE::Math::Matrix4 currentBoneMatrix{};
@@ -65,10 +69,15 @@ namespace NFGE::Physics
 		void CaculateRotationTransformAixes();
 		NFGE::Math::Matrix4 GetRotationTransform() const;
 
+		
+
 		void Update(float deltaTime, bool isLooking = false, const NFGE::Math::Vector3& target = NFGE::Math::Vector3::Zero()); // reset look rotation, smooth the rotation
 		void DebugDraw() const;
 
 		NFGE::Math::Vector3 GetPosition() const;
+
+	private:
+		void ConnectChildRigBone(PhysicsWorld& world, RigBone* childBone,const std::vector<NFGE::Math::Matrix4>& tPosToParentMatrixes); // Function that takes a rigbone that suppose to be the chhild bone of current bone
 	};
 }
 #endif // !NFGE_PHYSICS_RIGBONE

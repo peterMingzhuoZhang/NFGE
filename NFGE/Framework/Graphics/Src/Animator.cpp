@@ -148,11 +148,13 @@ void NFGE::Graphics::Animator::Play(int clipIndex, int partialId)
 
 void NFGE::Graphics::Animator::Pause(int partialId)
 {
+	ASSERT(partialId != -1, "[Animator] can not pause on index -1, please specising the clip index");
 	mPartials[partialId]->Pause();
 }
 
 void NFGE::Graphics::Animator::Resume(int partialId)
 {
+	ASSERT(partialId != -1, "[Animator] can not pause on index -1, please specising the clip index");
 	mPartials[partialId]->Resume();
 }
 

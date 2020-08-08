@@ -51,6 +51,8 @@ namespace NFGE::Graphics
 			std::vector<NFGE::Math::Quaternion>		mInnerTransitionRot;
 			std::vector<NFGE::Math::Vector3>		mInnerTransitionScl;
 		};
+
+
 		PartialAnimator(std::vector<AnimationClip*>& allClips, std::vector<std::unique_ptr<PartialAnimator>>& allPartials, std::vector<int>& boneRegistry, std::vector<int>& lastEffectingPartial, const std::vector<int> effectedBone, std::vector<NFGE::Math::Vector3>& currentBlendPos, std::vector<NFGE::Math::Quaternion>& currentBlendRot, std::vector<NFGE::Math::Vector3>& currentBlendScl, int particleId)
 			: mClips(allClips)
 			, mAllPartials(allPartials)
@@ -120,7 +122,7 @@ namespace NFGE::Graphics
 		std::vector<int> mEffectedBones;
 
 		std::vector<NFGE::Math::Vector3>&		mCurrentBlendPos;
-		std::vector<NFGE::Math::Quaternion>&		mCurrentBlendRot;
+		std::vector<NFGE::Math::Quaternion>&	mCurrentBlendRot;
 		std::vector<NFGE::Math::Vector3>&		mCurrentBlendScl;
 
 		std::vector<float> mClipSpeedMutiplyer;

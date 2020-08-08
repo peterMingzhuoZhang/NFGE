@@ -49,8 +49,18 @@ private:
 	float mSightRange;
 	//--- Physics -------------------------------
 	std::unique_ptr<NFGE::Physics::RigBone> mHeadRig;
+	std::unique_ptr<NFGE::Physics::RigBone> mNeckRig;
+	std::unique_ptr<NFGE::Physics::RigBone> mSpine1Rig;
+	std::unique_ptr<NFGE::Physics::RigBone> mSpine2Rig;
+	std::unique_ptr<NFGE::Physics::RigBone> mSpine3Rig;
+	std::unique_ptr<NFGE::Physics::RigBone> mHipRig;
+
+	std::vector<NFGE::Physics::RigBone*> mAllRigBones;
+	std::vector<NFGE::Math::Matrix4> mToParentsMatrixPhysicsDominate;
 	//-------------------------------------------
 
 private:
 	void UpdateSimplePhysics(float deltaTime);
+
+	bool isDebugDraw = false;
 };

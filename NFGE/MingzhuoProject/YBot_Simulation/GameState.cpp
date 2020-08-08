@@ -18,6 +18,11 @@ namespace
 	const char* dopeIdleAnimation = "../../Assets/Model/Idle_dope.NFAnimationSet";
 	const char* noFeelingIdleAnimation = "../../Assets/Model/Idle_noFeeling.NFAnimationSet";
 	const char* powerIdleAnimation = "../../Assets/Model/Idle_power.NFAnimationSet";
+
+	NFGE::Math::Plane obbPlane_high{ 0.0f, 1.0f, 0.0f, 160.0f };
+	NFGE::Math::Plane obbPlane_middle{ 0.0f, 1.0f, 0.0f, 130.0f };
+	NFGE::Math::Plane obbPlane_low{ 0.0f, 1.0f, 0.0f, 100.0f };
+	NFGE::Math::Vector3 obbNonEffectPosition{ 0.0f,-10.0f,0.0f };
 }
 
 void GameState::Initialize()
@@ -41,12 +46,13 @@ void GameState::Initialize()
 	mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
 	mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
 
-	mYBots[0]->Load(defaultIdleAnimation);
+	mYBots[0]->Load(dopeIdleAnimation);
 	mYBots[1]->Load(boxingIdleAnimation, Graphics::Colors::Pink);
 	mYBots[1]->SetInitPosition(Vector3{ 200.0f, 0.0f, 500.0f });
 	mYBots[1]->heading = Vector3{ -1.0f,0.0f,0.0f };
 
-	mPhysicsWorld.AddOBB(OBB{ { 0.0f,150.0f,200.0f },{ 100.0f,10.0f,100.0f },{ Math::QuaternionRotationAxis(Math::Vector3::XAxis, -0.5f) } });
+	//mPhysicsWorld.AddOBB(OBB{ { 0.0f,150.0f,200.0f },{ 100.0f,10.0f,100.0f },{ Math::QuaternionRotationAxis(Math::Vector3::XAxis, -0.5f) } });
+	mCollisionOBB = mPhysicsWorld.AddOBB(OBB{ { 0.0f,22.0f,0.0f },{ 10.0f,10.0f,10.0f },{ Math::Quaternion::Identity() } });
 }
 
 void GameState::Terminate()
@@ -102,6 +108,8 @@ void GameState::Update(float deltaTime)
 	{
 		ybot->Looking(lookTargets);
 	}
+
+	OBBControl();
 }
 
 void GameState::Render()
@@ -181,6 +189,49 @@ void GameState::ShowUI()
 	{
 		NFGE::sApp.GetMainCamera().SetPosition({ 600.0f,750.0f,350.0f });
 		NFGE::sApp.GetMainCamera().SetDirection({ 0.00001f,-0.9f,0.01f });
+	}
+
+}
+
+void GameState::OBBControl()
+{
+	auto inputSystem = InputSystem::Get();
+
+	NFGE::Math::Plane obbPlane;
+
+	if (inputSystem->IsKeyDown(Input::KeyCode::ONE))
+		obbPlane = obbPlane_high;
+	if (inputSystem->IsKeyDown(Input::KeyCode::TWO))
+		obbPlane = obbPlane_middle;
+	if (inputSystem->IsKeyDown(Input::KeyCode::THREE))
+		obbPlane = obbPlane_low;
+
+	if (inputSystem->IsMouseDown(Input::MouseButton::LBUTTON))
+	{
+		float mouseX = (float)inputSystem->GetMouseScreenX();
+		float mouseY = (float)inputSystem->GetMouseScreenY();
+
+		auto camera = NFGE::sApp.GetMainCamera();
+		NFGE::Math::Matrix4 NDCToWorldMat = NFGE::Math::Inverse(camera.GetViewMatrix() * camera.GetPerspectiveMatrix());
+		NFGE::Math::Vector3 mousePositionInWorld = Vector3
+		(
+			(mouseX / GraphicsSystem::Get()->GetBackBufferWidth()) * 2.0f - 1.0f,	// NDC space x is -1.0 to 1.0f, need special conversion 
+			(mouseY / GraphicsSystem::Get()->GetBackBufferHeight()) * -2.0f + 1.0f, // NDC space y is -1.0 to 1.0f, need special conversion 
+			0.0f
+		) * NDCToWorldMat;
+
+		NFGE::Math::Ray cameraRay = NFGE::Math::Ray(camera.GetPosition(), NFGE::Math::Normalize(mousePositionInWorld - camera.GetPosition()));
+
+		float toPlaneDis;
+		NFGE::Math::Intersect(cameraRay, obbPlane, toPlaneDis);
+
+		mCollisionOBB->center = camera.GetPosition() + cameraRay.dir * toPlaneDis;
+
+		SimpleDraw::AddOBB(*mCollisionOBB, NFGE::Graphics::Colors::AliceBlue);
+	}
+	else
+	{
+		mCollisionOBB->center = obbNonEffectPosition;
 	}
 
 }

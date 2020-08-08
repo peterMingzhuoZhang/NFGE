@@ -328,13 +328,13 @@ NFGE::Math::Vector3 NFGE::Graphics::PartialAnimator::GetTranslationValue(int bon
 	ASSERT((boneIndex < static_cast<int>(mClips[mCurrentClip]->boneAnimations.size())), "[NFGE::Graphics::Animator] try to get a bone animation that is out of bounds");																		//|
 
 	hasAnimation = true;
-	if (mBlender->mIsActive)
+	if (mBlender->mIsActive)	// Blending happen, either transition to next AnimationClip, or BlendTree taking over
 	{
-		if (mBlender->mIsMixing)
+		if (mBlender->mIsMixing)	// 1. Blend Tree taking over
 		{
 			return mBlender->mLastMixPos[boneIndex];
 		}
-		else
+		else	// Transition to next AnimationClip
 		{
 			ASSERT((boneIndex < static_cast<int>(mClips[mNextClip]->boneAnimations.size())), "[NFGE::Graphics::Animator] try to get a bone animation that is out of bounds");
 			auto& finalTranslate = mCurrentBlendPos[boneIndex];
@@ -349,9 +349,9 @@ NFGE::Math::Vector3 NFGE::Graphics::PartialAnimator::GetTranslationValue(int bon
 
 			NFGE::Math::Vector3 translate0;
 			int currentLastEffectPartial = mLastEffectingPartial[boneIndex];
-			if (currentLastEffectPartial != mParticleId)
+			if (currentLastEffectPartial != mParticleId)	// 2. Current Animation is handling by other Partial
 				translate0 = mAllPartials[currentLastEffectPartial]->GetTranslationValue(boneIndex, hasAnimation);
-			else
+			else	// 3. Current Animation is handling by this Partial
 			{
 				auto& currentBoneAnimation = mClips[mCurrentClip]->boneAnimations[boneIndex];
 				auto& currentHints = mClipsHints[mCurrentClip];
@@ -361,14 +361,14 @@ NFGE::Math::Vector3 NFGE::Graphics::PartialAnimator::GetTranslationValue(int bon
 					translate0 = currentBoneAnimation->animation->GetValue_OnKeyframes(currentBoneAnimation->animation->mPositionChannel.mKeyFrames, mCounter, &currentHints.positionHint);
 			}
 
-			if (mBlender->mIsInnerTransitionBlending)
+			if (mBlender->mIsInnerTransitionBlending)	// 4. Blending of more then two animation is happening
 				translate0 = mBlender->mInnerTransitionPos[boneIndex];
 
 			finalTranslate = Animation::InterpolationChannelKeys(translate0, translate1, mBlender->GetBlendInWeight());
 			return finalTranslate;
 		}
 	}
-	else
+	else	// 5. No Blending happen
 	{
 		if (mClips[mCurrentClip]->boneAnimations[boneIndex] == nullptr)				//|
 		{																			//|

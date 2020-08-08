@@ -11,7 +11,7 @@ namespace NFGE::AI
 		NFGE::Math::Vector2 Calulate(AI::Agent& agent) override;
 	private:
 		Agent * targetAgent;
-		std::list<NFGE::Math::Circle> obstacles;
+		std::list<NFGE::Math::Circle> obstacles; // TODO:: Change to std::vector in future. Cache fridenly has priority.
 		float stayDistance;
 	};
 

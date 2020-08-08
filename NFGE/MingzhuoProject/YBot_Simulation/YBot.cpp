@@ -56,6 +56,12 @@ namespace
 	const float yBotCameraBackOffset = 200.0f;
 
 	const float SightRange = 300.0f;
+	
+	const int HipBoneIndex = 0;
+	const int Spine3BoneIndex = 1;
+	const int Spine2BoneIndex = 2;
+	const int Spine1BoneIndex = 3;
+	const int NeckBoneIndex = 4;
 	const int HeadBoneIndex = 5;
 
 	const int totalController = 2;
@@ -152,14 +158,69 @@ void YBot::Load(const char * idleAnimationFile, const NFGE::Graphics::Color & ma
 	LowerBodyBoneIndices.emplace_back(0); // Add Hip
 	mAnimator.AddPartial("LowerBody", LowerBodyBoneIndices);
 
-	mHeadRig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.boneMatrix, mModel2.mContext.mSkeleton.bones[HeadBoneIndex].get());
-	mHeadRig->mXMinRad = DEG2RAD(60.0f);
-	mHeadRig->mXMaxRad = DEG2RAD(60.0f);
+	mHeadRig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.tPosToParentMatrix, mModel2.mContext.mSkeleton.bones[HeadBoneIndex].get());
+	mHeadRig->mXMinRad = DEG2RAD(10.0f);
+	mHeadRig->mXMaxRad = DEG2RAD(10.0f);
 	mHeadRig->mYMinRad = DEG2RAD(60.0f);
 	mHeadRig->mYMaxRad = DEG2RAD(60.0f);
-	mHeadRig->mZMinRad = DEG2RAD(30.0f);
-	mHeadRig->mZMaxRad = DEG2RAD(30.0f);
+	mHeadRig->mZMinRad = DEG2RAD(0.0f);
+	mHeadRig->mZMaxRad = DEG2RAD(0.0f);
 	mHeadRig->mRotationSpeed = 10.0f;
+
+	mNeckRig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.tPosToParentMatrix, mModel2.mContext.mSkeleton.bones[NeckBoneIndex].get(), mHeadRig.get());
+	mNeckRig->mXMinRad = DEG2RAD(60.0f);
+	mNeckRig->mXMaxRad = DEG2RAD(60.0f);
+	mNeckRig->mYMinRad = DEG2RAD(60.0f);
+	mNeckRig->mYMaxRad = DEG2RAD(60.0f);
+	mNeckRig->mZMinRad = DEG2RAD(10.0f);
+	mNeckRig->mZMaxRad = DEG2RAD(10.0f);
+	mNeckRig->mRotationSpeed = 10.0f;
+
+	mSpine1Rig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.tPosToParentMatrix, mModel2.mContext.mSkeleton.bones[Spine1BoneIndex].get(), mNeckRig.get());
+	mSpine1Rig->mXMinRad = DEG2RAD(60.0f);
+	mSpine1Rig->mXMaxRad = DEG2RAD(60.0f);
+	mSpine1Rig->mYMinRad = DEG2RAD(60.0f);
+	mSpine1Rig->mYMaxRad = DEG2RAD(60.0f);
+	mSpine1Rig->mZMinRad = DEG2RAD(60.0f);
+	mSpine1Rig->mZMaxRad = DEG2RAD(60.0f);
+	mSpine1Rig->mRotationSpeed = 10.0f;
+
+	mSpine2Rig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.tPosToParentMatrix, mModel2.mContext.mSkeleton.bones[Spine2BoneIndex].get(), mSpine1Rig.get());
+	mSpine2Rig->mXMinRad = DEG2RAD(20.0f);
+	mSpine2Rig->mXMaxRad = DEG2RAD(20.0f);
+	mSpine2Rig->mYMinRad = DEG2RAD(20.0f);
+	mSpine2Rig->mYMaxRad = DEG2RAD(20.0f);
+	mSpine2Rig->mZMinRad = DEG2RAD(20.0f);
+	mSpine2Rig->mZMaxRad = DEG2RAD(20.0f);
+	mSpine2Rig->mRotationSpeed = 10.0f;
+
+	mSpine3Rig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.tPosToParentMatrix, mModel2.mContext.mSkeleton.bones[Spine3BoneIndex].get(), mSpine2Rig.get());
+	mSpine3Rig->mXMinRad = DEG2RAD(20.0f);
+	mSpine3Rig->mXMaxRad = DEG2RAD(20.0f);
+	mSpine3Rig->mYMinRad = DEG2RAD(20.0f);
+	mSpine3Rig->mYMaxRad = DEG2RAD(20.0f);
+	mSpine3Rig->mZMinRad = DEG2RAD(20.0f);
+	mSpine3Rig->mZMaxRad = DEG2RAD(20.0f);
+	mSpine3Rig->mRotationSpeed = 10.0f;
+
+	mHipRig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.tPosToParentMatrix, mModel2.mContext.mSkeleton.bones[HipBoneIndex].get(), mSpine3Rig.get());
+	mHipRig->mXMinRad = DEG2RAD(60.0f);
+	mHipRig->mXMaxRad = DEG2RAD(60.0f);
+	mHipRig->mYMinRad = DEG2RAD(60.0f);
+	mHipRig->mYMaxRad = DEG2RAD(60.0f);
+	mHipRig->mZMinRad = DEG2RAD(60.0f);
+	mHipRig->mZMaxRad = DEG2RAD(60.0f);
+	mHipRig->mRotationSpeed = 10.0f;
+
+	mAllRigBones.reserve(10);
+	mAllRigBones.emplace_back(mHeadRig.get());
+	mAllRigBones.emplace_back(mNeckRig.get());
+	mAllRigBones.emplace_back(mSpine1Rig.get());
+	mAllRigBones.emplace_back(mSpine2Rig.get());
+	mAllRigBones.emplace_back(mSpine3Rig.get());
+	mAllRigBones.emplace_back(mHipRig.get());
+
+	mToParentsMatrixPhysicsDominate = mModel2.mContext.tPosToParentMatrix;
 
 	mSightRange = SightRange;
 
@@ -184,16 +245,89 @@ void YBot::Update(float deltaTime)
 	//						NFGE::Math::Matrix4::sTranslation(mModel.mPosition);
 	auto toWorldMatrix = mModel2.mContext.finalAdjustMatrix * mModel2.mContext.finalToWorld;
 
+	bool physicsDominate = false;
+	for (auto& rigBone : mAllRigBones)
+	{
+		if (rigBone->mIsDominateByPhysics)
+		{
+			physicsDominate = true;
+		}
+	}
+
+	for (auto& rigBone : mAllRigBones)
+	{
+		if (physicsDominate)
+		{
+			if (rigBone->mIsDominateByPhysics)
+			{
+				rigBone->mBone->toParentTransform = mToParentsMatrixPhysicsDominate[rigBone->mBone->index];
+			}
+			else
+			{
+				mToParentsMatrixPhysicsDominate[rigBone->mBone->index] = rigBone->mBone->toParentTransform;
+				rigBone->mIsDominateByPhysics = true;
+			}
+		}
+	}
+	
+	mModel2.mContext.UpdateTransform(mModel2.mSkeleton.root->index);
+
+
 	mHeadRig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, toWorldMatrix);
 	mHeadRig->Update(deltaTime, mIsLooking, mLookTar);
-	//mHeadRig->LookTo(mLookTar);
-
 	NFGE::Math::Matrix4 rigRotation = mHeadRig->GetRotationTransform();
-
 	mHeadRig->mBone->toParentTransform = rigRotation * mModel2.mContext.tPosToParentMatrix[mHeadRig->mBone->index];
-	mModel2.mContext.UpdateTransform(mHeadRig->mBone->index);
-
+	if (mHeadRig->mIsDominateByPhysics)
+		mToParentsMatrixPhysicsDominate[mHeadRig->mBone->index] = mHeadRig->mBone->toParentTransform;
+	//mModel2.mContext.UpdateTransform(mHeadRig->mBone->index);
 	mHeadRig->DebugDraw();
+
+	mNeckRig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, toWorldMatrix);
+	mNeckRig->Update(deltaTime);
+	rigRotation = mNeckRig->GetRotationTransform();
+	mNeckRig->mBone->toParentTransform = rigRotation * mModel2.mContext.tPosToParentMatrix[mNeckRig->mBone->index];
+	if (mNeckRig->mIsDominateByPhysics)
+		mToParentsMatrixPhysicsDominate[mNeckRig->mBone->index] = mNeckRig->mBone->toParentTransform;
+	//mModel2.mContext.UpdateTransform(mNeckRig->mBone->index);
+	mNeckRig->DebugDraw();
+
+	mSpine1Rig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, toWorldMatrix);
+	mSpine1Rig->Update(deltaTime);
+	rigRotation = mSpine1Rig->GetRotationTransform();
+	mSpine1Rig->mBone->toParentTransform = rigRotation * mModel2.mContext.tPosToParentMatrix[mSpine1Rig->mBone->index];
+	if (mSpine1Rig->mIsDominateByPhysics)
+		mToParentsMatrixPhysicsDominate[mSpine1Rig->mBone->index] = mSpine1Rig->mBone->toParentTransform;
+	//mModel2.mContext.UpdateTransform(mSpine1Rig->mBone->index);
+	mSpine1Rig->DebugDraw();
+
+	mSpine2Rig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, toWorldMatrix);
+	mSpine2Rig->Update(deltaTime);
+	rigRotation = mSpine2Rig->GetRotationTransform();
+	mSpine2Rig->mBone->toParentTransform = rigRotation * mModel2.mContext.tPosToParentMatrix[mSpine2Rig->mBone->index];
+	if (mSpine2Rig->mIsDominateByPhysics)
+		mToParentsMatrixPhysicsDominate[mSpine2Rig->mBone->index] = mSpine2Rig->mBone->toParentTransform;
+	//mModel2.mContext.UpdateTransform(mSpine2Rig->mBone->index);
+	mSpine2Rig->DebugDraw();
+
+	mSpine3Rig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, toWorldMatrix);
+	mSpine3Rig->Update(deltaTime);
+	rigRotation = mSpine3Rig->GetRotationTransform();
+	mSpine3Rig->mBone->toParentTransform = rigRotation * mModel2.mContext.tPosToParentMatrix[mSpine3Rig->mBone->index];
+	if (mSpine3Rig->mIsDominateByPhysics)
+		mToParentsMatrixPhysicsDominate[mSpine3Rig->mBone->index] = mSpine3Rig->mBone->toParentTransform;
+	//mModel2.mContext.UpdateTransform(mSpine3Rig->mBone->index);
+	mSpine3Rig->DebugDraw();
+
+	//mHipRig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, toWorldMatrix);
+	//mHipRig->Update(deltaTime);
+	//rigRotation = mHipRig->GetRotationTransform();
+	//mHipRig->mBone->toParentTransform = rigRotation * mModel2.mContext.tPosToParentMatrix[mHipRig->mBone->index];
+	//if (mHipRig->mIsDominateByPhysics)
+	//	mToParentsMatrixPhysicsDominate[mHipRig->mBone->index] = mHipRig->mBone->toParentTransform;
+	//mModel2.mContext.UpdateTransform(mHipRig->mBone->index);
+	//mHipRig->DebugDraw();
+
+	mModel2.mContext.UpdateTransform(mHipRig->mBone->index);
 	//Rig testing--------------
 
 	mModel2.mContext.position = position;
@@ -207,8 +341,13 @@ void YBot::Update(float deltaTime)
 
 void YBot::Render(const Camera & camera)
 {
-	//mModel2.DebugUI(NFGE::sApp.GetMainCamera());
-	mModel2.Render(camera);
+	//
+	
+	if(!isDebugDraw)
+	{
+		mModel2.Render(camera);
+	}
+	
 	NFGE::sApp.DrawSphere(mLookTar, 2.0f, NFGE::Graphics::Colors::Red);
 }
 
@@ -219,6 +358,7 @@ void YBot::UnLoad()
 
 void YBot::DebugUI()
 {
+
 
 	ImGui::Begin("YBot");
 
@@ -232,6 +372,11 @@ void YBot::DebugUI()
 	if (ImGui::Button("Toggle look"))
 	{
 		mIsLooking = !mIsLooking;
+	}
+
+	if (ImGui::Button("DebugDraw"))
+	{
+		isDebugDraw = !isDebugDraw;
 	}
 	ImGui::LabelText("", "Press [M] to switch control mode. Current mode : [%d]", mCurrentUseController);
 	ImGui::End();

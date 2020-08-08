@@ -35,7 +35,7 @@ namespace NFGE::AI {
 		bool AddProperty(std::string name, const PropertyType& porperty);
 	};
 
-	using MemoryRecords = std::list<MemoryRecord>;
+	using MemoryRecords = std::list<MemoryRecord>;		// TODO:: Change to std::vector in future. Cache fridenly has priority.
 
 	//Template function implemention-----------------------------------
 	template <class PropertyType>

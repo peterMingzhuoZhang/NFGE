@@ -22,6 +22,8 @@ private:
 	void CameraControl(Camera& camera);
 	//void CameraFollow(Camera& camera);
 	void ShowUI();
+	void OBBControl();
+
 private:
 	float mdeltaTime;
 
@@ -30,6 +32,7 @@ private:
 
 	AI::AIWorld3D mWorld3D;
 	Physics::PhysicsWorld mPhysicsWorld;
+	NFGE::Math::OBB* mCollisionOBB;
 	//PTPlane mPlane;
 	Graphics::Geometry::PlaneMesh mPlane;
 	//YBot mYBot{ mWorld3D };
