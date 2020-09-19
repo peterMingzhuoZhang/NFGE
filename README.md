@@ -22,7 +22,7 @@
     - Implemented `WindowMessageHandler` for window's message handling between system. System who need to monitor the window's message will have a static instance of `WindowMessageHandler` for hooking, unhooking customized callback function and track the previous callback function from another system. And by using ForwardMessage to achieve chain of callback functions.
     - Implemented `Block Allocator` that can preallocate a chunk of memory for smaller data to use which can avoid memory fragmentation.
     - Implemented a `Handle` system that verifies the pointer validity by tracking the generation of each pointer which can avoid dangling pointer and memory stomp.
-    - Implemented `Meta` system to stores information on how to 'Create, destroy, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of class instances at runtime.[Project Demo: NFGE Editor](#nfge-editor)
+    - Implemented `Meta` system to stores information on how to 'Create, destroy, serialize, deserialize, and access its member' of a certain class. Which can achieve run-time creating and editing of class instances.[Project Demo: NFGE Editor](#nfge-editor)
     
     
 - **Graphics**
