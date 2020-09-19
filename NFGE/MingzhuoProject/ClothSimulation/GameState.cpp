@@ -10,11 +10,11 @@ namespace
 
 	const char* PlaneTextureName = "rock.jpg";
 	const char* SkyDomTextureName = "SpaceSkydom.jpg";
-	int GrassCount = 20;
-	int GrassSegCount = 10;
+	int GrassCount = 42;
+	int GrassSegCount = 20;
 
 	NFGE::Math::Vector3 InitGrassPos = { 0.0f,0.0f,0.0f };
-	int GrassCol = 5;
+	int GrassCol = 7;
 	float GrassGapX = 5.0f;
 	float GrassGapZ = 5.0f;
 
@@ -45,7 +45,7 @@ void GameState::Initialize()
 	for (size_t i = 0; i < GrassCount; i++)
 	{
 		auto& theGrass = grasses.emplace_back();
-		theGrass.Load(GrassSegCount, 2.0f, "earth.jpg", "earth_normal.jpg", "earth_spec.jpg", "earth_bump.jpg");
+		theGrass.Load(GrassSegCount, 2.0f, "Grass_mesh.png", "", "", "");
 		theGrass.SetPosition({ InitGrassPos.x + i % GrassCol * GrassGapX, 0.0f, InitGrassPos.y + i / GrassCol * GrassGapZ });
 		theGrass.InitPhysics(mPhysicsWorld);
 	}

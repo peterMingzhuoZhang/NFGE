@@ -35,6 +35,9 @@ void NFGE::Physics::PhysicsWorld::DebugDraw() const
 	for (auto c : mConstrains)
 		c->DebugDraw();
 
+	for (auto jc : mJointConstrains)
+		jc->DebugDraw();
+
 	for (auto o : mOBBs)
 		Graphics::SimpleDraw::AddOBB(o, NFGE::Graphics::Colors::BlueViolet);
 	
@@ -50,6 +53,12 @@ NFGE::Physics::Constraint* NFGE::Physics::PhysicsWorld::AddConstraint(Constraint
 {
 	mConstrains.push_back(c); // TODO - this is bad :p, turn this into a pool
 	return mConstrains.back();
+}
+
+NFGE::Physics::JointRotation * NFGE::Physics::PhysicsWorld::AddJointConstraint(JointRotation * c)
+{
+	mJointConstrains.push_back(c); // TODO - this is bad :p, turn this into a pool
+	return mJointConstrains.back();
 }
 
 NFGE::Math::Plane * NFGE::Physics::PhysicsWorld::AddPlane(const NFGE::Math::Plane& plane)
@@ -275,9 +284,21 @@ void NFGE::Physics::PhysicsWorld::ClearDynamic()
 		delete c;
 	mConstrains.clear();
 
+	for (auto jc : mJointConstrains)
+		delete jc;
+	mJointConstrains.clear();
+
 	for (auto s : mShapes)
 		delete s;
 	mShapes.clear();
+}
+
+void NFGE::Physics::PhysicsWorld::ClearForce()
+{
+	for (auto particle : mParticles)
+	{
+		particle->SetVelocity({0.0f,0.0f,0.0f});
+	}
 }
 
 void NFGE::Physics::PhysicsWorld::AccumulateForces()
@@ -304,28 +325,33 @@ void NFGE::Physics::PhysicsWorld::SatisfyConstraints()
 	{
 		for (auto c : mConstrains)
 			c->Apply();
+
+		for (auto jc : mJointConstrains)
+			jc->ApplyFromParent(nullptr);
 	}
 
 	for (auto rigBone : mRigBones)
 	{// Mark rigBone that is effect by physics
-		rigBone->mIsDominateByPhysics = false;
+		//if (rigBone->IsStable())
+			rigBone->mIsDominateByPhysics = false;
 	}
 
-	for (auto plane : mPlanes)
+	for (auto& plane : mPlanes)
 	{
 		for (auto rigBone : mRigBones)
 		{// Mark rigBone that is effect by physics
-			if (rigBone->mIsDominateByPhysics)
-				break;
+			
 			for (auto p : rigBone->mParticles)
 			{
 				if (Math::Dot(p->position, plane.n) <= plane.d		// Detect is the position is on the negative side of the plane.
 					&& Math::Dot(p->lastPosition, plane.n) > plane.d)	// Detect is the lastPosition is on the positive side(different side with [position]) of plane .
 				{
 					rigBone->mIsDominateByPhysics = true;
-					break;
 				}
-				rigBone->mIsDominateByPhysics = false;
+				rigBone->mLastHitingPlane = &plane;
+				rigBone->mLastHitParticle = p;
+				rigBone->mLastHitPoint = p->position;
+				//rigBone->mIsDominateByPhysics = false;
 			}
 		}
 
@@ -344,16 +370,18 @@ void NFGE::Physics::PhysicsWorld::SatisfyConstraints()
 		}
 	}
 
-	for (auto obb : mOBBs)
+	for (auto& obb : mOBBs)
 	{
 		for (auto rigBone : mRigBones)
 		{// Mark rigBone that is effect by physics
-			if (rigBone->mIsDominateByPhysics)
-				break;
+			
 			for (auto p : rigBone->mParticles)
 			{
 				if (Math::Intersect(p->position, obb))
 				{
+					rigBone->mLastHitingOBB = &obb;
+					rigBone->mLastHitParticle = p;
+					rigBone->mLastHitPoint = p->position;
 					rigBone->mIsDominateByPhysics = true;
 					break;
 				}

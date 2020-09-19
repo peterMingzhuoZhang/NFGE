@@ -152,7 +152,7 @@
     <ClInclude Include="Inc\Particle.h" />
     <ClInclude Include="Inc\Physics.h" />
     <ClInclude Include="Inc\PhysicsWorld.h" />
-    <ClInclude Include="Inc\RigBody.h" />
+    <ClInclude Include="Inc\RagBody.h" />
     <ClInclude Include="Inc\RigBone.h" />
     <ClInclude Include="Inc\SimplePhysicsShape.h" />
     <ClInclude Include="Src\Precompiled.h" />
@@ -166,6 +166,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Src\RagBody.cpp" />
     <ClCompile Include="Src\RigBone.cpp" />
   </ItemGroup>
   <ItemGroup>

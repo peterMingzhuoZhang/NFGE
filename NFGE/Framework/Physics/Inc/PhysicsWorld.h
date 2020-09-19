@@ -30,6 +30,7 @@ namespace NFGE::Physics
 
 		Particle* AddParticle(Particle* p);
 		Constraint* AddConstraint(Constraint* c);
+		JointRotation* AddJointConstraint(JointRotation* c);
 		NFGE::Math::Plane* AddPlane(const NFGE::Math::Plane& plane); // TODO: Change to construct variable in future, when using object pool.
 		NFGE::Math::OBB* AddOBB(const NFGE::Math::OBB& obb); // TODO: Change to construct variable in future, when using object pool.
 		RigBone* AddRigBone(RigBone* rigBone);
@@ -41,7 +42,9 @@ namespace NFGE::Physics
 
 
 		void ClearDynamic();
+		void ClearForce();
 
+		Settings mSettings;
 	private:
 		void AccumulateForces();
 		void Integrate();
@@ -49,12 +52,13 @@ namespace NFGE::Physics
 
 		std::vector<Particle*> mParticles;
 		std::vector<Constraint*> mConstrains;
+		std::vector<JointRotation*> mJointConstrains;
 		std::vector<NFGE::Math::Plane> mPlanes;
 		std::vector<NFGE::Math::OBB> mOBBs;
 		std::vector<RigBone*> mRigBones;
 		std::vector<PhysicsShape*> mShapes;
 
-		Settings mSettings;
+		
 		float mTimer = 0.0f;
 
 	};

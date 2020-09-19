@@ -11,6 +11,7 @@ public:
 		: Agent3D(world)
 		, mAnimator()
 		, mPhysicsWorld(physicsWorld)
+		, mRagBody(physicsWorld, mModel2)
 	{
 	}
 
@@ -26,15 +27,30 @@ public:
 	Animator& GetAnimator() { return mAnimator; }
 	MovementControllerShell* GetController() { return mControllers[mCurrentUseController]; }
 	void HookCamera(Camera& camera, float deltaTime);
-	void Looking(const std::list<Vector3>& target);
+	void Looking(const std::list<NFGE::Math::Vector3>& target);
+	void SenceHitingTarget(const std::list<NFGE::Math::Vector3>& targets);
+	void Touching(const std::vector<NFGE::Math::Vector3>& targets);
+	
+	bool IsHittingReady() const { return mIsReadyHitting; }
+	void SetLeftArmTargetting(bool value) { mIsLeftArmTargeting = value; }
+	bool GetLeftArmTargetting() const { return mIsLeftArmTargeting; }
+	void SetRightArmTargetting(bool value) { mIsRightArmTargeting = value; }
+	bool GetRightArmTargetting() const { return mIsRightArmTargeting; }
 
-	NFGE::Physics::RigBone* GetHeadRigBone() const { return mHeadRig.get(); };
+	const NFGE::Physics::RigBone& GetHeadRigBone() const;
+	NFGE::Math::Vector3 GetLeftHandPosition() const { return mLeftHandRig->GetPosition(); }
+	NFGE::Math::Vector3 GetRightHandPosition() const { return mRightHandRig->GetPosition(); }
+
+	void SpwanRagDoll();
 public:
 	Vector3 mLookDir;
-	bool mIsLooking = true;
+	bool mIsLooking = false;
 	Vector3 mLookTar = { 0.0f,100.0f,100.0f };
 	std::unique_ptr<NFGE::AI::SteeringModule3D> mSteeringModule;
 
+	NFGE::Physics::RagBody mRagBody;
+
+	float mHitPower = 200.0f;
 private:
 	std::vector<MovementControllerShell*> mControllers;
 	std::unique_ptr<MovementController> mController_AI;
@@ -47,16 +63,36 @@ private:
 	NFGE::Physics::PhysicsWorld& mPhysicsWorld;
 
 	float mSightRange;
+	float mHitRange;
+	float mTouchRange;
+
 	//--- Physics -------------------------------
 	std::unique_ptr<NFGE::Physics::RigBone> mHeadRig;
-	std::unique_ptr<NFGE::Physics::RigBone> mNeckRig;
-	std::unique_ptr<NFGE::Physics::RigBone> mSpine1Rig;
-	std::unique_ptr<NFGE::Physics::RigBone> mSpine2Rig;
-	std::unique_ptr<NFGE::Physics::RigBone> mSpine3Rig;
-	std::unique_ptr<NFGE::Physics::RigBone> mHipRig;
+	bool mIsReadyHitting = false;
+	bool mIsLeftArmTargeting = false;
+	std::unique_ptr<NFGE::Physics::RigBone> mLeftShoulderRig;
+	Vector3 mLeftShouldTar;
+	std::unique_ptr<NFGE::Physics::RigBone> mLeftUpArmRig;
+	Vector3 mLeftUpArmTar;
+	std::unique_ptr<NFGE::Physics::RigBone> mLeftLowerArmRig;
+	Vector3 mLeftLowerArmTar;
+	std::unique_ptr<NFGE::Physics::RigBone> mLeftHandRig;
+	Vector3 mLeftHandTar;
 
-	std::vector<NFGE::Physics::RigBone*> mAllRigBones;
-	std::vector<NFGE::Math::Matrix4> mToParentsMatrixPhysicsDominate;
+	bool mIsRightArmTargeting = false;
+	std::unique_ptr<NFGE::Physics::RigBone> mRightShoulderRig;
+	Vector3 mRightShouldTar;
+	std::unique_ptr<NFGE::Physics::RigBone> mRightUpArmRig;
+	Vector3 mRightUpArmTar;
+	std::unique_ptr<NFGE::Physics::RigBone> mRightLowerArmRig;
+	Vector3 mRightLowerArmTar;
+	std::unique_ptr<NFGE::Physics::RigBone> mRightHandRig;
+	Vector3 mRightHandTar;
+
+	float armRigResetTimer = 0.0f;
+	float armRigResetTime = 2.0f;
+
+	
 	//-------------------------------------------
 
 private:

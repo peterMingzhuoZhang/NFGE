@@ -42,6 +42,30 @@ namespace
 	const int IdleTurnRight_Index		= 26;
 	const int IdleTurnLeft_Index		= 27;
 
+	ClipNode* idleClipNode;
+
+	ClipNode* WalkForwardClipNode;
+	ClipNode* WalkForwardRightClipNode;
+	ClipNode* WalkRightClipNode;
+	ClipNode* WalkBackwardRightClipNode;
+	ClipNode* WalkBackwardClipNode;
+	ClipNode* WalkBackwardLeftClipNode;
+	ClipNode* WalkLeftClipNode;
+	ClipNode* WalkForwardLeftClipNode;
+
+	ClipNode* RunForwardClipNode;
+	ClipNode* RunForwardRightClipNode;
+	ClipNode* RunRightClipNode;
+	ClipNode* RunBackwardRightClipNode;
+	ClipNode* RunBackwardClipNode;
+	ClipNode* RunBackwardLeftClipNode;
+	ClipNode* RunLeftClipNode;
+	ClipNode* RunForwardLeftClipNode;
+
+	ClipNode* IdleTurnRightClipNode;
+	ClipNode* IdleTurnLeftClipNode;
+
+
 	struct Idle_to_Movment_BlendPolicy
 	{
 		void operator()(ClipModifyer& clipModifyer, std::vector<ClipModifyer*>& activeClipNodePtr, float weight, const MovementController_AllDirection::YBOtBlendContext& context, float time)
@@ -270,28 +294,28 @@ void MovementController_AllDirection::Load()
 	mBlendContext->mDecelation = walkDecelation;
 
 	// Create Default(leaf) clip node
-	ClipNode* idleClipNode =  mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("Idle_clip", *mBlendContext, 0, true, IdleGun_Index));
+	idleClipNode =  mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("Idle_clip", *mBlendContext, 0, true, IdleGun_Index));
 	
-	ClipNode* WalkForwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkForward_clip", *mBlendContext, 0, true, WalkForward_Index));
-	ClipNode* WalkForwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkForwardRight_clip", *mBlendContext, 0, true, WalkForwardRight_Index));
-	ClipNode* WalkRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkRight_clip", *mBlendContext, 0, true, WalkRight_Index));
-	ClipNode* WalkBackwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkBackwardRight_clip", *mBlendContext, 0, true, WalkBackwardRight_Index));
-	ClipNode* WalkBackwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkBackward_clip", *mBlendContext, 0, true, WalkBackward_Index));
-	ClipNode* WalkBackwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkBackwardLeft_clip", *mBlendContext, 0, true, WalkBackwardLeft_Index));
-	ClipNode* WalkLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkLeft_clip", *mBlendContext, 0, true, WalkLeft_Index));
-	ClipNode* WalkForwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkForwardLeft_clip", *mBlendContext, 0, true, WalkForwardLeft_Index));
+	WalkForwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkForward_clip", *mBlendContext, 0, true, WalkForward_Index));
+	WalkForwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkForwardRight_clip", *mBlendContext, 0, true, WalkForwardRight_Index));
+	WalkRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkRight_clip", *mBlendContext, 0, true, WalkRight_Index));
+	WalkBackwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkBackwardRight_clip", *mBlendContext, 0, true, WalkBackwardRight_Index));
+	WalkBackwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkBackward_clip", *mBlendContext, 0, true, WalkBackward_Index));
+	WalkBackwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkBackwardLeft_clip", *mBlendContext, 0, true, WalkBackwardLeft_Index));
+	WalkLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkLeft_clip", *mBlendContext, 0, true, WalkLeft_Index));
+	WalkForwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("WalkForwardLeft_clip", *mBlendContext, 0, true, WalkForwardLeft_Index));
 
-	ClipNode* RunForwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunForward_clip", *mBlendContext, 0, true, RunForward_Index));
-	ClipNode* RunForwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunForwardRight_clip", *mBlendContext, 0, true, RunForwardRight_Index));
-	ClipNode* RunRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunRight_clip", *mBlendContext, 0, true, RunRight_Index));
-	ClipNode* RunBackwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunBackwardRight_clip", *mBlendContext, 0, true, RunBackwardRight_Index));
-	ClipNode* RunBackwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunBackward_clip", *mBlendContext, 0, true, RunBackward_Index));
-	ClipNode* RunBackwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunBackwardLeft_clip", *mBlendContext, 0, true, RunBackwardLeft_Index));
-	ClipNode* RunLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunLeft_clip", *mBlendContext, 0, true, RunLeft_Index));
-	ClipNode* RunForwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunForwardLeft_clip", *mBlendContext, 0, true, RunForwardLeft_Index));
+	RunForwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunForward_clip", *mBlendContext, 0, true, RunForward_Index));
+	RunForwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunForwardRight_clip", *mBlendContext, 0, true, RunForwardRight_Index));
+	RunRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunRight_clip", *mBlendContext, 0, true, RunRight_Index));
+	RunBackwardRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunBackwardRight_clip", *mBlendContext, 0, true, RunBackwardRight_Index));
+	RunBackwardClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunBackward_clip", *mBlendContext, 0, true, RunBackward_Index));
+	RunBackwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunBackwardLeft_clip", *mBlendContext, 0, true, RunBackwardLeft_Index));
+	RunLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunLeft_clip", *mBlendContext, 0, true, RunLeft_Index));
+	RunForwardLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("RunForwardLeft_clip", *mBlendContext, 0, true, RunForwardLeft_Index));
 
-	ClipNode* IdleTurnRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("IdleTurnRight_clip", *mBlendContext, 0, true, IdleTurnRight_Index, true));
-	ClipNode* IdleTurnLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("IdleTurnLeft_clip", *mBlendContext, 0, true, IdleTurnLeft_Index, true));
+	IdleTurnRightClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("IdleTurnRight_clip", *mBlendContext, 0, true, IdleTurnRight_Index, true));
+	IdleTurnLeftClipNode = mBlendTree.AddBlendNode(new BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>("IdleTurnLeft_clip", *mBlendContext, 0, true, IdleTurnLeft_Index, true));
 
 	// Create composed clip node
 	ClipNode* walk_BlendNode = mBlendTree.AddBlendNode(new BlendNode<MoveDirection_BlendPolicy, YBOtBlendContext>("walk_blend", *mBlendContext, 8));
@@ -456,5 +480,33 @@ void MovementController_AllDirection::Set()
 
 void MovementController_AllDirection::DebugUI()
 {
+	//ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f));
+	//ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+	//ImGui::Text("Progress Bar");
+	ImGui::Text("Idle Clip");
+	ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)idleClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Turn Right Clip"); ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)IdleTurnRightClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Turn Left Clip"); ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)IdleTurnLeftClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
 
+	ImGui::Text("Walk Forward Clip");		ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkForwardClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Walk Forward Right Clip");	ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkForwardRightClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Walk Right Clip");			ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkRightClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Walk Backward Right Clip");ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkBackwardRightClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Walk Backward Clip");		ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkBackwardClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Walk Backward Left Clip");	ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkBackwardLeftClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Walk Left Clip");			ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkLeftClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Walk Forward Left Clip");	ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)WalkForwardLeftClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	
+	ImGui::Text("Run Forward Clip");		ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunForwardClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Run Forward Right Clip");	ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunForwardRightClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Run Right Clip");			ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunRightClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Run Backward Right Clip"); ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunBackwardRightClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Run Backward Clip");		ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunBackwardClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Run Backward Left Clip");	ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunBackwardLeftClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Run Left Clip");			ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunLeftClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+	ImGui::Text("Run Forward Left Clip");	ImGui::ProgressBar(((BlendNode<DefaultBlendPolicy<YBOtBlendContext>, YBOtBlendContext>*)RunForwardLeftClipNode)->mClipModifyer.mWeight, ImVec2(0.0f, 0.0f));
+
+	//ImGui::ProgressBar(progress, ImVec2(0.0f, 0.0f));
+	//ImGui::SameLine(0.0f, ImGui::GetStyle().ItemInnerSpacing.x);
+	//ImGui::Text("Progress Bar");
 }

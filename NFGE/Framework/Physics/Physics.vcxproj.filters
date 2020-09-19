@@ -33,7 +33,7 @@
     <ClInclude Include="Inc\RigBone.h">
       <Filter>Inc</Filter>
     </ClInclude>
-    <ClInclude Include="Inc\RigBody.h">
+    <ClInclude Include="Inc\RagBody.h">
       <Filter>Inc</Filter>
     </ClInclude>
   </ItemGroup>
@@ -45,6 +45,9 @@
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\Constraints.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\RagBody.cpp">
       <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Src\RigBone.cpp">

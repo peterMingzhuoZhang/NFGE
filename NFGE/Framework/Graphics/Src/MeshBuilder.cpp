@@ -1272,7 +1272,7 @@ BoneMesh NFGE::Graphics::MeshBuilder::CreateTentacle(int numOfSeg, int sliceFact
 				currentRadius = 0.001f;
 
 			NFGE::Math::Vector3 position{
-				currentRadius * sin(j * unitAngleRad),
+				currentRadius * 0.5f * sin(j * unitAngleRad),
 				currentHeight,
 				currentRadius * cos(j * unitAngleRad)
 			};

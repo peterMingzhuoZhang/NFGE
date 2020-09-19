@@ -35,6 +35,7 @@ Physics Engine
 #include "Particle.h"
 #include "PhysicsWorld.h"
 #include "RigBone.h"
+#include "RagBody.h"
 #include "SimplePhysicsShape.h"
 
 

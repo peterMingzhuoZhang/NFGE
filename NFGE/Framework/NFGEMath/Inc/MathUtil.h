@@ -11,7 +11,7 @@ namespace Math
 	#define TwoPI      2.0f*PI
 	
 	#define DEG2RAD(x) ((x)*PI/180.0f)
-	#define RAD2DEG(x) (180.0f/(x)*PI)
+	#define RAD2DEG(x) (180.0f*(x)/PI)
 
 	inline bool IsZero(float a)		 { return (fabsf(a) < Epsilon); }
 } // namespace NFGE

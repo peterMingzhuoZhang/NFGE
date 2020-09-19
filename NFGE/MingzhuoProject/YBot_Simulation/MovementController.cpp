@@ -174,6 +174,13 @@ void MovementController::Update(float deltaTime)
 	mYBot.GetAnimator().SetClip(State::Walk, true, walkSpeedAnimationMutiplyer);
 	mYBot.GetAnimator().SetClip(State::Run, true, runSpeedAnimationMutiplyer);
 	
+	if (mYBot.IsHittingReady())
+	{
+		if (inputSystem->IsKeyPressed(NFGE::Input::KeyCode::H))
+		{
+			mYBot.SetRightArmTargetting(true);
+		}
+	}
 }
 
 void MovementController::Set()

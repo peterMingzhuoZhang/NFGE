@@ -10,7 +10,7 @@ namespace
 	float RotationSpeed = 0.20f;
 	Vector3 hookPosition = { 0.0f,30.0f,0.0f };
 	float SupportRootDistance = 10.0f;
-	float grassGrowingLevelDiff = 0.05f;
+	float grassGrowingLevelDiff = 0.01f;
 
 	void UpdateTransfrom(Bone* bone, std::vector<PC::TentacleSegment>& armSegments)
 	{
@@ -165,7 +165,7 @@ void PTTentacle::Render(const Camera & camera)
 	SamplerManager::Get()->GetSampler("LinearWrap")->BindPS();
 	SamplerManager::Get()->GetSampler("LinearWrap")->BindVS();
 
-	auto rs = NFGE::Graphics::RasterizerStateManager::Get()->GetRasterizerState("Wireframe");
+	auto rs = NFGE::Graphics::RasterizerStateManager::Get()->GetRasterizerState("Solid");
 	rs->Set();
 	mMeshBuffer.Update(mMesh.vertices.data(), static_cast<uint32_t>(mMesh.vertices.size()));
 	mMeshBuffer.Render();
@@ -232,7 +232,6 @@ void PTTentacle::DebugUI()
 
 	}
 	ImGui::End();
-
 }
 
 void PTTentacle::UnLoad()

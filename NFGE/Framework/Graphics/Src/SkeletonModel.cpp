@@ -38,6 +38,10 @@ void NFGE::Graphics::SkeletonModel::BoneMesh::Render(const NFGE::Math::Matrix4 &
 	float scaleY = Magnitude(parent) - 2.0f;
 
 	Quaternion qua = QuaternionFromTo({ 0.0f,1.0f,0.0f }, parent);
+	if (isnan(qua.x))
+	{
+		qua = Quaternion::Identity();
+	}
 
 	Vector3 toBottom = { 0.0f,0.5f,0.0f };
 	Vector3 toAboveSphere = { 0.0f,1.0f,0.0f };
@@ -47,8 +51,8 @@ void NFGE::Graphics::SkeletonModel::BoneMesh::Render(const NFGE::Math::Matrix4 &
 
 	coneMesh->UpdateAdjustMatrix(coneAdjustMat);
 
-	coneMesh->Render(toWorldMat, camera, isSelected ? NFGE::Graphics::Colors::White : mDiffuseColor, mAmbientColor);
-	sphereMesh->Render(toWorldMat, camera, isSelected ? NFGE::Graphics::Colors::White : mDiffuseColor, mAmbientColor);
+	coneMesh->OldRender(toWorldMat, camera, isSelected ? NFGE::Graphics::Colors::White : mDiffuseColor, mAmbientColor);
+	sphereMesh->OldRender(toWorldMat, camera, isSelected ? NFGE::Graphics::Colors::White : mDiffuseColor, mAmbientColor);
 
 }
 
