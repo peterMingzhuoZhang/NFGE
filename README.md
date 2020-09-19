@@ -116,7 +116,14 @@
 
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree.gif?raw=true)
 ![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/yBot_blendTree_01.gif?raw=true)
-        
+- This demo had implemented a `RagDoll System` with project specific `Verlet Particle Physics`
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/ragDoll_00.gif?raw=true)
+- It Adjust the bone transform matrices with the orientation on each joint that made with verlet particles.
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/ragDoll_01.gif?raw=true)
+
+- This demo also implemented a arm rigging system. 
+> It dynamicly adjust the orientation of the bone and also constrains the max and min rotation on each joint.
+![Alt Text](https://github.com/peterMingzhuoZhang/NFGE/blob/master/NFGE/Assets/Images/DemoGif/ragDoll_02.gif?raw=true)
 ---
 
  ### <a href="http://www.peterzmzprojects.com/2020/08/physics-demo-grass-simulation.html">**Grass Simulation**</a> 
