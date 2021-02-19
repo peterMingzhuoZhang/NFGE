@@ -135,9 +135,9 @@ void EditState::DebugUI()
 		ImGui::DragFloat3("rotationX##Transform", (float*)rotationData);
 
 		NFGE::Math::Vector3 eurlaAngle = NFGE::Math::GetEular(*rotationData);
-		eurlaAngle *= NFGE::Math::Constants::RadToDeg;
+		//eurlaAngle *= NFGE::Math::Constants::RadToDeg;
 
-		eurlaAngle *= NFGE::Math::Constants::DegToRad;
+		//eurlaAngle *= NFGE::Math::Constants::DegToRad;
 
 		*rotationData = NFGE::Math::Quaternion::ToQuaternion(eurlaAngle.x, eurlaAngle.y, eurlaAngle.z); 
 		

@@ -29,6 +29,9 @@ private:
 	PTModel mModel_0;
 	PTModel mModel_1;
 	PTModel mModel_2;
+	PTModel mModel_city_0;
+
+	Graphics::Geometry::PlaneMesh mPlane;
 
 	Camera mShadowCamera;
 	Camera* mCurrentCamera;

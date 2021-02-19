@@ -334,7 +334,7 @@ namespace
 		Vector2 RandomCirclePosInTile(size_t tileIndex)
 		{
 			TextureGridMap& worldMap = *(LevelManager::Get()->myBattleMapPtr);
-			return worldMap.gridGraph.GetNode(tileIndex).position + RandomUnitCircle() * 0.5f;
+			return worldMap.gridGraph.GetNode(tileIndex).position + NFGE::Math::RandomUnitCircle() * 0.5f;
 		}
 		AI::PathFollowingBehavior* mPathFollowBehavior;
 		Vector2 mTargetBuildingPos;

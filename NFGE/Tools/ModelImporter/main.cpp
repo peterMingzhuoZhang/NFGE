@@ -7,9 +7,9 @@
 #include <cstdio>
 
 const bool test = true;
-const char* arg_1 = "../../Assets/Model/Original/IdleGunTurnLeft_45-.fbx"; 
-const char* arg_2 = "../../Assets/Model/IdleGunTurnLeft_45.NFModelRV";
-bool arg_3 = true;
+const char* arg_1 = "../../Assets/Model/Original/fish.fbx"; 
+const char* arg_2 = "../../Assets/Model/fish.NFModelRV";
+bool arg_3 = false;		// Is animation only
 
 using namespace NFGE::Graphics;
 
@@ -302,13 +302,22 @@ int main(int argc, char* argv[])
 			const aiVector3D* texcood = inputMesh->HasTextureCoords(0) ? inputMesh->mTextureCoords[0] : nullptr;
 			if (texcood == nullptr)
 			{
+				
 				printf("Warning: %s\n", "Model dont have texcood");
+				
 				for (size_t i = 0; i < numVertices; ++i)
 				{
+					NFGE::Math::Vector3 tempTangent = NFGE::Math::Vector3{ 1.0f,0.0f,0.0f };
+					NFGE::Math::Vector3 tempNormal = NFGE::Math::Vector3{ 0.0f,1.0f,0.0f };
+					if (tangent != nullptr)
+						tempTangent = NFGE::Math::Vector3{ tangent[i].x, tangent[i].y, tangent[i].z };
+					if (normal != nullptr)
+						tempNormal = NFGE::Math::Vector3{ normal[i].x, normal[i].y, normal[i].z };
+
 					vertices.emplace_back(BoneVertex{
 						NFGE::Math::Vector3{ position[i].x, position[i].y, position[i].z },
-						NFGE::Math::Vector3{ normal[i].x, normal[i].y, normal[i].z },
-						NFGE::Math::Vector3{ tangent[i].x, tangent[i].y, tangent[i].z },
+						NFGE::Math::Vector3{ tempNormal.x, tempNormal.y, tempNormal.z },
+						NFGE::Math::Vector3{ tempTangent.x, tempTangent.y, tempTangent.z },
 						NFGE::Math::Vector2{ 0.0f, 0.0f},
 						});
 				}
@@ -318,9 +327,13 @@ int main(int argc, char* argv[])
 				printf("Warning: %s\n", "Model dont have tangent");
 				for (size_t i = 0; i < numVertices; ++i)
 				{
+					NFGE::Math::Vector3 tempNormal = NFGE::Math::Vector3{ 0.0f,1.0f,0.0f };
+					if (normal != nullptr)
+						tempNormal = NFGE::Math::Vector3{ normal[i].x, normal[i].y, normal[i].z };
+
 					vertices.emplace_back(BoneVertex{
 						NFGE::Math::Vector3{ position[i].x, position[i].y, position[i].z },
-						NFGE::Math::Vector3{ normal[i].x, normal[i].y, normal[i].z },
+						NFGE::Math::Vector3{ tempNormal.x, tempNormal.y, tempNormal.z },
 						NFGE::Math::Vector3{ 1.0f,0.0f, 0.0f},
 						NFGE::Math::Vector2{ texcood[i].x, texcood[i].y },
 						});

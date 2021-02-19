@@ -155,12 +155,12 @@ void YBot::Load(const char * idleAnimationFile, const NFGE::Graphics::Color & ma
 	mAnimator.AddPartial("LowerBody", LowerBodyBoneIndices);
 
 	mHeadRig = std::make_unique<NFGE::Physics::RigBone>(mPhysicsWorld, mModel2.mContext.boneMatrix, mModel2.mContext.mSkeleton.bones[HeadBoneIndex].get());
-	mHeadRig->mXMinRad = DEG2RAD(60.0f);
-	mHeadRig->mXMaxRad = DEG2RAD(60.0f);
+	mHeadRig->mXMinRad = DEG2RAD(10.0f);
+	mHeadRig->mXMaxRad = DEG2RAD(10.0f);
 	mHeadRig->mYMinRad = DEG2RAD(60.0f);
 	mHeadRig->mYMaxRad = DEG2RAD(60.0f);
-	mHeadRig->mZMinRad = DEG2RAD(30.0f);
-	mHeadRig->mZMaxRad = DEG2RAD(30.0f);
+	mHeadRig->mZMinRad = DEG2RAD(0.0f);
+	mHeadRig->mZMaxRad = DEG2RAD(0.0f);
 	mHeadRig->mRotationSpeed = 10.0f;
 
 	mSightRange = SightRange;
@@ -186,16 +186,16 @@ void YBot::Update(float deltaTime)
 	//						NFGE::Math::Matrix4::sTranslation(mModel.mPosition);
 	auto toWorldMatrix = mModel2.mContext.finalAdjustMatrix * mModel2.mContext.finalToWorld;
 
-	mHeadRig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, toWorldMatrix);
+	mHeadRig->Binding(mModel2.mContext.boneMatrix, mModel2.mContext.tPosToParentMatrix, mModel2.mContext.finalAdjustMatrix, toWorldMatrix);
 	mHeadRig->Update(deltaTime, mIsLooking, mLookTar);
 	//mHeadRig->LookTo(mLookTar);
 	
-	NFGE::Math::Matrix4 rigRotation = mHeadRig->GetRotationTransform();
+	NFGE::Math::Matrix4 rigRotation = mHeadRig->GetTransform();
 	
 	mHeadRig->mBone->toParentTransform = rigRotation * mModel2.mContext.tPosToParentMatrix[mHeadRig->mBone->index];
 	mModel2.mContext.UpdateTransform(mHeadRig->mBone->index);
 
-	mHeadRig->DebugDraw();
+	
 	//Rig testing--------------
 
 	mModel2.mContext.position = position;
@@ -221,7 +221,7 @@ void YBot::UnLoad()
 
 void YBot::DebugUI()
 {
-	
+	mHeadRig->DebugDraw();
 	ImGui::Begin("YBot");
 	
 	ImGui::DragFloat("Material_0 alpha##material", &mModel2.mContext.materials[0].ambient.w, 0.1f, 0.0f, 1.0f);

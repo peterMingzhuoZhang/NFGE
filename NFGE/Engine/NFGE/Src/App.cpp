@@ -116,8 +116,8 @@ void NFGE::App::Run(AppConfig appConfig)
 			postProcessManager->SetCurrentUsingCamera(&GetMainCamera());
 
 			auto& masterRenderTarget = postProcessManager->GetMasterRenderTarget();
-			masterRenderTarget.BeginRender(); // incase some object not using effect system to render
-			mCurrentState->Render();
+			masterRenderTarget.BeginRender();	// incase some object not using effect system to render
+			mCurrentState->Render();			// Register the render object in to the effect & post-process pipeline
 			masterRenderTarget.EndRender();
 			
 			effectManager->PreparePostProcessEffect();

@@ -28,7 +28,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR, int)
 	// Initialize the graphic system
 	GraphicsSystem::StaticInitialize(myWindow.GetWindowHandle(), false);
 	BlendStateManager::StaticInitialize();
-	SimpleDraw::StaticInitialize();
+	SimpleDraw::StaticInitialize(shaderFileName);
 
 
 	Camera camera;

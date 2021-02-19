@@ -273,6 +273,8 @@ void GameState::DebugUI()
 	ImGui::DragFloat("Spacing", &spacing, 1.0f, 0.0f, 100.0f);
 
 	tank.DebugUI();
+
+	NFGE::Graphics::PostProcessManager::Get()->OptionUI();
 }
 
 

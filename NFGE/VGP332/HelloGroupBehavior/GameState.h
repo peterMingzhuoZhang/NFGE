@@ -106,7 +106,7 @@ private:
 	const float size = 100.0f;
 
 	std::vector<TriangleDude*>dudes;
-	int totalDude = 1000;
+	int totalDude = 1500;
 
 	BehaviorControl behaviorControl;
 

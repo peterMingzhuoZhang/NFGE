@@ -105,7 +105,7 @@ namespace
 		Vector2 RandomCirclePosInTile(size_t tileIndex)
 		{
 			TextureGridMap& worldMap = *(LevelManager::Get()->myBattleMapPtr);
-			return worldMap.gridGraph.GetNode(tileIndex).position + RandomUnitCircle() * 0.5f;
+			return worldMap.gridGraph.GetNode(tileIndex).position + NFGE::Math::RandomUnitCircle() * 0.5f;
 		}
 
 		void ShootOutInterceptor(Carrier& agent)
@@ -114,7 +114,7 @@ namespace
 			{
 				if (interceptor->mTrivalPoints.empty())
 				{
-					interceptor->mTrivalPoints.push_back(agent.position + RandomUnitCircle() * 100.0f);
+					interceptor->mTrivalPoints.push_back(agent.position + NFGE::Math::RandomUnitCircle() * 100.0f);
 					interceptor->mTrivalPoints.push_back(mNextSubDestination);
 					interceptor->mIsInDock = false;
 				}

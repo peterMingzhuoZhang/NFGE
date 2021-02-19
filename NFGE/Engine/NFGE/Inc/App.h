@@ -21,8 +21,8 @@ namespace NFGE
 
 		std::string appName = "Nicolas Four Game Engine";
 		std::filesystem::path assetsDirectory = L"../../Assets";
-		uint32_t windowWidth = 1280;
-		uint32_t windowHeight = 720;
+		uint32_t windowWidth = 1920;//1280;
+		uint32_t windowHeight = 1080;//720;
 		bool maximize = false;
 		bool imGuiDocking = false;
 		bool isEditor = false;

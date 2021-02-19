@@ -79,7 +79,8 @@ VSOutput VS(VSInput input)
 	if (isUsingSkeleton)
 	{
 		matrix boneTransform = GetBoneTransform(input.blendIndices, input.blendWeights);
-		output.position = mul(mul(thePosition, boneTransform), WVP);
+		thePosition = mul(thePosition, boneTransform);
+		output.position = mul(thePosition, WVP);
 	}
 	else
 	{

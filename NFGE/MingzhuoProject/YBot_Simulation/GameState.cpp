@@ -79,24 +79,24 @@ void GameState::Initialize()
 	
 	mYBots.reserve(10);
 	mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
-	//mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
-	//mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
-	//mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
-	//mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
+	mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
+	mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
+	mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
+	mYBots.emplace_back(std::make_unique<YBot>(mWorld3D, mPhysicsWorld));
 
 	mYBots[0]->Load(dopeIdleAnimation);
-	//mYBots[1]->Load(boxingIdleAnimation, Graphics::Colors::Pink);
-	//mYBots[1]->SetInitPosition(Vector3{ 200.0f, 0.0f, 500.0f });
-	//mYBots[1]->heading = Vector3{ -1.0f,0.0f,0.0f };
-	//mYBots[2]->Load(dopeIdleAnimation, Graphics::Colors::Orange);
-	//mYBots[2]->SetInitPosition(Vector3{ -200.0f, 0.0f, 500.0f });
-	//mYBots[2]->heading = Vector3{ 1.0f,0.0f,0.0f };
-	//mYBots[3]->Load(noFeelingIdleAnimation, Graphics::Colors::Green);
-	//mYBots[3]->SetInitPosition(Vector3{ 200.0f, 0.0f, 900.0f });
-	//mYBots[3]->heading = Vector3{ -1.0f,0.0f,0.0f };
-	//mYBots[4]->Load(powerIdleAnimation, Graphics::Colors::Red);
-	//mYBots[4]->SetInitPosition(Vector3{ -200.0f, 0.0f, 900.0f });
-	//mYBots[4]->heading = Vector3{ 1.0f,0.0f,0.0f };
+	mYBots[1]->Load(boxingIdleAnimation, Graphics::Colors::Pink);
+	mYBots[1]->SetInitPosition(Vector3{ 200.0f, 0.0f, 500.0f });
+	mYBots[1]->heading = Vector3{ -1.0f,0.0f,0.0f };
+	mYBots[2]->Load(dopeIdleAnimation, Graphics::Colors::Orange);
+	mYBots[2]->SetInitPosition(Vector3{ -200.0f, 0.0f, 500.0f });
+	mYBots[2]->heading = Vector3{ 1.0f,0.0f,0.0f };
+	mYBots[3]->Load(noFeelingIdleAnimation, Graphics::Colors::Green);
+	mYBots[3]->SetInitPosition(Vector3{ 200.0f, 0.0f, 900.0f });
+	mYBots[3]->heading = Vector3{ -1.0f,0.0f,0.0f };
+	mYBots[4]->Load(powerIdleAnimation, Graphics::Colors::Red);
+	mYBots[4]->SetInitPosition(Vector3{ -200.0f, 0.0f, 900.0f });
+	mYBots[4]->heading = Vector3{ 1.0f,0.0f,0.0f };
 
 	mPhysicsWorld.AddOBB(OBB{ { 0.0f,-250.0f,0.0f },{ 5000.0f,250.0f,5000.0f },{ Math::Quaternion::Identity()} });
 	mCollisionOBB = mPhysicsWorld.AddOBB(OBB{ { 0.0f,22.0f,0.0f },{ 10.0f,10.0f,10.0f },{ Math::Quaternion::Identity() } });
