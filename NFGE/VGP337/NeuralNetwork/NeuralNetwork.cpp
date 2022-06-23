@@ -157,4 +157,6 @@ std::vector<double> NeuralNetwork::GetResults() const
 	std::vector<double> results;
 
 	//const Layer& outputLayer = mLayers.
+	// TODO
+	return std::vector<double>();
 }

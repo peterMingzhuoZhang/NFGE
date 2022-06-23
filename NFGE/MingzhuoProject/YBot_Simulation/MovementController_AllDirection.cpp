@@ -471,7 +471,7 @@ void MovementController_AllDirection::Update(float deltaTime)
 void MovementController_AllDirection::Set()
 {
 	mBlendContext->mFacingDirection = mYbot.heading;
-	//mYbot.GetAnimator().ChangeTo(IdleGun_Index, 1);
+	mYbot.GetAnimator().ChangeTo(IdleGun_Index, 1);
 	mYbot.GetAnimator().BindBlendTree(&mBlendTree,0);
 
 	auto Arrive = mYbot.mSteeringModule->GetBehavior<NFGE::AI::ArriveBehavior3D>("Arrive");

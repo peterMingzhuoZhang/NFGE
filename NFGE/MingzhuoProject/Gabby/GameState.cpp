@@ -14,13 +14,13 @@ namespace
 	const float BlurSpeed = 25.0f;
 
 	const int CheatCodeCount = 7;
-	const NFGE::Input::KeyCode CheatCheck[] = { NFGE::Input::KeyCode::P,	//Æ¤
-												NFGE::Input::KeyCode::T,	//ÌØ
-												NFGE::Input::KeyCode::S,	//ÊÇ
-												NFGE::Input::KeyCode::W,	//ÎÒ
-												NFGE::Input::KeyCode::N,	//ÄÐ
-												NFGE::Input::KeyCode::P,	//Åó
-												NFGE::Input::KeyCode::Y		//ÓÑ
+	const NFGE::Input::KeyCode CheatCheck[] = { NFGE::Input::KeyCode::P,
+												NFGE::Input::KeyCode::T,
+												NFGE::Input::KeyCode::S,
+												NFGE::Input::KeyCode::W,
+												NFGE::Input::KeyCode::N,
+												NFGE::Input::KeyCode::P,
+												NFGE::Input::KeyCode::Y
 	};
 	int CheatCheckIndex = 0;
 
