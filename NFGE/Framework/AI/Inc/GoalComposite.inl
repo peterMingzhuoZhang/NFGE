@@ -24,7 +24,7 @@ void GoalComposite<AgentType>::RemoveAllSubgoals()
 		if (goal != nullptr)
 		{
 			goal->Terminate();
-			X::SafeDelete(goal);
+			SafeDelete(goal);
 		}
 	}
 	mSubgoals.clear();
@@ -44,7 +44,7 @@ typename GoalComposite<AgentType>::Status GoalComposite<AgentType>::ProcessSubgo
 		}
 
 		goal->Terminate();
-		X::SafeDelete(goal);
+		SafeDelete(goal);
 		mSubgoals.pop_front();
 	}
 
