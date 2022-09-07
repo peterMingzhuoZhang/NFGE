@@ -397,8 +397,8 @@ void Worker::ControlUpdate(const Vector2& currentMousePos, float deltaTime)
 		return;
 	if (IsMousePressed(MouseButton::RBUTTON))
 	{
-		mTowardUnit = false;
-		mTowardStructure = false;
+		mTowardUnit = nullptr;
+		mTowardStructure = nullptr;
 
 		if (LevelManager::Get()->mPlayerController.mCurrentHighLightResource != nullptr)
 		{

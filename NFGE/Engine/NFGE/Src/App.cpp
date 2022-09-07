@@ -446,8 +446,11 @@ void NFGE::App::DrawScreenDiamond(float x, float y, float size, const Color& col
 void NFGE::App::DrawScreenText(const char* str, float x, float y, float size, const Color& color)
 {
 	ASSERT(initialized, "[XEngine] Engine not started.");
-	static std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-	myTextCommands.emplace_back(converter.from_bytes(str), size, x, y, ToColor(color));
+	size_t strLength = strlen(str);
+	int size_needed = MultiByteToWideChar(CP_UTF8, 0, str, strLength, NULL, 0);
+	std::wstring wstrTo(size_needed, 0);
+	MultiByteToWideChar(CP_UTF8, 0, str, strLength, &wstrTo[0], size_needed);
+	myTextCommands.emplace_back(wstrTo, size, x, y, ToColor(color));
 }
 
 //----------------------------------------------------------------------------------------------------

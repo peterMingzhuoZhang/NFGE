@@ -301,10 +301,10 @@
     <None Include="Inc\DecisionModule.inl">
       <Filter>Inc</Filter>
     </None>
-    <None Include="Inc\Goal.inl">
+    <None Include="Inc\GoalComposite.inl">
       <Filter>Inc</Filter>
     </None>
-    <None Include="Inc\GoalComposite.inl">
+    <None Include="Inc\Goal.inl">
       <Filter>Inc</Filter>
     </None>
   </ItemGroup>

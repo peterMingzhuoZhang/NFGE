@@ -3,6 +3,7 @@
 
 #include "AnimationSet.h"
 #include "MeshIO.h"
+#include "MeshTextureMaterial.h"
 
 #define LOAD_SAFTY_CHECK(readResult) if (readResult == EOF)\
 			{	LOG("[NFGE::Graphics::Model::LoadRV()] --- Error: File currupted! Reach EOF while Loading.");\
