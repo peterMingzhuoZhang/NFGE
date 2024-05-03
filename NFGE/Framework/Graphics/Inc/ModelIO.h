@@ -2,6 +2,7 @@
 #define INCLUDDE_NFGE_GRAPHICS_MODELIO_H
 
 #include "AnimationSet.h"
+#include "MeshTextureMaterial.h"
 #include "MeshIO.h"
 
 #define LOAD_SAFTY_CHECK(readResult) if (readResult == EOF)\
